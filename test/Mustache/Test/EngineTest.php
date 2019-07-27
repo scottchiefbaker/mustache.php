@@ -50,7 +50,7 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
         $this->assertTrue($mustache->hasHelper('foo'));
         $this->assertTrue($mustache->hasHelper('bar'));
         $this->assertFalse($mustache->hasHelper('baz'));
-        $this->assertInstanceOf('Mustache_Cache_FilesystemCache', $mustache->getCache());
+        $this->assertInstanceOf(Mustache_Cache_FilesystemCache::class, $mustache->getCache());
         $this->assertEquals([Mustache_Engine::PRAGMA_FILTERS], $mustache->getPragmas());
     }
 
@@ -65,7 +65,7 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
         $data   = ['bar' => 'baz'];
         $output = 'TEH OUTPUT';
 
-        $template = $this->getMockBuilder('Mustache_Template')
+        $template = $this->getMockBuilder(Mustache_Template::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -144,7 +144,7 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
             'cache_lambda_templates' => true,
         ]);
 
-        $this->assertNotInstanceOf('Mustache_Cache_NoopCache', $mustache->getProtectedLambdaCache());
+        $this->assertNotInstanceOf(Mustache_Cache_NoopCache::class, $mustache->getProtectedLambdaCache());
         $this->assertSame($mustache->getCache(), $mustache->getProtectedLambdaCache());
     }
 
@@ -154,7 +154,7 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
             'cache' => self::$tempDir,
         ]);
 
-        $this->assertInstanceOf('Mustache_Cache_NoopCache', $mustache->getProtectedLambdaCache());
+        $this->assertInstanceOf(Mustache_Cache_NoopCache::class, $mustache->getProtectedLambdaCache());
         $this->assertNotSame($mustache->getCache(), $mustache->getProtectedLambdaCache());
     }
 

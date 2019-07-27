@@ -18,9 +18,9 @@ class Mustache_Test_Loader_ProductionFilesystemLoaderTest extends Yoast\PHPUnitP
     {
         $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
         $loader = new Mustache_Loader_ProductionFilesystemLoader($baseDir, ['extension' => '.ms']);
-        $this->assertInstanceOf('Mustache_Source', $loader->load('alpha'));
+        $this->assertInstanceOf(Mustache_Source::class, $loader->load('alpha'));
         $this->assertEquals('alpha contents', $loader->load('alpha')->getSource());
-        $this->assertInstanceOf('Mustache_Source', $loader->load('beta.ms'));
+        $this->assertInstanceOf(Mustache_Source::class, $loader->load('beta.ms'));
         $this->assertEquals('beta contents', $loader->load('beta.ms')->getSource());
     }
 

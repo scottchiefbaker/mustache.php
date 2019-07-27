@@ -113,12 +113,12 @@ class Mustache_Test_HelperCollectionTest extends Yoast\PHPUnitPolyfills\TestCase
             [
                 'not helpers',
                 [],
-                'InvalidArgumentException',
+                InvalidArgumentException::class,
             ],
             [
                 [],
                 ['get' => ['foo']],
-                'InvalidArgumentException',
+                InvalidArgumentException::class,
             ],
             [
                 ['foo' => 'FOO'],
@@ -128,7 +128,7 @@ class Mustache_Test_HelperCollectionTest extends Yoast\PHPUnitPolyfills\TestCase
             [
                 ['foo' => 'FOO'],
                 ['get' => ['bar']],
-                'InvalidArgumentException',
+                InvalidArgumentException::class,
             ],
             [
                 ['foo' => 'FOO'],
@@ -152,12 +152,12 @@ class Mustache_Test_HelperCollectionTest extends Yoast\PHPUnitPolyfills\TestCase
                     'remove' => ['foo'],
                     'get'    => ['foo'],
                 ],
-                'InvalidArgumentException',
+                InvalidArgumentException::class,
             ],
             [
                 [],
                 ['remove' => ['foo']],
-                'InvalidArgumentException',
+                InvalidArgumentException::class,
             ],
         ];
     }

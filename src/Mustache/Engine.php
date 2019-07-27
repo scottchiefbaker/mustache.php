@@ -469,7 +469,8 @@ class Mustache_Engine
      */
     public function setLogger($logger = null)
     {
-        if ($logger !== null && !($logger instanceof Mustache_Logger || is_a($logger, 'Psr\\Log\\LoggerInterface'))) {
+        // n.b. this uses `is_a` to prevent a dependency on Psr\Log
+        if ($logger !== null && !$logger instanceof Mustache_Logger && !is_a($logger, 'Psr\Log\LoggerInterface')) {
             throw new Mustache_Exception_InvalidArgumentException('Expected an instance of Mustache_Logger or Psr\\Log\\LoggerInterface.');
         }
 

@@ -75,7 +75,7 @@ class Mustache_Test_Functional_HigherOrderSectionsTest extends Mustache_Test_Fun
 
     public function testPassthroughOptimization()
     {
-        $mustache = $this->getMockBuilder('Mustache_Engine');
+        $mustache = $this->getMockBuilder(Mustache_Engine::class);
         if (method_exists($mustache, 'onlyMethods')) {
             $mustache->onlyMethods(['loadLambda']);
         } else {
@@ -96,7 +96,7 @@ class Mustache_Test_Functional_HigherOrderSectionsTest extends Mustache_Test_Fun
 
     public function testWithoutPassthroughOptimization()
     {
-        $mustache = $this->getMockBuilder('Mustache_Engine');
+        $mustache = $this->getMockBuilder(Mustache_Engine::class);
         if (method_exists($mustache, 'onlyMethods')) {
             $mustache->onlyMethods(['loadLambda']);
         } else {
