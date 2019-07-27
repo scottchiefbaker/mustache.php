@@ -129,7 +129,7 @@ class Mustache_Tokenizer
 
         $this->reset();
 
-        if (is_string($delimiters) && $delimiters = trim($delimiters)) {
+        if (is_string($delimiters) && ($delimiters = trim($delimiters)) !== '') {
             $this->setDelimiters($delimiters);
         }
 
