@@ -13,7 +13,6 @@ $config->setRules([
 ]);
 
 $finder = $config->getFinder()
-    ->in('bin')
     ->in('src')
     ->in('test');
 

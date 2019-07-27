@@ -9,10 +9,6 @@
  * file that was distributed with this source code.
  */
 
-require dirname(__FILE__) . '/../src/Mustache/Autoloader.php';
-Mustache_Autoloader::register();
-Mustache_Autoloader::register(dirname(__FILE__) . '/../test');
-
 /**
  * Minimal stream wrapper to test protocol-based access to templates.
  */

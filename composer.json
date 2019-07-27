@@ -26,5 +26,10 @@
         "psr-0": {
             "Mustache": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "Mustache_Test": "test/"
+        }
     }
 }
