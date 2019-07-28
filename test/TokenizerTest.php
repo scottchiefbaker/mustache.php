@@ -11,6 +11,7 @@
 
 namespace Mustache\Test;
 
+use Mustache\Exception\InvalidArgumentException;
 use Mustache\Exception\SyntaxException;
 use Mustache\Tokenizer;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
@@ -27,6 +28,29 @@ class TokenizerTest extends TestCase
     {
         $tokenizer = new Tokenizer();
         $this->assertSame($expected, $tokenizer->scan($text, $delimiters));
+    }
+
+    /**
+     * @dataProvider invalidDelimiterTemplates
+     */
+    public function testInvalidDelimitersThrowExceptions($exceptionType, $tpl, $delim = null)
+    {
+        $this->expectException($exceptionType);
+
+        $tokenizer = new Tokenizer();
+        $tokenizer->scan($tpl, $delim);
+    }
+
+    public function invalidDelimiterTemplates()
+    {
+        return [
+            [SyntaxException::class, '{{= =}}'],
+            [SyntaxException::class, '{{=[[ =}}'],
+            [SyntaxException::class, '{{= ]]=}}'],
+
+            [InvalidArgumentException::class, 'yay!', 'boo!'],
+            [InvalidArgumentException::class, 'yay!', 'boo!'],
+        ];
     }
 
     public function testUnevenBracesThrowExceptions()
