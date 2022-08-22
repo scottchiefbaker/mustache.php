@@ -317,11 +317,11 @@ class Mustache_Test_ParserTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
 
     /**
      * @dataProvider getBadParseTrees
-     * @expectedException Mustache_Exception_SyntaxException
      */
     public function testParserThrowsExceptions($tokens)
     {
         $parser = new Mustache_Parser();
+        $this->expectException(Mustache_Exception_SyntaxException::class);
         $parser->parse($tokens);
     }
 

@@ -25,11 +25,10 @@ class Mustache_Test_Loader_CascadingLoaderTest extends Yoast\PHPUnitPolyfills\Te
         $this->assertEquals('{{#bar}}BAR{{/bar}}', $loader->load('bar'));
     }
 
-    /**
-     * @expectedException Mustache_Exception_UnknownTemplateException
-     */
     public function testMissingTemplatesThrowExceptions()
     {
+        $this->expectException(Mustache_Exception_UnknownTemplateException::class);
+
         $loader = new Mustache_Loader_CascadingLoader(array(
             new Mustache_Loader_ArrayLoader(array('foo' => '{{ foo }}')),
             new Mustache_Loader_ArrayLoader(array('bar' => '{{#bar}}BAR{{/bar}}')),
