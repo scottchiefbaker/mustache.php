@@ -21,10 +21,10 @@ class Mustache_Test_FiveThree_Functional_StrictCallablesTest extends Yoast\PHPUn
     public function testStrictCallables($strict, $name, $section, $expected)
     {
         $mustache = new Mustache_Engine(array('strict_callables' => $strict));
-        $tpl      = $mustache->loadTemplate('{{# section }}{{ name }}{{/ section }}');
+        $tpl      = $mustache->loadTemplate('{{# section }}{{ yourname }}{{/ section }}');
 
         $data = new StdClass();
-        $data->name    = $name;
+        $data->yourname    = $name;
         $data->section = $section;
 
         $this->assertEquals($expected, $tpl->render($data));
