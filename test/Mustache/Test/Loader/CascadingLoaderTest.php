@@ -12,7 +12,7 @@
 /**
  * @group unit
  */
-class Mustache_Test_Loader_CascadingLoaderTest extends PHPUnit_Framework_TestCase
+class Mustache_Test_Loader_CascadingLoaderTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
 {
     public function testLoadTemplates()
     {

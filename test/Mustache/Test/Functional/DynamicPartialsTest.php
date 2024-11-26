@@ -13,11 +13,11 @@
  * @group dynamic-names
  * @group functional
  */
-class Mustache_Test_Functional_DynamicPartialsTest extends PHPUnit_Framework_TestCase
+class Mustache_Test_Functional_DynamicPartialsTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
 {
     private $mustache;
 
-    public function setUp()
+    public function set_up()
     {
         $this->mustache = new Mustache_Engine(array(
             'pragmas' => array(Mustache_Engine::PRAGMA_DYNAMIC_NAMES),

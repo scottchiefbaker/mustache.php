@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-abstract class Mustache_Test_FunctionalTestCase extends PHPUnit_Framework_TestCase
+abstract class Mustache_Test_FunctionalTestCase extends Yoast\PHPUnitPolyfills\TestCases\TestCase
 {
     protected static $tempDir;
 
-    public static function setUpBeforeClass()
+    public static function set_up_before_class()
     {
         self::$tempDir = sys_get_temp_dir() . '/mustache_test';
         if (file_exists(self::$tempDir)) {

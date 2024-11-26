@@ -13,11 +13,11 @@
  * @group lambdas
  * @group functional
  */
-class Mustache_Test_FiveThree_Functional_HigherOrderSectionsTest extends PHPUnit_Framework_TestCase
+class Mustache_Test_FiveThree_Functional_HigherOrderSectionsTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
 {
     private $mustache;
 
-    public function setUp()
+    public function set_up()
     {
         $this->mustache = new Mustache_Engine();
     }

@@ -17,7 +17,7 @@ class Mustache_Test_Functional_HigherOrderSectionsTest extends Mustache_Test_Fun
 {
     private $mustache;
 
-    public function setUp()
+    public function set_up()
     {
         $this->mustache = new Mustache_Engine();
     }

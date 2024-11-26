@@ -25,7 +25,7 @@ class Mustache_Test_Functional_MustacheInheritanceSpecTest extends Mustache_Test
         'Nested block reindentation: Nested blocks are reindented relative to the surrounding block',
     );
 
-    public static function setUpBeforeClass()
+    public static function set_up_before_class()
     {
         self::$mustache = new Mustache_Engine(array(
           'pragmas' => array(Mustache_Engine::PRAGMA_BLOCKS),
