@@ -58,11 +58,11 @@ class Mustache_Test_Functional_DynamicPartialsTest extends Yoast\PHPUnitPolyfill
 
     /**
      * @dataProvider getDynamicNameParseErrors
-     * @expectedException Mustache_Exception_SyntaxException
-     * @expectedExceptionMessage Nesting error:
      */
     public function testDynamicNameParseErrors($template)
     {
+		$this->expectException(Mustache_Exception_SyntaxException::class);
+		$this->expectExceptionMessage('Nesting error:');
         $this->mustache->render($template);
     }
 
