@@ -26,7 +26,7 @@ class Mustache_Test_Functional_DynamicPartialsTest extends Yoast\PHPUnitPolyfill
 
     public function getValidDynamicNamesExamples()
     {
-      // technically not all dynamic names, but also not invalid
+        // technically not all dynamic names, but also not invalid
         return array(
             array('{{>* foo }}'),
             array('{{>* foo.bar.baz }}'),
@@ -61,8 +61,8 @@ class Mustache_Test_Functional_DynamicPartialsTest extends Yoast\PHPUnitPolyfill
      */
     public function testDynamicNameParseErrors($template)
     {
-		$this->expectException(Mustache_Exception_SyntaxException::class);
-		$this->expectExceptionMessage('Nesting error:');
+        $this->expectException(Mustache_Exception_SyntaxException::class);
+        $this->expectExceptionMessage('Nesting error:');
         $this->mustache->render($template);
     }
 

@@ -184,10 +184,10 @@ class Mustache_Test_ContextTest extends Yoast\PHPUnitPolyfills\TestCases\TestCas
         $context = new Mustache_Context();
 
         $a = array(
-            'name' => 'not null'
+            'name' => 'not null',
         );
         $b = array(
-            'name' => null
+            'name' => null,
         );
 
         $context->push($a);
@@ -201,10 +201,10 @@ class Mustache_Test_ContextTest extends Yoast\PHPUnitPolyfills\TestCases\TestCas
         $context = new Mustache_Context();
 
         $a = (object) array(
-            'name' => 'not null'
+            'name' => 'not null',
         );
         $b = (object) array(
-            'name' => null
+            'name' => null,
         );
 
         $context->push($a);
@@ -218,10 +218,10 @@ class Mustache_Test_ContextTest extends Yoast\PHPUnitPolyfills\TestCases\TestCas
         $context = new Mustache_Context(null, true);
 
         $a = (object) array(
-            'name' => 'not null'
+            'name' => 'not null',
         );
         $b = (object) array(
-            'name' => null
+            'name' => null,
         );
 
         $context->push($a);
@@ -262,7 +262,7 @@ class Mustache_Test_TestArrayAccess implements ArrayAccess
         }
     }
 
-	#[\ReturnTypeWillChange]
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         if (is_null($offset)) {
@@ -272,19 +272,19 @@ class Mustache_Test_TestArrayAccess implements ArrayAccess
         }
     }
 
-	#[\ReturnTypeWillChange]
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->container[$offset]);
     }
 
-	#[\ReturnTypeWillChange]
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         unset($this->container[$offset]);
     }
 
-	#[\ReturnTypeWillChange]
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
@@ -302,13 +302,13 @@ class Mustache_Test_AllTheThings implements ArrayAccess
         return 'win';
     }
 
-	#[\ReturnTypeWillChange]
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return true;
     }
 
-	#[\ReturnTypeWillChange]
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         switch ($offset) {
@@ -325,13 +325,13 @@ class Mustache_Test_AllTheThings implements ArrayAccess
         }
     }
 
-	#[\ReturnTypeWillChange]
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         // nada
     }
 
-	#[\ReturnTypeWillChange]
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         // nada

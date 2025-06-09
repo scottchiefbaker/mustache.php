@@ -401,7 +401,7 @@ class Mustache_Tokenizer
      *
      * @return string
      */
-    static function getTagName($tagType)
+    public static function getTagName($tagType)
     {
         return isset(self::$tagNames[$tagType]) ? self::$tagNames[$tagType] : 'unknown';
     }

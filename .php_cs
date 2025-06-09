@@ -1,22 +1,15 @@
 <?php
 
-use Symfony\CS\Config\Config;
-use Symfony\CS\FixerInterface;
+use PhpCsFixer\Config;
 
-$config = Config::create()
-    // use symfony level and extra fixers:
-    ->level(Symfony\CS\FixerInterface::SYMFONY_LEVEL)
-    ->fixers(array(
-        '-concat_without_spaces',
-        '-pre_increment',
-        '-unalign_double_arrow',
-        '-unalign_equals',
-        'align_double_arrow',
-        'concat_with_spaces',
-        'ordered_use',
-        'strict',
-    ))
-    ->setUsingLinter(false);
+$config = new Config();
+
+$config->setRules([
+    '@PSR12' => true,
+    'no_unused_imports' => true,
+    'single_quote' => true,
+    'trailing_comma_in_multiline' => true,
+]);
 
 $finder = $config->getFinder()
     ->in('bin')

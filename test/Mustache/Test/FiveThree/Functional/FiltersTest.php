@@ -219,7 +219,9 @@ EOS;
                 return $last->name;
             },
             'all_names' => function ($arr) {
-                return implode(', ', array_map(function ($person) { return $person->name; }, $arr));
+                return implode(', ', array_map(function ($person) {
+                    return $person->name;
+                }, $arr));
             },
             'first_person' => function ($arr) {
                 return $arr[0];
