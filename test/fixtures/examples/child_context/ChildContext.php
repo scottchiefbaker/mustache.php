@@ -11,13 +11,13 @@
 
 class ChildContext
 {
-    public $parent = array(
+    public $parent = [
         'child' => 'child works',
-    );
+    ];
 
-    public $grandparent = array(
-        'parent' => array(
+    public $grandparent = [
+        'parent' => [
             'child' => 'grandchild works',
-        ),
-    );
+        ],
+    ];
 }

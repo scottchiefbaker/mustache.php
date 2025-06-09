@@ -68,7 +68,7 @@ class Mustache_Cache_FilesystemCache extends Mustache_Cache_AbstractCache
         $this->log(
             Mustache_Logger::DEBUG,
             'Writing to template cache: "{fileName}"',
-            array('fileName' => $fileName)
+            ['fileName' => $fileName]
         );
 
         $this->writeFile($fileName, $value);
@@ -104,7 +104,7 @@ class Mustache_Cache_FilesystemCache extends Mustache_Cache_AbstractCache
             $this->log(
                 Mustache_Logger::INFO,
                 'Creating Mustache template cache directory: "{dirName}"',
-                array('dirName' => $dirName)
+                ['dirName' => $dirName]
             );
 
             @mkdir($dirName, 0777, true);
@@ -133,7 +133,7 @@ class Mustache_Cache_FilesystemCache extends Mustache_Cache_AbstractCache
         $this->log(
             Mustache_Logger::DEBUG,
             'Caching compiled template to "{fileName}"',
-            array('fileName' => $fileName)
+            ['fileName' => $fileName]
         );
 
         $tempFile = tempnam($dirName, basename($fileName));
@@ -149,7 +149,7 @@ class Mustache_Cache_FilesystemCache extends Mustache_Cache_AbstractCache
             $this->log(
                 Mustache_Logger::ERROR,
                 'Unable to rename Mustache temp cache file: "{tempName}" -> "{fileName}"',
-                array('tempName' => $tempFile, 'fileName' => $fileName)
+                ['tempName' => $tempFile, 'fileName' => $fileName]
             );
             // @codeCoverageIgnoreEnd
         }

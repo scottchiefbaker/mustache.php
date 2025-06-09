@@ -23,7 +23,7 @@ class Mustache_Test_Functional_CallTest extends Yoast\PHPUnitPolyfills\TestCases
         $foo = new Mustache_Test_Functional_ClassWithCall();
         $foo->name = 'Bob';
 
-        $data = array('label' => 'name', 'foo' => $foo);
+        $data = ['label' => 'name', 'foo' => $foo];
 
         $this->assertEquals('name: Bob', $tpl->render($data));
     }

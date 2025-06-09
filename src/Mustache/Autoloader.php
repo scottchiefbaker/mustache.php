@@ -60,7 +60,7 @@ class Mustache_Autoloader
         }
 
         $loader = self::$instances[$key];
-        spl_autoload_register(array($loader, 'autoload'));
+        spl_autoload_register([$loader, 'autoload']);
 
         return $loader;
     }

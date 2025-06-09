@@ -30,10 +30,10 @@ class Mustache_Test_Logger_StreamLoggerTest extends Yoast\PHPUnitPolyfills\TestC
         $one = tempnam(sys_get_temp_dir(), 'mustache-test');
         $two = tempnam(sys_get_temp_dir(), 'mustache-test');
 
-        return array(
-            array($one, $one),
-            array($two, fopen($two, 'a')),
-        );
+        return [
+            [$one, $one],
+            [$two, fopen($two, 'a')],
+        ];
     }
 
     public function testPrematurelyClosedStreamThrowsException()
@@ -68,35 +68,35 @@ class Mustache_Test_Logger_StreamLoggerTest extends Yoast\PHPUnitPolyfills\TestC
     public function getLevels()
     {
         // $logLevel, $level, $shouldLog
-        return array(
+        return [
             // identities
-            array(Mustache_Logger::EMERGENCY, Mustache_Logger::EMERGENCY, true),
-            array(Mustache_Logger::ALERT,     Mustache_Logger::ALERT,     true),
-            array(Mustache_Logger::CRITICAL,  Mustache_Logger::CRITICAL,  true),
-            array(Mustache_Logger::ERROR,     Mustache_Logger::ERROR,     true),
-            array(Mustache_Logger::WARNING,   Mustache_Logger::WARNING,   true),
-            array(Mustache_Logger::NOTICE,    Mustache_Logger::NOTICE,    true),
-            array(Mustache_Logger::INFO,      Mustache_Logger::INFO,      true),
-            array(Mustache_Logger::DEBUG,     Mustache_Logger::DEBUG,     true),
+            [Mustache_Logger::EMERGENCY, Mustache_Logger::EMERGENCY, true],
+            [Mustache_Logger::ALERT,     Mustache_Logger::ALERT,     true],
+            [Mustache_Logger::CRITICAL,  Mustache_Logger::CRITICAL,  true],
+            [Mustache_Logger::ERROR,     Mustache_Logger::ERROR,     true],
+            [Mustache_Logger::WARNING,   Mustache_Logger::WARNING,   true],
+            [Mustache_Logger::NOTICE,    Mustache_Logger::NOTICE,    true],
+            [Mustache_Logger::INFO,      Mustache_Logger::INFO,      true],
+            [Mustache_Logger::DEBUG,     Mustache_Logger::DEBUG,     true],
 
             // one above
-            array(Mustache_Logger::ALERT,     Mustache_Logger::EMERGENCY, true),
-            array(Mustache_Logger::CRITICAL,  Mustache_Logger::ALERT,     true),
-            array(Mustache_Logger::ERROR,     Mustache_Logger::CRITICAL,  true),
-            array(Mustache_Logger::WARNING,   Mustache_Logger::ERROR,     true),
-            array(Mustache_Logger::NOTICE,    Mustache_Logger::WARNING,   true),
-            array(Mustache_Logger::INFO,      Mustache_Logger::NOTICE,    true),
-            array(Mustache_Logger::DEBUG,     Mustache_Logger::INFO,      true),
+            [Mustache_Logger::ALERT,     Mustache_Logger::EMERGENCY, true],
+            [Mustache_Logger::CRITICAL,  Mustache_Logger::ALERT,     true],
+            [Mustache_Logger::ERROR,     Mustache_Logger::CRITICAL,  true],
+            [Mustache_Logger::WARNING,   Mustache_Logger::ERROR,     true],
+            [Mustache_Logger::NOTICE,    Mustache_Logger::WARNING,   true],
+            [Mustache_Logger::INFO,      Mustache_Logger::NOTICE,    true],
+            [Mustache_Logger::DEBUG,     Mustache_Logger::INFO,      true],
 
             // one below
-            array(Mustache_Logger::EMERGENCY, Mustache_Logger::ALERT,     false),
-            array(Mustache_Logger::ALERT,     Mustache_Logger::CRITICAL,  false),
-            array(Mustache_Logger::CRITICAL,  Mustache_Logger::ERROR,     false),
-            array(Mustache_Logger::ERROR,     Mustache_Logger::WARNING,   false),
-            array(Mustache_Logger::WARNING,   Mustache_Logger::NOTICE,    false),
-            array(Mustache_Logger::NOTICE,    Mustache_Logger::INFO,      false),
-            array(Mustache_Logger::INFO,      Mustache_Logger::DEBUG,     false),
-        );
+            [Mustache_Logger::EMERGENCY, Mustache_Logger::ALERT,     false],
+            [Mustache_Logger::ALERT,     Mustache_Logger::CRITICAL,  false],
+            [Mustache_Logger::CRITICAL,  Mustache_Logger::ERROR,     false],
+            [Mustache_Logger::ERROR,     Mustache_Logger::WARNING,   false],
+            [Mustache_Logger::WARNING,   Mustache_Logger::NOTICE,    false],
+            [Mustache_Logger::NOTICE,    Mustache_Logger::INFO,      false],
+            [Mustache_Logger::INFO,      Mustache_Logger::DEBUG,     false],
+        ];
     }
 
     /**
@@ -117,48 +117,48 @@ class Mustache_Test_Logger_StreamLoggerTest extends Yoast\PHPUnitPolyfills\TestC
     public function getLogMessages()
     {
         // $level, $message, $context, $expected
-        return array(
-            array(Mustache_Logger::DEBUG,     'debug message',     array(),  "DEBUG: debug message\n"),
-            array(Mustache_Logger::INFO,      'info message',      array(),  "INFO: info message\n"),
-            array(Mustache_Logger::NOTICE,    'notice message',    array(),  "NOTICE: notice message\n"),
-            array(Mustache_Logger::WARNING,   'warning message',   array(),  "WARNING: warning message\n"),
-            array(Mustache_Logger::ERROR,     'error message',     array(),  "ERROR: error message\n"),
-            array(Mustache_Logger::CRITICAL,  'critical message',  array(),  "CRITICAL: critical message\n"),
-            array(Mustache_Logger::ALERT,     'alert message',     array(),  "ALERT: alert message\n"),
-            array(Mustache_Logger::EMERGENCY, 'emergency message', array(),  "EMERGENCY: emergency message\n"),
+        return [
+            [Mustache_Logger::DEBUG,     'debug message',     [],  "DEBUG: debug message\n"],
+            [Mustache_Logger::INFO,      'info message',      [],  "INFO: info message\n"],
+            [Mustache_Logger::NOTICE,    'notice message',    [],  "NOTICE: notice message\n"],
+            [Mustache_Logger::WARNING,   'warning message',   [],  "WARNING: warning message\n"],
+            [Mustache_Logger::ERROR,     'error message',     [],  "ERROR: error message\n"],
+            [Mustache_Logger::CRITICAL,  'critical message',  [],  "CRITICAL: critical message\n"],
+            [Mustache_Logger::ALERT,     'alert message',     [],  "ALERT: alert message\n"],
+            [Mustache_Logger::EMERGENCY, 'emergency message', [],  "EMERGENCY: emergency message\n"],
 
             // with context
-            array(
+            [
                 Mustache_Logger::ERROR,
                 'error message',
-                array('name' => 'foo', 'number' => 42),
+                ['name' => 'foo', 'number' => 42],
                 "ERROR: error message\n",
-            ),
+            ],
 
             // with interpolation
-            array(
+            [
                 Mustache_Logger::ERROR,
                 'error {name}-{number}',
-                array('name' => 'foo', 'number' => 42),
+                ['name' => 'foo', 'number' => 42],
                 "ERROR: error foo-42\n",
-            ),
+            ],
 
             // with iterpolation false positive
-            array(
+            [
                 Mustache_Logger::ERROR,
                 'error {nothing}',
-                array('name' => 'foo', 'number' => 42),
+                ['name' => 'foo', 'number' => 42],
                 "ERROR: error {nothing}\n",
-            ),
+            ],
 
             // with interpolation injection
-            array(
+            [
                 Mustache_Logger::ERROR,
                 '{foo}',
-                array('foo' => '{bar}', 'bar' => 'FAIL'),
+                ['foo' => '{bar}', 'bar' => 'FAIL'],
                 "ERROR: {bar}\n",
-            ),
-        );
+            ],
+        ];
     }
 
     public function testChangeLoggingLevels()

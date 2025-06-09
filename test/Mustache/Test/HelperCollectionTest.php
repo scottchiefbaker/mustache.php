@@ -13,13 +13,13 @@ class Mustache_Test_HelperCollectionTest extends Yoast\PHPUnitPolyfills\TestCase
 {
     public function testConstructor()
     {
-        $foo = array($this, 'getFoo');
+        $foo = [$this, 'getFoo'];
         $bar = 'BAR';
 
-        $helpers = new Mustache_HelperCollection(array(
+        $helpers = new Mustache_HelperCollection([
             'foo' => $foo,
             'bar' => $bar,
-        ));
+        ]);
 
         $this->assertSame($foo, $helpers->get('foo'));
         $this->assertSame($bar, $helpers->get('bar'));
@@ -32,7 +32,7 @@ class Mustache_Test_HelperCollectionTest extends Yoast\PHPUnitPolyfills\TestCase
 
     public function testAccessorsAndMutators()
     {
-        $foo = array($this, 'getFoo');
+        $foo = [$this, 'getFoo'];
         $bar = 'BAR';
 
         $helpers = new Mustache_HelperCollection();
@@ -58,7 +58,7 @@ class Mustache_Test_HelperCollectionTest extends Yoast\PHPUnitPolyfills\TestCase
 
     public function testMagicMethods()
     {
-        $foo = array($this, 'getFoo');
+        $foo = [$this, 'getFoo'];
         $bar = 'BAR';
 
         $helpers = new Mustache_HelperCollection();
@@ -93,7 +93,7 @@ class Mustache_Test_HelperCollectionTest extends Yoast\PHPUnitPolyfills\TestCase
     /**
      * @dataProvider getInvalidHelperArguments
      */
-    public function testHelperCollectionIsntAfraidToThrowExceptions($helpers = array(), $actions = array(), $exception = null)
+    public function testHelperCollectionIsntAfraidToThrowExceptions($helpers = [], $actions = [], $exception = null)
     {
         if ($exception) {
             $this->expectException($exception);
@@ -102,63 +102,63 @@ class Mustache_Test_HelperCollectionTest extends Yoast\PHPUnitPolyfills\TestCase
         $helpers = new Mustache_HelperCollection($helpers);
 
         foreach ($actions as $method => $args) {
-            call_user_func_array(array($helpers, $method), $args);
+            call_user_func_array([$helpers, $method], $args);
         }
         $this->assertTrue(true);
     }
 
     public function getInvalidHelperArguments()
     {
-        return array(
-            array(
+        return [
+            [
                 'not helpers',
-                array(),
+                [],
                 'InvalidArgumentException',
-            ),
-            array(
-                array(),
-                array('get' => array('foo')),
+            ],
+            [
+                [],
+                ['get' => ['foo']],
                 'InvalidArgumentException',
-            ),
-            array(
-                array('foo' => 'FOO'),
-                array('get' => array('foo')),
+            ],
+            [
+                ['foo' => 'FOO'],
+                ['get' => ['foo']],
                 null,
-            ),
-            array(
-                array('foo' => 'FOO'),
-                array('get' => array('bar')),
+            ],
+            [
+                ['foo' => 'FOO'],
+                ['get' => ['bar']],
                 'InvalidArgumentException',
-            ),
-            array(
-                array('foo' => 'FOO'),
-                array(
-                    'add' => array('bar', 'BAR'),
-                    'get' => array('bar'),
-                ),
+            ],
+            [
+                ['foo' => 'FOO'],
+                [
+                    'add' => ['bar', 'BAR'],
+                    'get' => ['bar'],
+                ],
                 null,
-            ),
-            array(
-                array('foo' => 'FOO'),
-                array(
-                    'get'    => array('foo'),
-                    'remove' => array('foo'),
-                ),
+            ],
+            [
+                ['foo' => 'FOO'],
+                [
+                    'get'    => ['foo'],
+                    'remove' => ['foo'],
+                ],
                 null,
-            ),
-            array(
-                array('foo' => 'FOO'),
-                array(
-                    'remove' => array('foo'),
-                    'get'    => array('foo'),
-                ),
+            ],
+            [
+                ['foo' => 'FOO'],
+                [
+                    'remove' => ['foo'],
+                    'get'    => ['foo'],
+                ],
                 'InvalidArgumentException',
-            ),
-            array(
-                array(),
-                array('remove' => array('foo')),
+            ],
+            [
+                [],
+                ['remove' => ['foo']],
                 'InvalidArgumentException',
-            ),
-        );
+            ],
+        ];
     }
 }

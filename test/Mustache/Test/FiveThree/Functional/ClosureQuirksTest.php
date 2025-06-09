@@ -25,8 +25,8 @@ class Mustache_Test_FiveThree_Functional_ClosureQuirksTest extends Yoast\PHPUnit
     public function testClosuresDontLikeItWhenYouTouchTheirProperties()
     {
         $tpl = $this->mustache->loadTemplate('{{ foo.bar }}');
-        $this->assertEquals('', $tpl->render(array('foo' => function () {
+        $this->assertEquals('', $tpl->render(['foo' => function () {
             return 'FOO';
-        })));
+        }]));
     }
 }

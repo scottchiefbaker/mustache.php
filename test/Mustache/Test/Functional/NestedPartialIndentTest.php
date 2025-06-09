@@ -20,26 +20,26 @@ class Mustache_Test_Functional_NestedPartialIndentTest extends Yoast\PHPUnitPoly
      */
     public function testNestedPartialsAreIndentedProperly($src, array $partials, $expected)
     {
-        $m = new Mustache_Engine(array(
+        $m = new Mustache_Engine([
             'partials' => $partials,
-        ));
+        ]);
         $tpl = $m->loadTemplate($src);
         $this->assertEquals($expected, $tpl->render());
     }
 
     public function partialsAndStuff()
     {
-        $partials = array(
+        $partials = [
             'a' => ' {{> b }}',
             'b' => ' {{> d }}',
             'c' => ' {{> d }}{{> d }}',
             'd' => 'D!',
-        );
+        ];
 
-        return array(
-            array(' {{> a }}', $partials, '   D!'),
-            array(' {{> b }}', $partials, '  D!'),
-            array(' {{> c }}', $partials, '  D!D!'),
-        );
+        return [
+            [' {{> a }}', $partials, '   D!'],
+            [' {{> b }}', $partials, '  D!'],
+            [' {{> c }}', $partials, '  D!D!'],
+        ];
     }
 }

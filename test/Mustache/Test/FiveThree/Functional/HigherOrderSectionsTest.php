@@ -51,12 +51,12 @@ class Mustache_Test_FiveThree_Functional_HigherOrderSectionsTest extends Yoast\P
     {
         $tpl = $this->mustache->loadTemplate('{{#wrap}}{{name}}{{/wrap}}');
 
-        $data = array(
+        $data = [
             'name' => 'Bob',
             'wrap' => function ($text) {
                 return sprintf('[[%s]]', $text);
             },
-        );
+        ];
 
         $this->assertEquals(sprintf('[[%s]]', $data['name']), $tpl->render($data));
     }
@@ -71,21 +71,21 @@ class Mustache_Test_FiveThree_Functional_HigherOrderSectionsTest extends Yoast\P
 
     public function nonTemplateLambdasData()
     {
-        $data = array(
+        $data = [
             'lang' => 'en-US',
             'people' => function () {
-                return array(
-                    (object) array('name' => 'Albert', 'lang' => 'en-GB'),
-                    (object) array('name' => 'Betty'),
-                    (object) array('name' => 'Charles'),
-                );
+                return [
+                    (object) ['name' => 'Albert', 'lang' => 'en-GB'],
+                    (object) ['name' => 'Betty'],
+                    (object) ['name' => 'Charles'],
+                ];
             },
-        );
+        ];
 
-        return array(
-            array("{{# people }} - {{ name }}\n{{/people}}", $data, " - Albert\n - Betty\n - Charles\n"),
-            array("{{# people }} - {{ name }}: {{ lang }}\n{{/people}}", $data, " - Albert: en-GB\n - Betty: en-US\n - Charles: en-US\n"),
-        );
+        return [
+            ["{{# people }} - {{ name }}\n{{/people}}", $data, " - Albert\n - Betty\n - Charles\n"],
+            ["{{# people }} - {{ name }}: {{ lang }}\n{{/people}}", $data, " - Albert: en-GB\n - Betty: en-US\n - Charles: en-US\n"],
+        ];
     }
 }
 

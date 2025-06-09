@@ -20,10 +20,10 @@ class Mustache_Test_ContextTest extends Yoast\PHPUnitPolyfills\TestCases\TestCas
         $this->assertSame('', $one->find('foo'));
         $this->assertSame('', $one->find('bar'));
 
-        $two = new Mustache_Context(array(
+        $two = new Mustache_Context([
             'foo' => 'FOO',
             'bar' => '<BAR>',
-        ));
+        ]);
         $this->assertEquals('FOO', $two->find('foo'));
         $this->assertEquals('<BAR>', $two->find('bar'));
 
@@ -64,10 +64,10 @@ class Mustache_Test_ContextTest extends Yoast\PHPUnitPolyfills\TestCases\TestCas
         $obj = new StdClass();
         $obj->name = 'obj';
 
-        $arr = array(
-            'a' => array('b' => array('c' => 'see')),
+        $arr = [
+            'a' => ['b' => ['c' => 'see']],
             'b' => 'bee',
-        );
+        ];
 
         $string = 'some arbitrary string';
 
@@ -99,10 +99,10 @@ class Mustache_Test_ContextTest extends Yoast\PHPUnitPolyfills\TestCases\TestCas
 
     public function testArrayAccessFind()
     {
-        $access = new Mustache_Test_TestArrayAccess(array(
-            'a' => array('b' => array('c' => 'see')),
+        $access = new Mustache_Test_TestArrayAccess([
+            'a' => ['b' => ['c' => 'see']],
             'b' => 'bee',
-        ));
+        ]);
 
         $context = new Mustache_Context($access);
         $this->assertEquals('bee', $context->find('b'));
@@ -124,21 +124,21 @@ class Mustache_Test_ContextTest extends Yoast\PHPUnitPolyfills\TestCases\TestCas
     {
         $context = new Mustache_Context();
 
-        $a = array(
+        $a = [
             'name'   => 'a',
             'number' => 1,
-        );
+        ];
 
-        $b = array(
+        $b = [
             'number' => 2,
-            'child'  => array(
+            'child'  => [
                 'name' => 'baby bee',
-            ),
-        );
+            ],
+        ];
 
-        $c = array(
+        $c = [
             'name' => 'cee',
-        );
+        ];
 
         $context->push($a);
         $this->assertEquals('a', $context->find('name'));
@@ -174,7 +174,7 @@ class Mustache_Test_ContextTest extends Yoast\PHPUnitPolyfills\TestCases\TestCas
     public function testAnchoredDotNotationThrowsExceptions()
     {
         $context = new Mustache_Context();
-        $context->push(array('a' => 1));
+        $context->push(['a' => 1]);
         $this->expectException(Mustache_Exception_InvalidArgumentException::class);
         $context->findAnchoredDot('a');
     }
@@ -183,12 +183,12 @@ class Mustache_Test_ContextTest extends Yoast\PHPUnitPolyfills\TestCases\TestCas
     {
         $context = new Mustache_Context();
 
-        $a = array(
+        $a = [
             'name' => 'not null',
-        );
-        $b = array(
+        ];
+        $b = [
             'name' => null,
-        );
+        ];
 
         $context->push($a);
         $context->push($b);
@@ -200,12 +200,12 @@ class Mustache_Test_ContextTest extends Yoast\PHPUnitPolyfills\TestCases\TestCas
     {
         $context = new Mustache_Context();
 
-        $a = (object) array(
+        $a = (object) [
             'name' => 'not null',
-        );
-        $b = (object) array(
+        ];
+        $b = (object) [
             'name' => null,
-        );
+        ];
 
         $context->push($a);
         $context->push($b);
@@ -217,12 +217,12 @@ class Mustache_Test_ContextTest extends Yoast\PHPUnitPolyfills\TestCases\TestCas
     {
         $context = new Mustache_Context(null, true);
 
-        $a = (object) array(
+        $a = (object) [
             'name' => 'not null',
-        );
-        $b = (object) array(
+        ];
+        $b = (object) [
             'name' => null,
-        );
+        ];
 
         $context->push($a);
         $context->push($b);
@@ -253,7 +253,7 @@ class Mustache_Test_TestDummy
 
 class Mustache_Test_TestArrayAccess implements ArrayAccess
 {
-    private $container = array();
+    private $container = [];
 
     public function __construct($array)
     {

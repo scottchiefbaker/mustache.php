@@ -27,16 +27,16 @@ class Mustache_Test_Logger_AbstractLoggerTest extends Yoast\PHPUnitPolyfills\Tes
         $logger->info('info message');
         $logger->debug('debug message');
 
-        $expected = array(
-            array(Mustache_Logger::EMERGENCY, 'emergency message', array()),
-            array(Mustache_Logger::ALERT, 'alert message', array()),
-            array(Mustache_Logger::CRITICAL, 'critical message', array()),
-            array(Mustache_Logger::ERROR, 'error message', array()),
-            array(Mustache_Logger::WARNING, 'warning message', array()),
-            array(Mustache_Logger::NOTICE, 'notice message', array()),
-            array(Mustache_Logger::INFO, 'info message', array()),
-            array(Mustache_Logger::DEBUG, 'debug message', array()),
-        );
+        $expected = [
+            [Mustache_Logger::EMERGENCY, 'emergency message', []],
+            [Mustache_Logger::ALERT, 'alert message', []],
+            [Mustache_Logger::CRITICAL, 'critical message', []],
+            [Mustache_Logger::ERROR, 'error message', []],
+            [Mustache_Logger::WARNING, 'warning message', []],
+            [Mustache_Logger::NOTICE, 'notice message', []],
+            [Mustache_Logger::INFO, 'info message', []],
+            [Mustache_Logger::DEBUG, 'debug message', []],
+        ];
 
         $this->assertEquals($expected, $logger->log);
     }
@@ -44,7 +44,7 @@ class Mustache_Test_Logger_AbstractLoggerTest extends Yoast\PHPUnitPolyfills\Tes
 
 class Mustache_Test_Logger_TestLogger extends Mustache_Logger_AbstractLogger
 {
-    public $log = array();
+    public $log = [];
 
     /**
      * Logs with an arbitrary level.
@@ -53,8 +53,8 @@ class Mustache_Test_Logger_TestLogger extends Mustache_Logger_AbstractLogger
      * @param string $message
      * @param array  $context
      */
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = [])
     {
-        $this->log[] = array($level, $message, $context);
+        $this->log[] = [$level, $message, $context];
     }
 }

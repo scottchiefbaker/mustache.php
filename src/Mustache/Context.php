@@ -14,8 +14,8 @@
  */
 class Mustache_Context
 {
-    private $stack      = array();
-    private $blockStack = array();
+    private $stack      = [];
+    private $blockStack = [];
 
     private $buggyPropertyShadowing = false;
 
@@ -28,7 +28,7 @@ class Mustache_Context
     public function __construct($context = null, $buggyPropertyShadowing = false)
     {
         if ($context !== null) {
-            $this->stack = array($context);
+            $this->stack = [$context];
         }
 
         $this->buggyPropertyShadowing = $buggyPropertyShadowing;
@@ -150,7 +150,7 @@ class Mustache_Context
                 return $value;
             }
 
-            $value = $this->findVariableInStack($chunk, array($value));
+            $value = $this->findVariableInStack($chunk, [$value]);
         }
 
         return $value;
@@ -186,7 +186,7 @@ class Mustache_Context
                 return $value;
             }
 
-            $value = $this->findVariableInStack($chunk, array($value));
+            $value = $this->findVariableInStack($chunk, [$value]);
         }
 
         return $value;

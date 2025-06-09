@@ -35,7 +35,7 @@ class Mustache_Test_TemplateTest extends Yoast\PHPUnitPolyfills\TestCases\TestCa
 
         $this->assertEquals($rendered, $template->render());
         $this->assertEquals($rendered, $template->renderInternal($context));
-        $this->assertEquals($rendered, $template->render(array('foo' => 'bar')));
+        $this->assertEquals($rendered, $template->render(['foo' => 'bar']));
     }
 }
 

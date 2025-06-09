@@ -17,7 +17,7 @@ class Mustache_Test_Loader_FilesystemLoaderTest extends Yoast\PHPUnitPolyfills\T
     public function testConstructor()
     {
         $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
-        $loader = new Mustache_Loader_FilesystemLoader($baseDir, array('extension' => '.ms'));
+        $loader = new Mustache_Loader_FilesystemLoader($baseDir, ['extension' => '.ms']);
         $this->assertEquals('alpha contents', $loader->load('alpha'));
         $this->assertEquals('beta contents', $loader->load('beta.ms'));
     }
@@ -33,7 +33,7 @@ class Mustache_Test_Loader_FilesystemLoaderTest extends Yoast\PHPUnitPolyfills\T
     {
         $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
 
-        $loader = new Mustache_Loader_FilesystemLoader('test://' . $baseDir, array('extension' => '.ms'));
+        $loader = new Mustache_Loader_FilesystemLoader('test://' . $baseDir, ['extension' => '.ms']);
         $this->assertEquals('alpha contents', $loader->load('alpha'));
         $this->assertEquals('beta contents', $loader->load('beta.ms'));
     }
@@ -50,11 +50,11 @@ class Mustache_Test_Loader_FilesystemLoaderTest extends Yoast\PHPUnitPolyfills\T
     {
         $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
 
-        $loader = new Mustache_Loader_FilesystemLoader($baseDir, array('extension' => ''));
+        $loader = new Mustache_Loader_FilesystemLoader($baseDir, ['extension' => '']);
         $this->assertEquals('one contents', $loader->load('one.mustache'));
         $this->assertEquals('alpha contents', $loader->load('alpha.ms'));
 
-        $loader = new Mustache_Loader_FilesystemLoader($baseDir, array('extension' => null));
+        $loader = new Mustache_Loader_FilesystemLoader($baseDir, ['extension' => null]);
         $this->assertEquals('two contents', $loader->load('two.mustache'));
         $this->assertEquals('beta contents', $loader->load('beta.ms'));
     }

@@ -17,7 +17,7 @@ class Mustache_Test_AutoloaderTest extends Yoast\PHPUnitPolyfills\TestCases\Test
     public function testRegister()
     {
         $loader = Mustache_Autoloader::register();
-        $this->assertTrue(spl_autoload_unregister(array($loader, 'autoload')));
+        $this->assertTrue(spl_autoload_unregister([$loader, 'autoload']));
     }
 
     public function testAutoloader()

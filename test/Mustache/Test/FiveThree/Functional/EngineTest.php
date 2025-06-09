@@ -20,31 +20,31 @@ class Mustache_Test_FiveThree_Functional_EngineTest extends Yoast\PHPUnitPolyfil
      */
     public function testPragmasConstructorOption($pragmas, $helpers, $data, $tpl, $expect)
     {
-        $mustache = new Mustache_Engine(array(
+        $mustache = new Mustache_Engine([
             'pragmas' => $pragmas,
             'helpers' => $helpers,
-        ));
+        ]);
 
         $this->assertEquals($expect, $mustache->render($tpl, $data));
     }
 
     public function pragmaData()
     {
-        $helpers = array(
+        $helpers = [
             'longdate' => function (\DateTime $value) {
                 return $value->format('Y-m-d h:m:s');
             },
-        );
+        ];
 
-        $data = array(
+        $data = [
             'date' => new DateTime('1/1/2000', new DateTimeZone('UTC')),
-        );
+        ];
 
         $tpl = '{{ date | longdate }}';
 
-        return array(
-            array(array(Mustache_Engine::PRAGMA_FILTERS), $helpers, $data, $tpl, '2000-01-01 12:01:00'),
-            array(array(),                                $helpers, $data, $tpl, ''),
-        );
+        return [
+            [[Mustache_Engine::PRAGMA_FILTERS], $helpers, $data, $tpl, '2000-01-01 12:01:00'],
+            [[],                                $helpers, $data, $tpl, ''],
+        ];
     }
 }

@@ -16,10 +16,10 @@ class Mustache_Test_Loader_CascadingLoaderTest extends Yoast\PHPUnitPolyfills\Te
 {
     public function testLoadTemplates()
     {
-        $loader = new Mustache_Loader_CascadingLoader(array(
-            new Mustache_Loader_ArrayLoader(array('foo' => '{{ foo }}')),
-            new Mustache_Loader_ArrayLoader(array('bar' => '{{#bar}}BAR{{/bar}}')),
-        ));
+        $loader = new Mustache_Loader_CascadingLoader([
+            new Mustache_Loader_ArrayLoader(['foo' => '{{ foo }}']),
+            new Mustache_Loader_ArrayLoader(['bar' => '{{#bar}}BAR{{/bar}}']),
+        ]);
 
         $this->assertEquals('{{ foo }}', $loader->load('foo'));
         $this->assertEquals('{{#bar}}BAR{{/bar}}', $loader->load('bar'));
@@ -29,10 +29,10 @@ class Mustache_Test_Loader_CascadingLoaderTest extends Yoast\PHPUnitPolyfills\Te
     {
         $this->expectException(Mustache_Exception_UnknownTemplateException::class);
 
-        $loader = new Mustache_Loader_CascadingLoader(array(
-            new Mustache_Loader_ArrayLoader(array('foo' => '{{ foo }}')),
-            new Mustache_Loader_ArrayLoader(array('bar' => '{{#bar}}BAR{{/bar}}')),
-        ));
+        $loader = new Mustache_Loader_CascadingLoader([
+            new Mustache_Loader_ArrayLoader(['foo' => '{{ foo }}']),
+            new Mustache_Loader_ArrayLoader(['bar' => '{{#bar}}BAR{{/bar}}']),
+        ]);
 
         $loader->load('not_a_real_template');
     }

@@ -12,11 +12,11 @@
 class RecursivePartials
 {
     public $name = 'George';
-    public $child = array(
+    public $child = [
         'name'  => 'Dan',
-        'child' => array(
+        'child' => [
             'name'  => 'Justin',
             'child' => false,
-        ),
-    );
+        ],
+    ];
 }

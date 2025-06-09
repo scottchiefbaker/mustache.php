@@ -19,23 +19,23 @@ class Mustache_Test_Functional_DynamicPartialsTest extends Yoast\PHPUnitPolyfill
 
     public function set_up()
     {
-        $this->mustache = new Mustache_Engine(array(
-            'pragmas' => array(Mustache_Engine::PRAGMA_DYNAMIC_NAMES),
-        ));
+        $this->mustache = new Mustache_Engine([
+            'pragmas' => [Mustache_Engine::PRAGMA_DYNAMIC_NAMES],
+        ]);
     }
 
     public function getValidDynamicNamesExamples()
     {
         // technically not all dynamic names, but also not invalid
-        return array(
-            array('{{>* foo }}'),
-            array('{{>* foo.bar.baz }}'),
-            array('{{=* *=}}'),
-            array('{{! *foo }}'),
-            array('{{! foo.*bar }}'),
-            array('{{% FILTERS }}{{! foo | *bar }}'),
-            array('{{% BLOCKS }}{{< *foo }}{{/ *foo }}'),
-        );
+        return [
+            ['{{>* foo }}'],
+            ['{{>* foo.bar.baz }}'],
+            ['{{=* *=}}'],
+            ['{{! *foo }}'],
+            ['{{! foo.*bar }}'],
+            ['{{% FILTERS }}{{! foo | *bar }}'],
+            ['{{% BLOCKS }}{{< *foo }}{{/ *foo }}'],
+        ];
     }
 
     /**
@@ -48,12 +48,12 @@ class Mustache_Test_Functional_DynamicPartialsTest extends Yoast\PHPUnitPolyfill
 
     public function getDynamicNameParseErrors()
     {
-        return array(
-            array('{{# foo }}{{/ *foo }}'),
-            array('{{^ foo }}{{/ *foo }}'),
-            array('{{% BLOCKS }}{{< foo }}{{/ *foo }}'),
-            array('{{% BLOCKS }}{{$ foo }}{{/ *foo }}'),
-        );
+        return [
+            ['{{# foo }}{{/ *foo }}'],
+            ['{{^ foo }}{{/ *foo }}'],
+            ['{{% BLOCKS }}{{< foo }}{{/ *foo }}'],
+            ['{{% BLOCKS }}{{$ foo }}{{/ *foo }}'],
+        ];
     }
 
     /**
@@ -71,15 +71,15 @@ class Mustache_Test_Functional_DynamicPartialsTest extends Yoast\PHPUnitPolyfill
     {
         $tpl = '{{% BLOCKS }}{{< *partial }}{{$ bar }}{{ value }}{{/ bar }}{{/ *partial }}';
 
-        $this->mustache->setPartials(array(
+        $this->mustache->setPartials([
             'foobarbaz' => '{{% BLOCKS }}{{$ foo }}foo{{/ foo }}{{$ bar }}bar{{/ bar }}{{$ baz }}baz{{/ baz }}',
             'qux' => 'qux',
-        ));
+        ]);
 
-        $result = $this->mustache->render($tpl, array(
+        $result = $this->mustache->render($tpl, [
             'partial' => 'foobarbaz',
             'value' => 'BAR',
-        ));
+        ]);
 
         $this->assertSame($result, 'fooBARbaz');
     }

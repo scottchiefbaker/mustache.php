@@ -44,9 +44,9 @@ class Mustache_Source_FilesystemSource implements Mustache_Source
      */
     public function getKey()
     {
-        $chunks = array(
+        $chunks = [
             'fileName' => $this->fileName,
-        );
+        ];
 
         if (!empty($this->statProps)) {
             if (!isset($this->stat)) {

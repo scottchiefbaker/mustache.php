@@ -33,30 +33,30 @@ class Mustache_Test_FiveThree_Functional_FiltersTest extends Yoast\PHPUnitPolyfi
 
     public function singleFilterData()
     {
-        $helpers = array(
+        $helpers = [
             'longdate' => function (\DateTime $value) {
                 return $value->format('Y-m-d h:m:s');
             },
             'echo' => function ($value) {
-                return array($value, $value, $value);
+                return [$value, $value, $value];
             },
-        );
+        ];
 
-        return array(
-            array(
+        return [
+            [
                 '{{% FILTERS }}{{ date | longdate }}',
                 $helpers,
-                (object) array('date' => new DateTime('1/1/2000', new DateTimeZone('UTC'))),
+                (object) ['date' => new DateTime('1/1/2000', new DateTimeZone('UTC'))],
                 '2000-01-01 12:01:00',
-            ),
+            ],
 
-            array(
+            [
                 '{{% FILTERS }}{{# word | echo }}{{ . }}!{{/ word | echo }}',
                 $helpers,
-                array('word' => 'bacon'),
+                ['word' => 'bacon'],
                 'bacon!bacon!bacon!',
-            ),
-        );
+            ],
+        ];
     }
 
     public function testChainedFilters()
@@ -89,19 +89,19 @@ EOS;
         $tpl = $this->mustache->loadTemplate(self::CHAINED_SECTION_FILTERS_TPL);
 
         $this->mustache->addHelper('echo', function ($value) {
-            return array($value, $value, $value);
+            return [$value, $value, $value];
         });
 
         $this->mustache->addHelper('with_index', function ($value) {
             return array_map(function ($k, $v) {
-                return array(
+                return [
                     'key'   => $k,
                     'value' => $v,
-                );
+                ];
             }, array_keys($value), $value);
         });
 
-        $this->assertEquals("0: bacon\n1: bacon\n2: bacon\n", $tpl->render(array('word' => 'bacon')));
+        $this->assertEquals("0: bacon\n1: bacon\n2: bacon\n", $tpl->render(['word' => 'bacon']));
     }
 
     /**
@@ -114,17 +114,17 @@ EOS;
 
     public function interpolateFirstData()
     {
-        $data = array(
+        $data = [
             'foo' => 'FOO',
             'bar' => function ($value) {
                 return ($value === 'FOO') ? 'win!' : 'fail :(';
             },
-        );
+        ];
 
-        return array(
-            array('{{% FILTERS }}{{ foo | bar }}',                         $data, 'win!'),
-            array('{{% FILTERS }}{{# foo | bar }}{{ . }}{{/ foo | bar }}', $data, 'win!'),
-        );
+        return [
+            ['{{% FILTERS }}{{ foo | bar }}',                         $data, 'win!'],
+            ['{{% FILTERS }}{{# foo | bar }}{{ . }}{{/ foo | bar }}', $data, 'win!'],
+        ];
     }
 
     /**
@@ -138,51 +138,51 @@ EOS;
 
     public function brokenPipeData()
     {
-        return array(
-            array('{{% FILTERS }}{{ foo | bar }}',       array()),
-            array('{{% FILTERS }}{{ foo | bar }}',       array('foo' => 'FOO')),
-            array('{{% FILTERS }}{{ foo | bar }}',       array('foo' => 'FOO', 'bar' => 'BAR')),
-            array('{{% FILTERS }}{{ foo | bar }}',       array('foo' => 'FOO', 'bar' => array(1, 2))),
-            array('{{% FILTERS }}{{ foo | bar | baz }}', array('foo' => 'FOO', 'bar' => function () {
+        return [
+            ['{{% FILTERS }}{{ foo | bar }}',       []],
+            ['{{% FILTERS }}{{ foo | bar }}',       ['foo' => 'FOO']],
+            ['{{% FILTERS }}{{ foo | bar }}',       ['foo' => 'FOO', 'bar' => 'BAR']],
+            ['{{% FILTERS }}{{ foo | bar }}',       ['foo' => 'FOO', 'bar' => [1, 2]]],
+            ['{{% FILTERS }}{{ foo | bar | baz }}', ['foo' => 'FOO', 'bar' => function () {
                 return 'BAR';
-            })),
-            array('{{% FILTERS }}{{ foo | bar | baz }}', array('foo' => 'FOO', 'baz' => function () {
+            }]],
+            ['{{% FILTERS }}{{ foo | bar | baz }}', ['foo' => 'FOO', 'baz' => function () {
                 return 'BAZ';
-            })),
-            array('{{% FILTERS }}{{ foo | bar | baz }}', array('bar' => function () {
+            }]],
+            ['{{% FILTERS }}{{ foo | bar | baz }}', ['bar' => function () {
                 return 'BAR';
-            })),
-            array('{{% FILTERS }}{{ foo | bar | baz }}', array('baz' => function () {
+            }]],
+            ['{{% FILTERS }}{{ foo | bar | baz }}', ['baz' => function () {
                 return 'BAZ';
-            })),
-            array('{{% FILTERS }}{{ foo | bar.baz }}',   array('foo' => 'FOO', 'bar' => function () {
+            }]],
+            ['{{% FILTERS }}{{ foo | bar.baz }}',   ['foo' => 'FOO', 'bar' => function () {
                 return 'BAR';
             }, 'baz' => function () {
                 return 'BAZ';
-            })),
+            }]],
 
-            array('{{% FILTERS }}{{# foo | bar }}{{ . }}{{/ foo | bar }}',             array()),
-            array('{{% FILTERS }}{{# foo | bar }}{{ . }}{{/ foo | bar }}',             array('foo' => 'FOO')),
-            array('{{% FILTERS }}{{# foo | bar }}{{ . }}{{/ foo | bar }}',             array('foo' => 'FOO', 'bar' => 'BAR')),
-            array('{{% FILTERS }}{{# foo | bar }}{{ . }}{{/ foo | bar }}',             array('foo' => 'FOO', 'bar' => array(1, 2))),
-            array('{{% FILTERS }}{{# foo | bar | baz }}{{ . }}{{/ foo | bar | baz }}', array('foo' => 'FOO', 'bar' => function () {
+            ['{{% FILTERS }}{{# foo | bar }}{{ . }}{{/ foo | bar }}',             []],
+            ['{{% FILTERS }}{{# foo | bar }}{{ . }}{{/ foo | bar }}',             ['foo' => 'FOO']],
+            ['{{% FILTERS }}{{# foo | bar }}{{ . }}{{/ foo | bar }}',             ['foo' => 'FOO', 'bar' => 'BAR']],
+            ['{{% FILTERS }}{{# foo | bar }}{{ . }}{{/ foo | bar }}',             ['foo' => 'FOO', 'bar' => [1, 2]]],
+            ['{{% FILTERS }}{{# foo | bar | baz }}{{ . }}{{/ foo | bar | baz }}', ['foo' => 'FOO', 'bar' => function () {
                 return 'BAR';
-            })),
-            array('{{% FILTERS }}{{# foo | bar | baz }}{{ . }}{{/ foo | bar | baz }}', array('foo' => 'FOO', 'baz' => function () {
+            }]],
+            ['{{% FILTERS }}{{# foo | bar | baz }}{{ . }}{{/ foo | bar | baz }}', ['foo' => 'FOO', 'baz' => function () {
                 return 'BAZ';
-            })),
-            array('{{% FILTERS }}{{# foo | bar | baz }}{{ . }}{{/ foo | bar | baz }}', array('bar' => function () {
+            }]],
+            ['{{% FILTERS }}{{# foo | bar | baz }}{{ . }}{{/ foo | bar | baz }}', ['bar' => function () {
                 return 'BAR';
-            })),
-            array('{{% FILTERS }}{{# foo | bar | baz }}{{ . }}{{/ foo | bar | baz }}', array('baz' => function () {
+            }]],
+            ['{{% FILTERS }}{{# foo | bar | baz }}{{ . }}{{/ foo | bar | baz }}', ['baz' => function () {
                 return 'BAZ';
-            })),
-            array('{{% FILTERS }}{{# foo | bar.baz }}{{ . }}{{/ foo | bar.baz }}',     array('foo' => 'FOO', 'bar' => function () {
+            }]],
+            ['{{% FILTERS }}{{# foo | bar.baz }}{{ . }}{{/ foo | bar.baz }}',     ['foo' => 'FOO', 'bar' => function () {
                 return 'BAR';
             }, 'baz' => function () {
                 return 'BAZ';
-            })),
-        );
+            }]],
+        ];
     }
 
     /**
@@ -196,13 +196,13 @@ EOS;
 
     public function lambdaFiltersData()
     {
-        $people = array(
-            (object) array('name' => 'Albert'),
-            (object) array('name' => 'Betty'),
-            (object) array('name' => 'Charles'),
-        );
+        $people = [
+            (object) ['name' => 'Albert'],
+            (object) ['name' => 'Betty'],
+            (object) ['name' => 'Charles'],
+        ];
 
-        $data = array(
+        $data = [
             'noop' => function ($value) {
                 return $value;
             },
@@ -226,15 +226,15 @@ EOS;
             'first_person' => function ($arr) {
                 return $arr[0];
             },
-        );
+        ];
 
-        return array(
-            array('{{% FILTERS }}{{ people | first_name }}', $data, 'Albert'),
-            array('{{% FILTERS }}{{ people | last_name }}', $data, 'Charles'),
-            array('{{% FILTERS }}{{ people | all_names }}', $data, 'Albert, Betty, Charles'),
-            array('{{% FILTERS }}{{# people | first_person }}{{ name }}{{/ people }}', $data, 'Albert'),
-            array('{{% FILTERS }}{{# people_lambda | first_person }}{{ name }}{{/ people_lambda }}', $data, 'Albert'),
-            array('{{% FILTERS }}{{# people_lambda | noop | first_person }}{{ name }}{{/ people_lambda }}', $data, 'Albert'),
-        );
+        return [
+            ['{{% FILTERS }}{{ people | first_name }}', $data, 'Albert'],
+            ['{{% FILTERS }}{{ people | last_name }}', $data, 'Charles'],
+            ['{{% FILTERS }}{{ people | all_names }}', $data, 'Albert, Betty, Charles'],
+            ['{{% FILTERS }}{{# people | first_person }}{{ name }}{{/ people }}', $data, 'Albert'],
+            ['{{% FILTERS }}{{# people_lambda | first_person }}{{ name }}{{/ people_lambda }}', $data, 'Albert'],
+            ['{{% FILTERS }}{{# people_lambda | noop | first_person }}{{ name }}{{/ people_lambda }}', $data, 'Albert'],
+        ];
     }
 }

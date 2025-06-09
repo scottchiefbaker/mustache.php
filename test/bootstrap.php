@@ -54,7 +54,7 @@ class TestStream
      */
     public function stream_stat()
     {
-        return array();
+        return [];
     }
 
     /**

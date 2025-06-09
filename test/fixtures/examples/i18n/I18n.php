@@ -15,13 +15,13 @@ class I18n
     public $name = 'Bob';
 
     // Add a {{#__}} lambda for i18n
-    public $__ = array(__CLASS__, '__trans');
+    public $__ = [__CLASS__, '__trans'];
 
     // A *very* small i18n dictionary :)
-    private static $dictionary = array(
+    private static $dictionary = [
         'Hello.'                 => 'Hola.',
         'My name is {{ name }}.' => 'Me llamo {{ name }}.',
-    );
+    ];
 
     public static function __trans($text)
     {

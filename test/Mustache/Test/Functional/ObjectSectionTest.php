@@ -69,7 +69,7 @@ class Mustache_Test_Functional_Alpha
 
 class Mustache_Test_Functional_Beta
 {
-    protected $_data = array();
+    protected $_data = [];
 
     public function __construct()
     {

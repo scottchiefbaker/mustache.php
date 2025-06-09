@@ -13,14 +13,14 @@ class Mustache_Test_Exception_SyntaxExceptionTest extends Yoast\PHPUnitPolyfills
 {
     public function testInstance()
     {
-        $e = new Mustache_Exception_SyntaxException('whot', array('is' => 'this'));
+        $e = new Mustache_Exception_SyntaxException('whot', ['is' => 'this']);
         $this->assertTrue($e instanceof LogicException);
         $this->assertTrue($e instanceof Mustache_Exception);
     }
 
     public function testGetToken()
     {
-        $token = array(Mustache_Tokenizer::TYPE => 'whatever');
+        $token = [Mustache_Tokenizer::TYPE => 'whatever'];
         $e = new Mustache_Exception_SyntaxException('ignore this', $token);
         $this->assertEquals($token, $e->getToken());
     }
@@ -32,7 +32,7 @@ class Mustache_Test_Exception_SyntaxExceptionTest extends Yoast\PHPUnitPolyfills
         }
 
         $previous = new Exception();
-        $e = new Mustache_Exception_SyntaxException('foo', array(), $previous);
+        $e = new Mustache_Exception_SyntaxException('foo', [], $previous);
 
         $this->assertSame($previous, $e->getPrevious());
     }

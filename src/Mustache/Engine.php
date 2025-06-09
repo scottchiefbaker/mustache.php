@@ -32,15 +32,15 @@ class Mustache_Engine
     const PRAGMA_DYNAMIC_NAMES = 'DYNAMIC-NAMES';
 
     // Known pragmas
-    private static $knownPragmas = array(
+    private static $knownPragmas = [
         self::PRAGMA_FILTERS       => true,
         self::PRAGMA_BLOCKS        => true,
         self::PRAGMA_ANCHORED_DOT  => true,
         self::PRAGMA_DYNAMIC_NAMES => true,
-    );
+    ];
 
     // Template cache
-    private $templates = array();
+    private $templates = [];
 
     // Environment
     private $templateClassPrefix = '__Mustache_';
@@ -55,7 +55,7 @@ class Mustache_Engine
     private $charset = 'UTF-8';
     private $logger;
     private $strictCallables = false;
-    private $pragmas = array();
+    private $pragmas = [];
     private $delimiters;
     private $buggyPropertyShadowing = false;
 
@@ -142,7 +142,7 @@ class Mustache_Engine
      *
      * @param array $options (default: array())
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
         if (isset($options['template_class_prefix'])) {
             if ((string) $options['template_class_prefix'] === '') {
@@ -238,7 +238,7 @@ class Mustache_Engine
      *
      * @return string Rendered template
      */
-    public function render($template, $context = array())
+    public function render($template, $context = [])
     {
         return $this->loadTemplate($template)->render($context);
     }
@@ -354,7 +354,7 @@ class Mustache_Engine
      *
      * @param array $partials (default: array())
      */
-    public function setPartials(array $partials = array())
+    public function setPartials(array $partials = [])
     {
         if (!isset($this->partialsLoader)) {
             $this->partialsLoader = new Mustache_Loader_ArrayLoader();
@@ -640,7 +640,7 @@ class Mustache_Engine
         // 'default' escapes.
         //
         // Keep this list in alphabetical order :)
-        $chunks = array(
+        $chunks = [
             'charset'         => $this->charset,
             'delimiters'      => $this->delimiters ? $this->delimiters : '{{ }}',
             'entityFlags'     => $this->entityFlags,
@@ -649,7 +649,7 @@ class Mustache_Engine
             'pragmas'         => $this->getPragmas(),
             'strictCallables' => $this->strictCallables,
             'version'         => self::VERSION,
-        );
+        ];
 
         $key = json_encode($chunks);
 
@@ -701,7 +701,7 @@ class Mustache_Engine
             $this->log(
                 Mustache_Logger::WARNING,
                 'Partial not found: "{name}"',
-                array('name' => $e->getTemplateName())
+                ['name' => $e->getTemplateName()]
             );
         }
     }
@@ -760,7 +760,7 @@ class Mustache_Engine
             $this->log(
                 Mustache_Logger::DEBUG,
                 'Instantiating template: "{className}"',
-                array('className' => $className)
+                ['className' => $className]
             );
 
             $this->templates[$className] = new $className($this);
@@ -816,7 +816,7 @@ class Mustache_Engine
         $this->log(
             Mustache_Logger::INFO,
             'Compiling template to "{className}" class',
-            array('className' => $name)
+            ['className' => $name]
         );
 
         if ($source instanceof Mustache_Source) {
@@ -837,7 +837,7 @@ class Mustache_Engine
      * @param string $message The log message
      * @param array  $context The log context
      */
-    private function log($level, $message, array $context = array())
+    private function log($level, $message, array $context = [])
     {
         if (isset($this->logger)) {
             $this->logger->log($level, $message, $context);

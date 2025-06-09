@@ -27,9 +27,9 @@ class Mustache_Test_Functional_ExamplesTest extends Yoast\PHPUnitPolyfills\TestC
      */
     public function testExamples($context, $source, $partials, $expected)
     {
-        $mustache = new Mustache_Engine(array(
+        $mustache = new Mustache_Engine([
             'partials' => $partials,
-        ));
+        ]);
         $this->assertEquals($expected, $mustache->loadTemplate($source)->render($context));
     }
 
@@ -47,7 +47,7 @@ class Mustache_Test_Functional_ExamplesTest extends Yoast\PHPUnitPolyfills\TestC
     public function getExamples()
     {
         $path     = realpath(dirname(__FILE__) . '/../../../fixtures/examples');
-        $examples = array();
+        $examples = [];
 
         $handle   = opendir($path);
         while (($file = readdir($handle)) !== false) {
@@ -76,7 +76,7 @@ class Mustache_Test_Functional_ExamplesTest extends Yoast\PHPUnitPolyfills\TestC
     {
         $context  = null;
         $source   = null;
-        $partials = array();
+        $partials = [];
         $expected = null;
 
         $handle = opendir($path);
@@ -108,7 +108,7 @@ class Mustache_Test_Functional_ExamplesTest extends Yoast\PHPUnitPolyfills\TestC
         }
         closedir($handle);
 
-        return array($context, $source, $partials, $expected);
+        return [$context, $source, $partials, $expected];
     }
 
     /**
@@ -120,7 +120,7 @@ class Mustache_Test_Functional_ExamplesTest extends Yoast\PHPUnitPolyfills\TestC
      */
     private function loadPartials($path)
     {
-        $partials = array();
+        $partials = [];
 
         $handle = opendir($path);
         while (($file = readdir($handle)) !== false) {

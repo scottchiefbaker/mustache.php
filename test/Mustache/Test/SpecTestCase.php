@@ -38,21 +38,21 @@ abstract class Mustache_Test_SpecTestCase extends Yoast\PHPUnitPolyfills\TestCas
     {
         $filename = dirname(__FILE__) . '/../../../vendor/spec/specs/' . $name . '.json';
         if (!file_exists($filename)) {
-            return array();
+            return [];
         }
 
-        $data = array();
+        $data = [];
         $file = file_get_contents($filename);
         $spec = json_decode($file, true);
 
         foreach ($spec['tests'] as $test) {
-            $data[] = array(
+            $data[] = [
                 $test['name'] . ': ' . $test['desc'],
                 $test['template'],
-                isset($test['partials']) ? $test['partials'] : array(),
+                isset($test['partials']) ? $test['partials'] : [],
                 $test['data'],
                 $test['expected'],
-            );
+            ];
         }
 
         return $data;

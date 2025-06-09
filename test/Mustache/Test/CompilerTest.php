@@ -29,97 +29,97 @@ class Mustache_Test_CompilerTest extends Yoast\PHPUnitPolyfills\TestCases\TestCa
 
     public function getCompileValues()
     {
-        return array(
-            array('', array(), 'Banana', false, ENT_COMPAT, 'ISO-8859-1', array(
+        return [
+            ['', [], 'Banana', false, ENT_COMPAT, 'ISO-8859-1', [
                 "\nclass Banana extends Mustache_Template",
                 'return $buffer;',
-            )),
+            ]],
 
-            array('', array($this->createTextToken('TEXT')), 'Monkey', false, ENT_COMPAT, 'UTF-8', array(
+            ['', [$this->createTextToken('TEXT')], 'Monkey', false, ENT_COMPAT, 'UTF-8', [
                 "\nclass Monkey extends Mustache_Template",
                 '$buffer .= $indent . \'TEXT\';',
                 'return $buffer;',
-            )),
+            ]],
 
-            array(
+            [
                 '',
-                array(
-                    array(
+                [
+                    [
                         Mustache_Tokenizer::TYPE => Mustache_Tokenizer::T_ESCAPED,
                         Mustache_Tokenizer::NAME => 'name',
-                    ),
-                ),
+                    ],
+                ],
                 'Monkey',
                 true,
                 ENT_COMPAT,
                 'ISO-8859-1',
-                array(
+                [
                     "\nclass Monkey extends Mustache_Template",
                     '$value = $this->resolveValue($context->find(\'name\'), $context);',
                     '$buffer .= $indent . ($value === null ? \'\' : call_user_func($this->mustache->getEscape(), $value));',
                     'return $buffer;',
-                ),
-            ),
+                ],
+            ],
 
-            array(
+            [
                 '',
-                array(
-                    array(
+                [
+                    [
                         Mustache_Tokenizer::TYPE => Mustache_Tokenizer::T_ESCAPED,
                         Mustache_Tokenizer::NAME => 'name',
-                    ),
-                ),
+                    ],
+                ],
                 'Monkey',
                 false,
                 ENT_COMPAT,
                 'ISO-8859-1',
-                array(
+                [
                     "\nclass Monkey extends Mustache_Template",
                     '$value = $this->resolveValue($context->find(\'name\'), $context);',
                     '$buffer .= $indent . ($value === null ? \'\' : htmlspecialchars($value, ' . ENT_COMPAT . ', \'ISO-8859-1\'));',
                     'return $buffer;',
-                ),
-            ),
+                ],
+            ],
 
-            array(
+            [
                 '',
-                array(
-                    array(
+                [
+                    [
                         Mustache_Tokenizer::TYPE => Mustache_Tokenizer::T_ESCAPED,
                         Mustache_Tokenizer::NAME => 'name',
-                    ),
-                ),
+                    ],
+                ],
                 'Monkey',
                 false,
                 ENT_QUOTES,
                 'ISO-8859-1',
-                array(
+                [
                     "\nclass Monkey extends Mustache_Template",
                     '$value = $this->resolveValue($context->find(\'name\'), $context);',
                     '$buffer .= $indent . ($value === null ? \'\' : htmlspecialchars($value, ' . ENT_QUOTES . ', \'ISO-8859-1\'));',
                     'return $buffer;',
-                ),
-            ),
+                ],
+            ],
 
-            array(
+            [
                 '',
-                array(
+                [
                     $this->createTextToken("foo\n"),
-                    array(
+                    [
                         Mustache_Tokenizer::TYPE => Mustache_Tokenizer::T_ESCAPED,
                         Mustache_Tokenizer::NAME => 'name',
-                    ),
-                    array(
+                    ],
+                    [
                         Mustache_Tokenizer::TYPE => Mustache_Tokenizer::T_ESCAPED,
                         Mustache_Tokenizer::NAME => '.',
-                    ),
+                    ],
                     $this->createTextToken("'bar'"),
-                ),
+                ],
                 'Monkey',
                 false,
                 ENT_COMPAT,
                 'UTF-8',
-                array(
+                [
                     "\nclass Monkey extends Mustache_Template",
                     "\$buffer .= \$indent . 'foo\n';",
                     '$value = $this->resolveValue($context->find(\'name\'), $context);',
@@ -127,16 +127,16 @@ class Mustache_Test_CompilerTest extends Yoast\PHPUnitPolyfills\TestCases\TestCa
                     '$value = $this->resolveValue($context->last(), $context);',
                     '$buffer .= \'\\\'bar\\\'\';',
                     'return $buffer;',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
     }
 
     public function testCompilerThrowsSyntaxException()
     {
         $compiler = new Mustache_Compiler();
         $this->expectException(Mustache_Exception_SyntaxException::class);
-        $compiler->compile('', array(array(Mustache_Tokenizer::TYPE => 'invalid')), 'SomeClass');
+        $compiler->compile('', [[Mustache_Tokenizer::TYPE => 'invalid']], 'SomeClass');
     }
 
     /**
@@ -144,9 +144,9 @@ class Mustache_Test_CompilerTest extends Yoast\PHPUnitPolyfills\TestCases\TestCa
      */
     private function createTextToken($value)
     {
-        return array(
+        return [
             Mustache_Tokenizer::TYPE  => Mustache_Tokenizer::T_TEXT,
             Mustache_Tokenizer::VALUE => $value,
-        );
+        ];
     }
 }

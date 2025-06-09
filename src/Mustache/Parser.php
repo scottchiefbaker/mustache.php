@@ -19,7 +19,7 @@ class Mustache_Parser
     private $lineNum;
     private $lineTokens;
     private $pragmas;
-    private $defaultPragmas = array();
+    private $defaultPragmas = [];
 
     private $pragmaFilters;
     private $pragmaBlocks;
@@ -32,7 +32,7 @@ class Mustache_Parser
      *
      * @return array Mustache token parse tree
      */
-    public function parse(array $tokens = array())
+    public function parse(array $tokens = [])
     {
         $this->lineNum    = -1;
         $this->lineTokens = 0;
@@ -55,7 +55,7 @@ class Mustache_Parser
      */
     public function setPragmas(array $pragmas)
     {
-        $this->pragmas = array();
+        $this->pragmas = [];
         foreach ($pragmas as $pragma) {
             $this->enablePragma($pragma);
         }
@@ -74,7 +74,7 @@ class Mustache_Parser
      */
     private function buildTree(array &$tokens, $parent = null)
     {
-        $nodes = array();
+        $nodes = [];
 
         while (!empty($tokens)) {
             $token = array_shift($tokens);
@@ -315,7 +315,7 @@ class Mustache_Parser
             $isDynamic = true;
         }
 
-        return array($name, $isDynamic);
+        return [$name, $isDynamic];
     }
 
     /**
@@ -356,7 +356,7 @@ class Mustache_Parser
         $filters = array_map('trim', explode('|', $name));
         $name    = array_shift($filters);
 
-        return array($name, $filters);
+        return [$name, $filters];
     }
 
     /**

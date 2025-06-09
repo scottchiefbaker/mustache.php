@@ -11,5 +11,5 @@
 
 class InvertedSection
 {
-    public $repo = array();
+    public $repo = [];
 }

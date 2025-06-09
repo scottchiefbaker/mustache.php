@@ -11,45 +11,45 @@
 
 class AnchoredDotNotation
 {
-    public $genres = array(
-        array(
+    public $genres = [
+        [
             'name'      => 'Punk',
-            'subgenres' => array(
-                array(
+            'subgenres' => [
+                [
                     'name'      => 'Hardcore',
-                    'subgenres' => array(
-                        array(
+                    'subgenres' => [
+                        [
                             'name'      => 'First wave of black metal',
-                            'subgenres' => array(
-                                array('name' => 'Norwegian black metal'),
-                                array(
+                            'subgenres' => [
+                                ['name' => 'Norwegian black metal'],
+                                [
                                     'name'      => 'Death metal',
-                                    'subgenres' => array(
-                                        array(
+                                    'subgenres' => [
+                                        [
                                             'name'      => 'Swedish death metal',
-                                            'subgenres' => array(
-                                                array('name' => 'New wave of American metal'),
-                                            ),
-                                        ),
-                                    ),
-                                ),
-                            ),
-                        ),
-                        array(
+                                            'subgenres' => [
+                                                ['name' => 'New wave of American metal'],
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                        [
                             'name'      => 'Thrash metal',
-                            'subgenres' => array(
-                                array('name' => 'Grindcore'),
-                                array(
+                            'subgenres' => [
+                                ['name' => 'Grindcore'],
+                                [
                                     'name'      => 'Metalcore',
-                                    'subgenres' => array(
-                                        array('name' => 'Nu metal'),
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-    );
+                                    'subgenres' => [
+                                        ['name' => 'Nu metal'],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ];
 }

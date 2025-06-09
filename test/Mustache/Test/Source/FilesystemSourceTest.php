@@ -16,7 +16,7 @@ class Mustache_Test_Source_FilesystemSourceTest extends Yoast\PHPUnitPolyfills\T
 {
     public function testMissingTemplateThrowsException()
     {
-        $source = new Mustache_Source_FilesystemSource(dirname(__FILE__) . '/not_a_file.mustache', array('mtime'));
+        $source = new Mustache_Source_FilesystemSource(dirname(__FILE__) . '/not_a_file.mustache', ['mtime']);
 
         $this->expectException(Mustache_Exception_RuntimeException::class);
         $source->getKey();

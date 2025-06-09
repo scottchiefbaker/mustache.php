@@ -17,19 +17,19 @@
  */
 class Mustache_Test_Functional_MustacheInheritanceSpecTest extends Mustache_Test_SpecTestCase
 {
-    private $whitespaceFailures = array(
+    private $whitespaceFailures = [
         'Standalone parent: A parent\'s opening and closing tags need not be on separate lines in order to be standalone',
         'Standalone block: A block\'s opening and closing tags need not be on separate lines in order to be standalone',
         'Block reindentation: Block indentation is removed at the site of definition and added at the site of expansion',
         'Intrinsic indentation: When the block opening tag is standalone, indentation is determined by default content',
         'Nested block reindentation: Nested blocks are reindented relative to the surrounding block',
-    );
+    ];
 
     public static function set_up_before_class()
     {
-        self::$mustache = new Mustache_Engine(array(
-          'pragmas' => array(Mustache_Engine::PRAGMA_BLOCKS),
-        ));
+        self::$mustache = new Mustache_Engine([
+          'pragmas' => [Mustache_Engine::PRAGMA_BLOCKS],
+        ]);
     }
 
     /**

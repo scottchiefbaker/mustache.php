@@ -17,7 +17,7 @@
 class Mustache_Compiler
 {
     private $pragmas;
-    private $defaultPragmas = array();
+    private $defaultPragmas = [];
     private $sections;
     private $blocks;
     private $source;
@@ -43,8 +43,8 @@ class Mustache_Compiler
     public function compile($source, array $tree, $name, $customEscape = false, $charset = 'UTF-8', $strictCallables = false, $entityFlags = ENT_COMPAT)
     {
         $this->pragmas         = $this->defaultPragmas;
-        $this->sections        = array();
-        $this->blocks          = array();
+        $this->sections        = [];
+        $this->blocks          = [];
         $this->source          = $source;
         $this->indentNextLine  = true;
         $this->customEscape    = $customEscape;
@@ -65,7 +65,7 @@ class Mustache_Compiler
      */
     public function setPragmas(array $pragmas)
     {
-        $this->pragmas = array();
+        $this->pragmas = [];
         foreach ($pragmas as $pragma) {
             $this->pragmas[$pragma] = true;
         }
@@ -96,7 +96,7 @@ class Mustache_Compiler
                     $code .= $this->section(
                         $node[Mustache_Tokenizer::NODES],
                         $node[Mustache_Tokenizer::NAME],
-                        isset($node[Mustache_Tokenizer::FILTERS]) ? $node[Mustache_Tokenizer::FILTERS] : array(),
+                        isset($node[Mustache_Tokenizer::FILTERS]) ? $node[Mustache_Tokenizer::FILTERS] : [],
                         $node[Mustache_Tokenizer::INDEX],
                         $node[Mustache_Tokenizer::END],
                         $node[Mustache_Tokenizer::OTAG],
@@ -109,7 +109,7 @@ class Mustache_Compiler
                     $code .= $this->invertedSection(
                         $node[Mustache_Tokenizer::NODES],
                         $node[Mustache_Tokenizer::NAME],
-                        isset($node[Mustache_Tokenizer::FILTERS]) ? $node[Mustache_Tokenizer::FILTERS] : array(),
+                        isset($node[Mustache_Tokenizer::FILTERS]) ? $node[Mustache_Tokenizer::FILTERS] : [],
                         $level
                     );
                     break;
@@ -165,7 +165,7 @@ class Mustache_Compiler
                 case Mustache_Tokenizer::T_UNESCAPED_2:
                     $code .= $this->variable(
                         $node[Mustache_Tokenizer::NAME],
-                        isset($node[Mustache_Tokenizer::FILTERS]) ? $node[Mustache_Tokenizer::FILTERS] : array(),
+                        isset($node[Mustache_Tokenizer::FILTERS]) ? $node[Mustache_Tokenizer::FILTERS] : [],
                         $node[Mustache_Tokenizer::TYPE] === Mustache_Tokenizer::T_ESCAPED,
                         $level
                     );
@@ -513,7 +513,7 @@ class Mustache_Compiler
      */
     private function parent($id, $dynamic, $indent, array $children, $level)
     {
-        $realChildren = array_filter($children, array(__CLASS__, 'onlyBlockArgs'));
+        $realChildren = array_filter($children, [__CLASS__, 'onlyBlockArgs']);
         $partialName = $this->resolveDynamicName($id, $dynamic);
 
         if (empty($realChildren)) {

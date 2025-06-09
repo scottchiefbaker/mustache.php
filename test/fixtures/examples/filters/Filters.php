@@ -11,7 +11,7 @@
 
 class Filters
 {
-    public $states = array(
+    public $states = [
         'al' => 'Alabama',
         'ak' => 'Alaska',
         'az' => 'Arizona',
@@ -62,7 +62,7 @@ class Filters
         'wv' => 'West Virginia',
         'wi' => 'Wisconsin',
         'wy' => 'Wyoming',
-    );
+    ];
 
     // The next few functions are ugly, because they have to work in PHP 5.2...
     // for everyone who doesn't have to support 5.2, please, for the love, make
@@ -72,7 +72,7 @@ class Filters
 
     public function upcase()
     {
-        return array($this, '_upcase');
+        return [$this, '_upcase'];
     }
 
     public function _upcase($val)
@@ -82,12 +82,12 @@ class Filters
 
     public function eachPair()
     {
-        return array($this, '_eachPair');
+        return [$this, '_eachPair'];
     }
 
     public function _eachPair($val)
     {
-        $ret = array();
+        $ret = [];
         foreach ($val as $key => $value) {
             array_push($ret, compact('key', 'value'));
         }

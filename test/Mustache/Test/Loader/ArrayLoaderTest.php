@@ -16,27 +16,27 @@ class Mustache_Test_Loader_ArrayLoaderTest extends Yoast\PHPUnitPolyfills\TestCa
 {
     public function testConstructor()
     {
-        $loader = new Mustache_Loader_ArrayLoader(array(
+        $loader = new Mustache_Loader_ArrayLoader([
             'foo' => 'bar',
-        ));
+        ]);
 
         $this->assertEquals('bar', $loader->load('foo'));
     }
 
     public function testSetAndLoadTemplates()
     {
-        $loader = new Mustache_Loader_ArrayLoader(array(
+        $loader = new Mustache_Loader_ArrayLoader([
             'foo' => 'bar',
-        ));
+        ]);
         $this->assertEquals('bar', $loader->load('foo'));
 
         $loader->setTemplate('baz', 'qux');
         $this->assertEquals('qux', $loader->load('baz'));
 
-        $loader->setTemplates(array(
+        $loader->setTemplates([
             'foo' => 'FOO',
             'baz' => 'BAZ',
-        ));
+        ]);
         $this->assertEquals('FOO', $loader->load('foo'));
         $this->assertEquals('BAZ', $loader->load('baz'));
     }

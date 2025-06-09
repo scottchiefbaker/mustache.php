@@ -49,18 +49,18 @@ class Mustache_Loader_ProductionFilesystemLoader extends Mustache_Loader_Filesys
      * @param string $baseDir Base directory containing Mustache template files.
      * @param array  $options Array of Loader options (default: array())
      */
-    public function __construct($baseDir, array $options = array())
+    public function __construct($baseDir, array $options = [])
     {
         parent::__construct($baseDir, $options);
 
         if (array_key_exists('stat_props', $options)) {
             if (empty($options['stat_props'])) {
-                $this->statProps = array();
+                $this->statProps = [];
             } else {
                 $this->statProps = $options['stat_props'];
             }
         } else {
-            $this->statProps = array('size', 'mtime');
+            $this->statProps = ['size', 'mtime'];
         }
     }
 

@@ -33,15 +33,15 @@ class Mustache_Test_Functional_HigherOrderSectionsTest extends Mustache_Test_Fun
     public function sectionCallbackData()
     {
         $foo = new Mustache_Test_Functional_Foo();
-        $foo->doublewrap = array($foo, 'wrapWithBoth');
+        $foo->doublewrap = [$foo, 'wrapWithBoth'];
 
         $bar = new Mustache_Test_Functional_Foo();
-        $bar->trimmer = array(get_class($bar), 'staticTrim');
+        $bar->trimmer = [get_class($bar), 'staticTrim'];
 
-        return array(
-            array($foo, '{{#doublewrap}}{{name}}{{/doublewrap}}', sprintf('<strong><em>%s</em></strong>', $foo->name)),
-            array($bar, '{{#trimmer}}   {{name}}   {{/trimmer}}', $bar->name),
-        );
+        return [
+            [$foo, '{{#doublewrap}}{{name}}{{/doublewrap}}', sprintf('<strong><em>%s</em></strong>', $foo->name)],
+            [$bar, '{{#trimmer}}   {{name}}   {{/trimmer}}', $bar->name],
+        ];
     }
 
     public function testViewArraySectionCallback()
@@ -50,10 +50,10 @@ class Mustache_Test_Functional_HigherOrderSectionsTest extends Mustache_Test_Fun
 
         $foo = new Mustache_Test_Functional_Foo();
 
-        $data = array(
+        $data = [
             'name' => 'Bob',
-            'trim' => array(get_class($foo), 'staticTrim'),
-        );
+            'trim' => [get_class($foo), 'staticTrim'],
+        ];
 
         $this->assertEquals($data['name'], $tpl->render($data));
     }
@@ -77,9 +77,9 @@ class Mustache_Test_Functional_HigherOrderSectionsTest extends Mustache_Test_Fun
     {
         $mustache = $this->getMockBuilder('Mustache_Engine');
         if (method_exists($mustache, 'onlyMethods')) {
-            $mustache->onlyMethods(array('loadLambda'));
+            $mustache->onlyMethods(['loadLambda']);
         } else {
-            $mustache->setMethods(array('loadLambda'));
+            $mustache->setMethods(['loadLambda']);
         }
         $mustache = $mustache->getMock();
 
@@ -89,7 +89,7 @@ class Mustache_Test_Functional_HigherOrderSectionsTest extends Mustache_Test_Fun
         $tpl = $mustache->loadTemplate('{{#wrap}}NAME{{/wrap}}');
 
         $foo = new Mustache_Test_Functional_Foo();
-        $foo->wrap = array($foo, 'wrapWithEm');
+        $foo->wrap = [$foo, 'wrapWithEm'];
 
         $this->assertEquals('<em>NAME</em>', $tpl->render($foo));
     }
@@ -98,9 +98,9 @@ class Mustache_Test_Functional_HigherOrderSectionsTest extends Mustache_Test_Fun
     {
         $mustache = $this->getMockBuilder('Mustache_Engine');
         if (method_exists($mustache, 'onlyMethods')) {
-            $mustache->onlyMethods(array('loadLambda'));
+            $mustache->onlyMethods(['loadLambda']);
         } else {
-            $mustache->setMethods(array('loadLambda'));
+            $mustache->setMethods(['loadLambda']);
         }
         $mustache = $mustache->getMock();
 
@@ -111,7 +111,7 @@ class Mustache_Test_Functional_HigherOrderSectionsTest extends Mustache_Test_Fun
         $tpl = $mustache->loadTemplate('{{#wrap}}{{name}}{{/wrap}}');
 
         $foo = new Mustache_Test_Functional_Foo();
-        $foo->wrap = array($foo, 'wrapWithEm');
+        $foo->wrap = [$foo, 'wrapWithEm'];
 
         $this->assertEquals('<em>' . $foo->name . '</em>', $tpl->render($foo));
     }
@@ -122,25 +122,25 @@ class Mustache_Test_Functional_HigherOrderSectionsTest extends Mustache_Test_Fun
     public function testCacheLambdaTemplatesOptionWorks($dirName, $tplPrefix, $enable, $expect)
     {
         $cacheDir = $this->setUpCacheDir($dirName);
-        $mustache = new Mustache_Engine(array(
+        $mustache = new Mustache_Engine([
             'template_class_prefix'  => $tplPrefix,
             'cache'                  => $cacheDir,
             'cache_lambda_templates' => $enable,
-        ));
+        ]);
 
         $tpl = $mustache->loadTemplate('{{#wrap}}{{name}}{{/wrap}}');
         $foo = new Mustache_Test_Functional_Foo();
-        $foo->wrap = array($foo, 'wrapWithEm');
+        $foo->wrap = [$foo, 'wrapWithEm'];
         $this->assertEquals('<em>' . $foo->name . '</em>', $tpl->render($foo));
         $this->assertCount($expect, glob($cacheDir . '/*.php'));
     }
 
     public function cacheLambdaTemplatesData()
     {
-        return array(
-            array('test_enabling_lambda_cache',  '_TestEnablingLambdaCache_',  true,  2),
-            array('test_disabling_lambda_cache', '_TestDisablingLambdaCache_', false, 1),
-        );
+        return [
+            ['test_enabling_lambda_cache',  '_TestEnablingLambdaCache_',  true,  2],
+            ['test_disabling_lambda_cache', '_TestDisablingLambdaCache_', false, 1],
+        ];
     }
 
     protected function setUpCacheDir($name)

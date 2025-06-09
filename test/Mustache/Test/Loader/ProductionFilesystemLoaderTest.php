@@ -17,7 +17,7 @@ class Mustache_Test_Loader_ProductionFilesystemLoaderTest extends Yoast\PHPUnitP
     public function testConstructor()
     {
         $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
-        $loader = new Mustache_Loader_ProductionFilesystemLoader($baseDir, array('extension' => '.ms'));
+        $loader = new Mustache_Loader_ProductionFilesystemLoader($baseDir, ['extension' => '.ms']);
         $this->assertInstanceOf('Mustache_Source', $loader->load('alpha'));
         $this->assertEquals('alpha contents', $loader->load('alpha')->getSource());
         $this->assertInstanceOf('Mustache_Source', $loader->load('beta.ms'));
@@ -35,7 +35,7 @@ class Mustache_Test_Loader_ProductionFilesystemLoaderTest extends Yoast\PHPUnitP
     {
         $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
 
-        $loader = new Mustache_Loader_ProductionFilesystemLoader('file://' . $baseDir, array('extension' => '.ms'));
+        $loader = new Mustache_Loader_ProductionFilesystemLoader('file://' . $baseDir, ['extension' => '.ms']);
         $this->assertEquals('alpha contents', $loader->load('alpha')->getSource());
         $this->assertEquals('beta contents', $loader->load('beta.ms')->getSource());
     }
@@ -52,11 +52,11 @@ class Mustache_Test_Loader_ProductionFilesystemLoaderTest extends Yoast\PHPUnitP
     {
         $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
 
-        $loader = new Mustache_Loader_ProductionFilesystemLoader($baseDir, array('extension' => ''));
+        $loader = new Mustache_Loader_ProductionFilesystemLoader($baseDir, ['extension' => '']);
         $this->assertEquals('one contents', $loader->load('one.mustache')->getSource());
         $this->assertEquals('alpha contents', $loader->load('alpha.ms')->getSource());
 
-        $loader = new Mustache_Loader_ProductionFilesystemLoader($baseDir, array('extension' => null));
+        $loader = new Mustache_Loader_ProductionFilesystemLoader($baseDir, ['extension' => null]);
         $this->assertEquals('two contents', $loader->load('two.mustache')->getSource());
         $this->assertEquals('beta contents', $loader->load('beta.ms')->getSource());
     }
@@ -79,10 +79,10 @@ class Mustache_Test_Loader_ProductionFilesystemLoaderTest extends Yoast\PHPUnitP
     public function testLoadWithDifferentStatProps()
     {
         $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
-        $noStatLoader = new Mustache_Loader_ProductionFilesystemLoader($baseDir, array('stat_props' => null));
-        $mtimeLoader = new Mustache_Loader_ProductionFilesystemLoader($baseDir, array('stat_props' => array('mtime')));
-        $sizeLoader = new Mustache_Loader_ProductionFilesystemLoader($baseDir, array('stat_props' => array('size')));
-        $bothLoader = new Mustache_Loader_ProductionFilesystemLoader($baseDir, array('stat_props' => array('mtime', 'size')));
+        $noStatLoader = new Mustache_Loader_ProductionFilesystemLoader($baseDir, ['stat_props' => null]);
+        $mtimeLoader = new Mustache_Loader_ProductionFilesystemLoader($baseDir, ['stat_props' => ['mtime']]);
+        $sizeLoader = new Mustache_Loader_ProductionFilesystemLoader($baseDir, ['stat_props' => ['size']]);
+        $bothLoader = new Mustache_Loader_ProductionFilesystemLoader($baseDir, ['stat_props' => ['mtime', 'size']]);
 
         $noStatKey = $noStatLoader->load('one.mustache')->getKey();
         $mtimeKey = $mtimeLoader->load('one.mustache')->getKey();

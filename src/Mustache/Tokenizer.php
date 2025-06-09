@@ -38,7 +38,7 @@ class Mustache_Tokenizer
     const T_BLOCK_ARG    = '$arg';
 
     // Valid token types
-    private static $tagTypes = array(
+    private static $tagTypes = [
         self::T_SECTION      => true,
         self::T_INVERTED     => true,
         self::T_END_SECTION  => true,
@@ -51,9 +51,9 @@ class Mustache_Tokenizer
         self::T_UNESCAPED_2  => true,
         self::T_PRAGMA       => true,
         self::T_BLOCK_VAR    => true,
-    );
+    ];
 
-    private static $tagNames = array(
+    private static $tagNames = [
         self::T_SECTION      => 'section',
         self::T_INVERTED     => 'inverted section',
         self::T_END_SECTION  => 'section end',
@@ -67,7 +67,7 @@ class Mustache_Tokenizer
         self::T_PRAGMA       => 'pragma',
         self::T_BLOCK_VAR    => 'block variable',
         self::T_BLOCK_ARG    => 'block variable',
-    );
+    ];
 
     // Token properties
     const TYPE    = 'type';
@@ -182,14 +182,14 @@ class Mustache_Tokenizer
                     $char = $text[$i];
                     // Test whether it's time to change tags.
                     if ($char === $this->ctagChar && substr($text, $i, $this->ctagLen) === $this->ctag) {
-                        $token = array(
+                        $token = [
                             self::TYPE  => $this->tagType,
                             self::NAME  => trim($this->buffer),
                             self::OTAG  => $this->otag,
                             self::CTAG  => $this->ctag,
                             self::LINE  => $this->line,
                             self::INDEX => ($this->tagType === self::T_END_SECTION) ? $this->seenTag - $this->otagLen : $i + $this->ctagLen,
-                        );
+                        ];
 
                         if ($this->tagType === self::T_UNESCAPED) {
                             // Clean up `{{{ tripleStache }}}` style tokens.
@@ -256,7 +256,7 @@ class Mustache_Tokenizer
         $this->state    = self::IN_TEXT;
         $this->tagType  = null;
         $this->buffer   = '';
-        $this->tokens   = array();
+        $this->tokens   = [];
         $this->seenTag  = false;
         $this->line     = 0;
 
@@ -275,11 +275,11 @@ class Mustache_Tokenizer
     private function flushBuffer()
     {
         if (strlen($this->buffer) > 0) {
-            $this->tokens[] = array(
+            $this->tokens[] = [
                 self::TYPE  => self::T_TEXT,
                 self::LINE  => $this->line,
                 self::VALUE => $this->buffer,
-            );
+            ];
             $this->buffer   = '';
         }
     }
@@ -304,10 +304,10 @@ class Mustache_Tokenizer
             $this->throwUnclosedTagException();
         }
 
-        $token = array(
+        $token = [
             self::TYPE => self::T_DELIM_CHANGE,
             self::LINE => $this->line,
-        );
+        ];
 
         try {
             $this->setDelimiters(trim(substr($text, $startIndex, $closeIndex - $startIndex)));
@@ -365,11 +365,11 @@ class Mustache_Tokenizer
         $pragma = trim(substr($text, $index + 2, $end - $index - 2));
 
         // Pragmas are hoisted to the front of the template.
-        array_unshift($this->tokens, array(
+        array_unshift($this->tokens, [
             self::TYPE => self::T_PRAGMA,
             self::NAME => $pragma,
             self::LINE => 0,
-        ));
+        ]);
 
         return $end + $this->ctagLen - 1;
     }
@@ -384,14 +384,14 @@ class Mustache_Tokenizer
             $msg = sprintf('Unclosed tag on line %d', $this->line);
         }
 
-        throw new Mustache_Exception_SyntaxException($msg, array(
+        throw new Mustache_Exception_SyntaxException($msg, [
             self::TYPE  => $this->tagType,
             self::NAME  => $name,
             self::OTAG  => $this->otag,
             self::CTAG  => $this->ctag,
             self::LINE  => $this->line,
             self::INDEX => $this->seenTag - $this->otagLen,
-        ));
+        ]);
     }
 
     /**

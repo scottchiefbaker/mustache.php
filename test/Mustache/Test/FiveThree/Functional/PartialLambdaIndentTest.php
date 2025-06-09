@@ -35,9 +35,9 @@ EOS;
 
 EOS;
 
-        $m = new Mustache_Engine(array(
-            'partials' => array('input' => $partial),
-        ));
+        $m = new Mustache_Engine([
+            'partials' => ['input' => $partial],
+        ]);
 
         $tpl = $m->loadTemplate($src);
 
@@ -65,9 +65,9 @@ EOS;
 
 EOS;
 
-        $m = new Mustache_Engine(array(
-            'partials' => array('input' => $partial),
-        ));
+        $m = new Mustache_Engine([
+            'partials' => ['input' => $partial],
+        ]);
 
         $tpl = $m->loadTemplate($src);
 

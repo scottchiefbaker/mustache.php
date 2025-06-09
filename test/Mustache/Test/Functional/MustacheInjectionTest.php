@@ -33,42 +33,42 @@ class Mustache_Test_Functional_MustacheInjectionTest extends Yoast\PHPUnitPolyfi
 
     public function injectionData()
     {
-        $interpolationData = array(
+        $interpolationData = [
             'a' => '{{ b }}',
             'b' => 'FAIL',
-        );
+        ];
 
-        $sectionData = array(
+        $sectionData = [
             'a' => true,
             'b' => '{{ c }}',
             'c' => 'FAIL',
-        );
+        ];
 
-        $lambdaInterpolationData = array(
-            'a' => array($this, 'lambdaInterpolationCallback'),
+        $lambdaInterpolationData = [
+            'a' => [$this, 'lambdaInterpolationCallback'],
             'b' => '{{ c }}',
             'c' => 'FAIL',
-        );
+        ];
 
-        $lambdaSectionData = array(
-            'a' => array($this, 'lambdaSectionCallback'),
+        $lambdaSectionData = [
+            'a' => [$this, 'lambdaSectionCallback'],
             'b' => '{{ c }}',
             'c' => 'FAIL',
-        );
+        ];
 
-        return array(
-            array('{{ a }}',   $interpolationData, array(), '{{ b }}'),
-            array('{{{ a }}}', $interpolationData, array(), '{{ b }}'),
+        return [
+            ['{{ a }}',   $interpolationData, [], '{{ b }}'],
+            ['{{{ a }}}', $interpolationData, [], '{{ b }}'],
 
-            array('{{# a }}{{ b }}{{/ a }}',   $sectionData, array(), '{{ c }}'),
-            array('{{# a }}{{{ b }}}{{/ a }}', $sectionData, array(), '{{ c }}'),
+            ['{{# a }}{{ b }}{{/ a }}',   $sectionData, [], '{{ c }}'],
+            ['{{# a }}{{{ b }}}{{/ a }}', $sectionData, [], '{{ c }}'],
 
-            array('{{> partial }}', $interpolationData, array('partial' => '{{ a }}'),   '{{ b }}'),
-            array('{{> partial }}', $interpolationData, array('partial' => '{{{ a }}}'), '{{ b }}'),
+            ['{{> partial }}', $interpolationData, ['partial' => '{{ a }}'],   '{{ b }}'],
+            ['{{> partial }}', $interpolationData, ['partial' => '{{{ a }}}'], '{{ b }}'],
 
-            array('{{ a }}',           $lambdaInterpolationData, array(), '{{ c }}'),
-            array('{{# a }}b{{/ a }}', $lambdaSectionData,       array(), '{{ c }}'),
-        );
+            ['{{ a }}',           $lambdaInterpolationData, [], '{{ c }}'],
+            ['{{# a }}b{{/ a }}', $lambdaSectionData,       [], '{{ c }}'],
+        ];
     }
 
     public static function lambdaInterpolationCallback()

@@ -19,25 +19,25 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
         $logger         = new Mustache_Logger_StreamLogger(tmpfile());
         $loader         = new Mustache_Loader_StringLoader();
         $partialsLoader = new Mustache_Loader_ArrayLoader();
-        $mustache       = new Mustache_Engine(array(
+        $mustache       = new Mustache_Engine([
             'template_class_prefix' => '__whot__',
             'cache'                 => self::$tempDir,
             'cache_file_mode'       => 777,
             'logger'                => $logger,
             'loader'                => $loader,
             'partials_loader'       => $partialsLoader,
-            'partials'              => array(
+            'partials'              => [
                 'foo' => '{{ foo }}',
-            ),
-            'helpers' => array(
-                'foo' => array($this, 'getFoo'),
+            ],
+            'helpers' => [
+                'foo' => [$this, 'getFoo'],
                 'bar' => 'BAR',
-            ),
+            ],
             'escape'       => 'strtoupper',
             'entity_flags' => ENT_QUOTES,
             'charset'      => 'ISO-8859-1',
-            'pragmas'      => array(Mustache_Engine::PRAGMA_FILTERS),
-        ));
+            'pragmas'      => [Mustache_Engine::PRAGMA_FILTERS],
+        ]);
 
         $this->assertSame($logger, $mustache->getLogger());
         $this->assertSame($loader, $mustache->getLoader());
@@ -51,7 +51,7 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
         $this->assertTrue($mustache->hasHelper('bar'));
         $this->assertFalse($mustache->hasHelper('baz'));
         $this->assertInstanceOf('Mustache_Cache_FilesystemCache', $mustache->getCache());
-        $this->assertEquals(array(Mustache_Engine::PRAGMA_FILTERS), $mustache->getPragmas());
+        $this->assertEquals([Mustache_Engine::PRAGMA_FILTERS], $mustache->getPragmas());
     }
 
     public static function getFoo()
@@ -62,7 +62,7 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
     public function testRender()
     {
         $source = '{{ foo }}';
-        $data   = array('bar' => 'baz');
+        $data   = ['bar' => 'baz'];
         $output = 'TEH OUTPUT';
 
         $template = $this->getMockBuilder('Mustache_Template')
@@ -125,10 +125,10 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
      */
     public function testCache()
     {
-        $mustache = new Mustache_Engine(array(
+        $mustache = new Mustache_Engine([
             'template_class_prefix' => '__whot__',
             'cache'                 => self::$tempDir,
-        ));
+        ]);
 
         $source    = '{{ foo }}';
         $template  = $mustache->loadTemplate($source);
@@ -139,10 +139,10 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
 
     public function testLambdaCache()
     {
-        $mustache = new MustacheStub(array(
+        $mustache = new MustacheStub([
             'cache'                  => self::$tempDir,
             'cache_lambda_templates' => true,
-        ));
+        ]);
 
         $this->assertNotInstanceOf('Mustache_Cache_NoopCache', $mustache->getProtectedLambdaCache());
         $this->assertSame($mustache->getCache(), $mustache->getProtectedLambdaCache());
@@ -150,9 +150,9 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
 
     public function testWithoutLambdaCache()
     {
-        $mustache = new MustacheStub(array(
+        $mustache = new MustacheStub([
             'cache' => self::$tempDir,
-        ));
+        ]);
 
         $this->assertInstanceOf('Mustache_Cache_NoopCache', $mustache->getProtectedLambdaCache());
         $this->assertNotSame($mustache->getCache(), $mustache->getProtectedLambdaCache());
@@ -161,9 +161,9 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
     public function testEmptyTemplatePrefixThrowsException()
     {
         $this->expectException(Mustache_Exception_InvalidArgumentException::class);
-        new Mustache_Engine(array(
+        new Mustache_Engine([
             'template_class_prefix' => '',
-        ));
+        ]);
     }
 
     /**
@@ -172,47 +172,47 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
     public function testNonCallableEscapeThrowsException($escape)
     {
         $this->expectException(Mustache_Exception_InvalidArgumentException::class);
-        new Mustache_Engine(array('escape' => $escape));
+        new Mustache_Engine(['escape' => $escape]);
     }
 
     public function getBadEscapers()
     {
-        return array(
-            array('nothing'),
-            array('foo', 'bar'),
-        );
+        return [
+            ['nothing'],
+            ['foo', 'bar'],
+        ];
     }
 
     public function testImmutablePartialsLoadersThrowException()
     {
-        $mustache = new Mustache_Engine(array(
+        $mustache = new Mustache_Engine([
             'partials_loader' => new Mustache_Loader_StringLoader(),
-        ));
+        ]);
 
         $this->expectException(Mustache_Exception_RuntimeException::class);
-        $mustache->setPartials(array('foo' => '{{ foo }}'));
+        $mustache->setPartials(['foo' => '{{ foo }}']);
     }
 
     public function testMissingPartialsTreatedAsEmptyString()
     {
-        $mustache = new Mustache_Engine(array(
-            'partials_loader' => new Mustache_Loader_ArrayLoader(array(
+        $mustache = new Mustache_Engine([
+            'partials_loader' => new Mustache_Loader_ArrayLoader([
                 'foo' => 'FOO',
                 'baz' => 'BAZ',
-            )),
-        ));
+            ]),
+        ]);
 
-        $this->assertEquals('FOOBAZ', $mustache->render('{{>foo}}{{>bar}}{{>baz}}', array()));
+        $this->assertEquals('FOOBAZ', $mustache->render('{{>foo}}{{>bar}}{{>baz}}', []));
     }
 
     public function testHelpers()
     {
-        $foo = array($this, 'getFoo');
+        $foo = [$this, 'getFoo'];
         $bar = 'BAR';
-        $mustache = new Mustache_Engine(array('helpers' => array(
+        $mustache = new Mustache_Engine(['helpers' => [
             'foo' => $foo,
             'bar' => $bar,
-        )));
+        ]]);
 
         $helpers = $mustache->getHelpers();
         $this->assertTrue($mustache->hasHelper('foo'));
@@ -227,7 +227,7 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
         $mustache->addHelper('bar', $bar);
         $this->assertSame($bar, $mustache->getHelper('bar'));
 
-        $baz = array($this, 'wrapWithUnderscores');
+        $baz = [$this, 'wrapWithUnderscores'];
         $this->assertFalse($mustache->hasHelper('baz'));
         $this->assertFalse($helpers->has('baz'));
 
@@ -238,7 +238,7 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
         // ... and a functional test
         $tpl = $mustache->loadTemplate('{{foo}} - {{bar}} - {{#baz}}qux{{/baz}}');
         $this->assertEquals('foo - BAR - __qux__', $tpl->render());
-        $this->assertEquals('foo - BAR - __qux__', $tpl->render(array('qux' => "won't mess things up")));
+        $this->assertEquals('foo - BAR - __qux__', $tpl->render(['qux' => "won't mess things up"]));
     }
 
     public static function wrapWithUnderscores($text)
@@ -262,19 +262,19 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
 
     public function testLoadPartialCascading()
     {
-        $loader = new Mustache_Loader_ArrayLoader(array(
+        $loader = new Mustache_Loader_ArrayLoader([
             'foo' => 'FOO',
-        ));
+        ]);
 
-        $mustache = new Mustache_Engine(array('loader' => $loader));
+        $mustache = new Mustache_Engine(['loader' => $loader]);
 
         $tpl = $mustache->loadTemplate('foo');
 
         $this->assertSame($tpl, $mustache->loadPartial('foo'));
 
-        $mustache->setPartials(array(
+        $mustache->setPartials([
             'foo' => 'f00',
-        ));
+        ]);
 
         // setting partials overrides the default template loading fallback.
         $this->assertNotSame($tpl, $mustache->loadPartial('foo'));
@@ -286,15 +286,15 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
     public function testPartialLoadFailLogging()
     {
         $name     = tempnam(sys_get_temp_dir(), 'mustache-test');
-        $mustache = new Mustache_Engine(array(
+        $mustache = new Mustache_Engine([
             'logger'   => new Mustache_Logger_StreamLogger($name, Mustache_Logger::WARNING),
-            'partials' => array(
+            'partials' => [
                 'foo' => 'FOO',
                 'bar' => 'BAR',
-            ),
-        ));
+            ],
+        ]);
 
-        $result = $mustache->render('{{> foo }}{{> bar }}{{> baz }}', array());
+        $result = $mustache->render('{{> foo }}{{> bar }}{{> baz }}', []);
         $this->assertEquals('FOOBAR', $result);
 
         $this->assertStringContainsString('WARNING: Partial not found: "baz"', file_get_contents($name));
@@ -303,21 +303,21 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
     public function testCacheWarningLogging()
     {
         list($name, $mustache) = $this->getLoggedMustache(Mustache_Logger::WARNING);
-        $mustache->render('{{ foo }}', array('foo' => 'FOO'));
+        $mustache->render('{{ foo }}', ['foo' => 'FOO']);
         $this->assertStringContainsString('WARNING: Template cache disabled, evaluating', file_get_contents($name));
     }
 
     public function testLoggingIsNotTooAnnoying()
     {
         list($name, $mustache) = $this->getLoggedMustache();
-        $mustache->render('{{ foo }}{{> bar }}', array('foo' => 'FOO'));
+        $mustache->render('{{ foo }}{{> bar }}', ['foo' => 'FOO']);
         $this->assertEmpty(file_get_contents($name));
     }
 
     public function testVerboseLoggingIsVerbose()
     {
         list($name, $mustache) = $this->getLoggedMustache(Mustache_Logger::DEBUG);
-        $mustache->render('{{ foo }}{{> bar }}', array('foo' => 'FOO'));
+        $mustache->render('{{ foo }}{{> bar }}', ['foo' => 'FOO']);
         $log = file_get_contents($name);
         $this->assertStringContainsString('DEBUG: Instantiating template: ', $log);
         $this->assertStringContainsString('WARNING: Partial not found: "bar"', $log);
@@ -326,45 +326,45 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
     public function testUnknownPragmaThrowsException()
     {
         $this->expectException(Mustache_Exception_InvalidArgumentException::class);
-        new Mustache_Engine(array(
-            'pragmas' => array('UNKNOWN'),
-        ));
+        new Mustache_Engine([
+            'pragmas' => ['UNKNOWN'],
+        ]);
     }
 
     public function testCompileFromMustacheSourceInstance()
     {
         $baseDir = realpath(dirname(__FILE__) . '/../../fixtures/templates');
-        $mustache = new Mustache_Engine(array(
+        $mustache = new Mustache_Engine([
             'loader' => new Mustache_Loader_ProductionFilesystemLoader($baseDir),
-        ));
+        ]);
         $this->assertEquals('one contents', $mustache->render('one'));
     }
 
     private function getLoggedMustache($level = Mustache_Logger::ERROR)
     {
         $name     = tempnam(sys_get_temp_dir(), 'mustache-test');
-        $mustache = new Mustache_Engine(array(
+        $mustache = new Mustache_Engine([
             'logger' => new Mustache_Logger_StreamLogger($name, $level),
-        ));
+        ]);
 
-        return array($name, $mustache);
+        return [$name, $mustache];
     }
 
     public function testCustomDelimiters()
     {
-        $mustache = new Mustache_Engine(array(
+        $mustache = new Mustache_Engine([
             'delimiters' => '[[ ]]',
-            'partials'   => array(
+            'partials'   => [
                 'one' => '[[> two ]]',
                 'two' => '[[ a ]]',
-            ),
-        ));
+            ],
+        ]);
 
         $tpl = $mustache->loadTemplate('[[# a ]][[ b ]][[/a ]]');
-        $this->assertEquals('c', $tpl->render(array('a' => true, 'b' => 'c')));
+        $this->assertEquals('c', $tpl->render(['a' => true, 'b' => 'c']));
 
         $tpl = $mustache->loadTemplate('[[> one ]]');
-        $this->assertEquals('b', $tpl->render(array('a' => 'b')));
+        $this->assertEquals('b', $tpl->render(['a' => 'b']));
     }
 
     public function testBuggyPropertyShadowing()
@@ -372,7 +372,7 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
         $mustache = new Mustache_Engine();
         $this->assertFalse($mustache->useBuggyPropertyShadowing());
 
-        $mustache = new Mustache_Engine(array('buggy_property_shadowing' => true));
+        $mustache = new Mustache_Engine(['buggy_property_shadowing' => true]);
         $this->assertTrue($mustache->useBuggyPropertyShadowing());
     }
 }

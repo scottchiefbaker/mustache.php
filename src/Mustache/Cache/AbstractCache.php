@@ -51,7 +51,7 @@ abstract class Mustache_Cache_AbstractCache implements Mustache_Cache
      * @param string $message The log message
      * @param array  $context The log context
      */
-    protected function log($level, $message, array $context = array())
+    protected function log($level, $message, array $context = [])
     {
         if (isset($this->logger)) {
             $this->logger->log($level, $message, $context);

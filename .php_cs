@@ -9,6 +9,7 @@ $config->setRules([
     'no_unused_imports' => true,
     'single_quote' => true,
     'trailing_comma_in_multiline' => true,
+    'array_syntax' => ['syntax' => 'short'],
 ]);
 
 $finder = $config->getFinder()
