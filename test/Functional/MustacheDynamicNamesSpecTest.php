@@ -10,6 +10,7 @@
  */
 
 namespace Mustache\Test\Functional;
+
 use Mustache\Engine;
 use Mustache\Test\SpecTestCase;
 
@@ -34,7 +35,7 @@ class MustacheDynamicNamesSpecTest extends SpecTestCase
      */
     public function testSpecInitialized()
     {
-        if (!file_exists(dirname(__FILE__) . '/../../../../vendor/spec/specs/')) {
+        if (!file_exists(__DIR__ . '/../../../../vendor/spec/specs/')) {
             $this->markTestSkipped('Mustache spec submodule not initialized: run "git submodule update --init"');
         }
         $this->assertTrue(true);

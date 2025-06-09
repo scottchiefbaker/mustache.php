@@ -350,7 +350,7 @@ class EngineTest extends FunctionalTestCase
 
     public function testCompileFromMustacheSourceInstance()
     {
-        $baseDir = realpath(dirname(__FILE__) . '/../../fixtures/templates');
+        $baseDir = realpath(__DIR__ . '/fixtures/templates');
         $mustache = new Engine([
             'loader' => new ProductionFilesystemLoader($baseDir),
         ]);

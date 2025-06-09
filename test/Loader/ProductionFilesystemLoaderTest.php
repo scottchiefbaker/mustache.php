@@ -24,7 +24,7 @@ class ProductionFilesystemLoaderTest extends TestCase
 {
     public function testConstructor()
     {
-        $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
+        $baseDir = realpath(__DIR__ . '/../fixtures/templates');
         $loader = new ProductionFilesystemLoader($baseDir, ['extension' => '.ms']);
         $this->assertInstanceOf(Source::class, $loader->load('alpha'));
         $this->assertEquals('alpha contents', $loader->load('alpha')->getSource());
@@ -34,14 +34,15 @@ class ProductionFilesystemLoaderTest extends TestCase
 
     public function testTrailingSlashes()
     {
-        $baseDir = dirname(__FILE__) . '/../../../fixtures/templates/';
+        // Not realpath, because it strips trailing slashes
+        $baseDir = __DIR__ . '/../fixtures/templates/';
         $loader = new ProductionFilesystemLoader($baseDir);
         $this->assertEquals('one contents', $loader->load('one')->getSource());
     }
 
     public function testConstructorWithProtocol()
     {
-        $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
+        $baseDir = realpath(__DIR__ . '/../fixtures/templates');
 
         $loader = new ProductionFilesystemLoader('file://' . $baseDir, ['extension' => '.ms']);
         $this->assertEquals('alpha contents', $loader->load('alpha')->getSource());
@@ -50,7 +51,7 @@ class ProductionFilesystemLoaderTest extends TestCase
 
     public function testLoadTemplates()
     {
-        $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
+        $baseDir = realpath(__DIR__ . '/../fixtures/templates');
         $loader = new ProductionFilesystemLoader($baseDir);
         $this->assertEquals('one contents', $loader->load('one')->getSource());
         $this->assertEquals('two contents', $loader->load('two.mustache')->getSource());
@@ -58,7 +59,7 @@ class ProductionFilesystemLoaderTest extends TestCase
 
     public function testEmptyExtensionString()
     {
-        $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
+        $baseDir = realpath(__DIR__ . '/../fixtures/templates');
 
         $loader = new ProductionFilesystemLoader($baseDir, ['extension' => '']);
         $this->assertEquals('one contents', $loader->load('one.mustache')->getSource());
@@ -72,13 +73,13 @@ class ProductionFilesystemLoaderTest extends TestCase
     public function testMissingBaseDirThrowsException()
     {
         $this->expectException(RuntimeException::class);
-        new ProductionFilesystemLoader(dirname(__FILE__) . '/not_a_directory');
+        new ProductionFilesystemLoader(__DIR__ . '/not_a_directory');
     }
 
     public function testMissingTemplateThrowsException()
     {
         $this->expectException(UnknownTemplateException::class);
-        $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
+        $baseDir = realpath(__DIR__ . '/../fixtures/templates');
         $loader = new ProductionFilesystemLoader($baseDir);
 
         $loader->load('fake');
@@ -86,7 +87,7 @@ class ProductionFilesystemLoaderTest extends TestCase
 
     public function testLoadWithDifferentStatProps()
     {
-        $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
+        $baseDir = realpath(__DIR__ . '/../fixtures/templates');
         $noStatLoader = new ProductionFilesystemLoader($baseDir, ['stat_props' => null]);
         $mtimeLoader = new ProductionFilesystemLoader($baseDir, ['stat_props' => ['mtime']]);
         $sizeLoader = new ProductionFilesystemLoader($baseDir, ['stat_props' => ['size']]);

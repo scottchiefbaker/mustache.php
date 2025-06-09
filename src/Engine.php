@@ -11,7 +11,6 @@
 
 namespace Mustache;
 
-use Mustache\Cache;
 use Mustache\Cache\FilesystemCache;
 use Mustache\Cache\NoopCache;
 use Mustache\Exception\InvalidArgumentException;
@@ -87,7 +86,7 @@ class Engine
      *
      *         // A Mustache cache instance or a cache directory string for compiled templates.
      *         // Mustache will not cache templates unless this is set.
-     *         'cache' => dirname(__FILE__).'/tmp/cache/mustache',
+     *         'cache' => __DIR__.'/tmp/cache/mustache',
      *
      *         // Override default permissions for cache files. Defaults to using the system-defined umask. It is
      *         // *strongly* recommended that you configure your umask properly rather than overriding permissions here.
@@ -106,14 +105,14 @@ class Engine
      *         'delimiters' => '<% %>',
      *
      *         // A Mustache template loader instance. Uses a StringLoader if not specified.
-     *         'loader' => new \Mustache\Loader\FilesystemLoader(dirname(__FILE__).'/views'),
+     *         'loader' => new \Mustache\Loader\FilesystemLoader(__DIR__.'/views'),
      *
      *         // A Mustache loader instance for partials.
-     *         'partials_loader' => new \Mustache\Loader\FilesystemLoader(dirname(__FILE__).'/views/partials'),
+     *         'partials_loader' => new \Mustache\Loader\FilesystemLoader(__DIR__.'/views/partials'),
      *
      *         // An array of Mustache partials. Useful for quick-and-dirty string template loading, but not as
      *         // efficient or lazy as a Filesystem (or database) loader.
-     *         'partials' => array('foo' => file_get_contents(dirname(__FILE__).'/views/partials/foo.mustache')),
+     *         'partials' => array('foo' => file_get_contents(__DIR__.'/views/partials/foo.mustache')),
      *
      *         // An array of 'helpers'. Helpers can be global variables or objects, closures (e.g. for higher order
      *         // sections), or any other valid Mustache context value. They will be prepended to the context stack,

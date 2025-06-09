@@ -51,7 +51,7 @@ class ExamplesTest extends TestCase
      */
     public function getExamples()
     {
-        $path     = realpath(dirname(__FILE__) . '/../../../fixtures/examples');
+        $path     = realpath(__DIR__ . '/../fixtures/examples');
         $examples = [];
 
         $handle   = opendir($path);

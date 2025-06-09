@@ -19,7 +19,7 @@ use Mustache\Logger;
  *
  * A FilesystemCache instance caches Mustache Template classes from the filesystem by name:
  *
- *     $cache = new FilesystemCache(dirname(__FILE__).'/cache');
+ *     $cache = new FilesystemCache(__DIR__.'/cache');
  *     $cache->cache($className, $compiledSource);
  *
  * The FilesystemCache benefits from any opcode caching that may be setup in your environment. So do that, k?

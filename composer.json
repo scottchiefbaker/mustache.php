@@ -24,12 +24,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Mustache\\": "src/Mustache/"
+            "Mustache\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Mustache\\Test\\": "test/Mustache/Test/"
+            "Mustache\\Test\\": "test/"
         }
     }
 }
