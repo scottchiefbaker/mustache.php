@@ -368,6 +368,10 @@ class Compiler
                 $source = %s;
                 $value = call_user_func($value, $source, %s);
 
+                if ($value instanceof \\Mustache\\RenderedString) {
+                    return $value->getValue();
+                }
+
                 if (is_string($value)) {
                     if (strpos($value, \'{{\') === false) {
                         return $value;

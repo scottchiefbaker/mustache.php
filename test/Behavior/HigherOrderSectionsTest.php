@@ -246,6 +246,81 @@ class HigherOrderSectionsTest extends FunctionalTestCase
             'data' => [Baz::class, 'getData'],
         ]));
     }
+
+    public function testPreventRender()
+    {
+        $this->mustache->setHelpers([
+            'wrap' => function ($text, $lambda) {
+                return $lambda->preventRender('{{ mustache }}');
+            },
+            'mustache' => 'FAIL',
+        ]);
+
+        $tpl = $this->mustache->loadTemplate('{{# wrap }}{{ name }}{{/ wrap }}');
+
+        $this->assertSame(
+            '{{ mustache }}',
+            $tpl->render(['name' => '{{ mustache }}'])
+        );
+    }
+
+    public function testImplicitPreventRender()
+    {
+        $this->mustache->setHelpers([
+            'wrap' => function ($text, $lambda) {
+                return $lambda->render($text);
+            },
+            'mustache' => 'FAIL',
+        ]);
+
+        $tpl = $this->mustache->loadTemplate('{{# wrap }}{{ name }}{{/ wrap }}');
+
+        $this->assertSame(
+            '{{ mustache }}',
+            $tpl->render(['name' => '{{ mustache }}'])
+        );
+    }
+
+    public function testAllowDoubleRender()
+    {
+        $mustache = new Engine([
+            'double_render_lambdas' => true,
+            'helpers' => [
+                'wrap' => function ($text, $lambda) {
+                    return $lambda->render($text);
+                },
+                'mustache' => 'PASS',
+            ],
+        ]);
+
+        $tpl = $mustache->loadTemplate('{{# wrap }}{{ name }}{{/ wrap }}');
+
+        $this->assertSame(
+            'PASS',
+            'PASS',
+            $tpl->render(['name' => '{{ mustache }}'])
+        );
+    }
+
+    public function testPreventRenderWithAllowedDoubleRender()
+    {
+        $mustache = new Engine([
+            'double_render_lambdas' => true,
+            'helpers' => [
+                'wrap' => function ($text, $lambda) {
+                    return $lambda->preventRender($lambda->render($text));
+                },
+                'mustache' => 'FAIL',
+            ],
+        ]);
+
+        $tpl = $mustache->loadTemplate('{{# wrap }}{{ name }}{{/ wrap }}');
+
+        $this->assertSame(
+            '{{ mustache }}',
+            $tpl->render(['name' => '{{ mustache }}'])
+        );
+    }
 }
 
 class Foo

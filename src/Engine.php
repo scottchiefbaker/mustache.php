@@ -61,6 +61,7 @@ class Engine
     private $cache;
     private $lambdaCache;
     private $cacheLambdaTemplates = false;
+    private $doubleRenderLambdas = false;
     private $loader;
     private $partialsLoader;
     private $helpers;
@@ -145,51 +146,71 @@ class Engine
      *         // available as well:
      *         'logger' => new \Mustache\Logger\StreamLogger('php://stderr'),
      *
+     *
+     *         // OPTIONAL MUSTACHE FEATURES:
+     *
+     *         // Enable dynamic names. By default, variables and sections like `{{*name}}` will be resolved dynamically.
+     *         //
+     *         // To disable dynamic name resolution, set this to false.
+     *         'dynamic_names' => true,
+     *
+     *         // Enable template inheritance. By default, templates can extend other templates using the `{{< name}}` and
+     *         // `{{$ block}}` tags.
+     *         //
+     *         // To disable inheritance, set this to false.
+     *         'inheritance' => true,
+     *
+     *         // Enable lambda sections and values. By default, "lambdas" are enabled; if a variable resolves to a
+     *         // callable value, that callable is called before interpolation. If a section name resolves to a callable
+     *         // value, it is treated as a "higher order section", and the section content is passed to the callable
+     *         // for processing prior to rendering.
+     *         //
+     *         // Note that the FILTERS pragma requires lambdas to function, so using FILTERS without lambdas enabled
+     *         // will throw an invalid argument exception.
+     *         //
+     *         // To disable lambdas and higher order sections entirely, set this to false.
+     *         'lambdas' => true,
+     *
+     *         // Enable pragmas across all templates, regardless of the presence of pragma tags in the individual
+     *         // templates.
+     *         'pragmas' => [\Mustache\Engine::PRAGMA_FILTERS],
+     *
+     *
+     *         // BACKWARDS COMPATIBILITY:
+     *
      *         // Only treat \Closure instances and invokable classes as callable. If true, values like
      *         // `['ClassName', 'methodName']` and `[$classInstance, 'methodName']`, which are traditionally
      *         // "callable" in PHP, are not called to resolve variables for interpolation or section contexts. This
      *         // helps protect against arbitrary code execution when user input is passed directly into the template.
-     *         // Defaults to true, but can be set to false to preserve v2.x behavior.
+     *         //
+     *         // Defaults to true, but can be set to false to preserve Mustache v2.x behavior.
+     *         //
+     *         // THIS IS NOT RECOMMENDED.
      *         'strict_callables' => true,
      *
-     *        // Enable buggy property shadowing. Per the Mustache spec, keys of a value higher in the context stack
-     *        // shadow similarly named keys lower in the stack. For example, in the template
-     *        // `{{# foo }}{{ bar }}{{/ foo }}` if the value for `foo` has a method, property, or key named `bar`, it
-     *        // will prevent looking lower in the context stack for a another value named `bar`.
-     *        //
-     *        // Setting the value of an array key to null prevents lookups higher in the context stack. The behavior
-     *        // should have been identical for object properties (and ArrayAccess) as well, but a bug in the context
-     *        // lookup logic meant that a property which exists but is set to null would not prevent further context
-     *        // lookup.
-     *        //
-     *        // This bug was fixed in v3.0.0, but the buggy behavior can be preserved by setting this option to true.
-     *        'buggy_property_shadowing' => false,
+     *         // Enable buggy property shadowing. Per the Mustache spec, keys of a value higher in the context stack
+     *         // shadow similarly named keys lower in the stack. For example, in the template
+     *         // `{{# foo }}{{ bar }}{{/ foo }}` if the value for `foo` has a method, property, or key named `bar`, it
+     *         // will prevent looking lower in the context stack for a another value named `bar`.
+     *         //
+     *         // Setting the value of an array key to null prevents lookups higher in the context stack. The behavior
+     *         // should have been identical for object properties (and ArrayAccess) as well, but a bug in the context
+     *         // lookup logic meant that a property which exists but is set to null would not prevent further context
+     *         // lookup.
+     *         //
+     *         // This bug was fixed in Mustache v3.x, but the previous buggy behavior can be preserved by setting this
+     *         // option to true.
+     *         //
+     *         // THIS IS NOT RECOMMENDED.
+     *         'buggy_property_shadowing' => false,
      *
-     *        // Enable dynamic names. By default, variables and sections like `{{*name}}` will be resolved dynamically.
-     *        //
-     *        // To disable dynamic name resolution, set this to false.
-     *        'dynamic_names' => true,
-     *
-     *        // Enable template inheritance. By default, templates can extend other templates using the `{{< name}}` and
-     *        // `{{$ block}}` tags.
-     *        //
-     *        // To disable inheritance, set this to false.
-     *       'inheritance' => true,
-     *
-     *        // Enable lambda sections and values. By default, "lambdas" are enabled; if a variable resolves to a
-     *        // callable value, that callable is called before interpolation. If a section name resolves to a callable
-     *        // value, it is treated as a "higher order section", and the section content is passed to the callable
-     *        // for processing prior to rendering.
-     *        //
-     *        // Note that the FILTERS pragma requires lambdas to function, so using FILTERS without lambdas enabled
-     *        // will throw an invalid argument exception.
-     *        //
-     *        // To disable lambdas and higher order sections entirely, set this to false.
-     *        'lambdas' => true,
-     *
-     *        // Enable pragmas across all templates, regardless of the presence of pragma tags in the individual
-     *        // templates.
-     *        'pragmas' => [\Mustache\Engine::PRAGMA_FILTERS],
+     *         // Double-render lambda return values. By default, the return value of higher order sections that are
+     *         // rendered via the lambda helper will *not* be re-rendered.
+     *         //
+     *         // To preserve the behavior of Mustache v2.x, set this to true.
+     *         //
+     *         // THIS IS NOT RECOMMENDED.
+     *        'double_render_lambdas' => false,
      *     ];
      *
      * @throws InvalidArgumentException If `escape` option is not callable
@@ -256,26 +277,11 @@ class Engine
             $this->setLogger($options['logger']);
         }
 
-        if (isset($options['strict_callables'])) {
-            $this->strictCallables = $options['strict_callables'];
-        }
-
         if (isset($options['delimiters'])) {
             $this->delimiters = $options['delimiters'];
         }
 
-        if (isset($options['pragmas'])) {
-            foreach ($options['pragmas'] as $pragma) {
-                if (!isset(self::$knownPragmas[$pragma])) {
-                    throw new InvalidArgumentException(sprintf('Unknown pragma: "%s"', $pragma));
-                }
-                $this->pragmas[$pragma] = true;
-            }
-        }
-
-        if (isset($options['buggy_property_shadowing'])) {
-            $this->buggyPropertyShadowing = (bool) $options['buggy_property_shadowing'];
-        }
+        // Optional Mustache features
 
         if (isset($options['dynamic_names'])) {
             $this->dynamicNames = $options['dynamic_names'] !== false;
@@ -289,8 +295,31 @@ class Engine
             $this->lambdas = $options['lambdas'] !== false;
         }
 
+        if (isset($options['pragmas'])) {
+            foreach ($options['pragmas'] as $pragma) {
+                if (!isset(self::$knownPragmas[$pragma])) {
+                    throw new InvalidArgumentException(sprintf('Unknown pragma: "%s"', $pragma));
+                }
+                $this->pragmas[$pragma] = true;
+            }
+        }
+
         if (!$this->lambdas && isset($this->pragmas[self::PRAGMA_FILTERS])) {
             throw new InvalidArgumentException('The FILTERS pragma requires lambda support');
+        }
+
+        // Backwards compatibility
+
+        if (isset($options['strict_callables'])) {
+            $this->strictCallables = (bool) $options['strict_callables'];
+        }
+
+        if (isset($options['buggy_property_shadowing'])) {
+            $this->buggyPropertyShadowing = (bool) $options['buggy_property_shadowing'];
+        }
+
+        if (isset($options['double_render_lambdas'])) {
+            $this->doubleRenderLambdas = (bool) $options['double_render_lambdas'];
         }
     }
 
@@ -342,7 +371,23 @@ class Engine
     }
 
     /**
+     * Check whether to double-render higher-order sections.
+     *
+     * By default, the return value of higher order sections that are rendered
+     * via the lambda helper will *not* be re-rendered. To preserve the
+     * behavior of Mustache v2.x, set this to true.
+     *
+     * THIS IS NOT RECOMMENDED.
+     */
+    public function getDoubleRenderLambdas()
+    {
+        return $this->doubleRenderLambdas;
+    }
+
+    /**
      * Check whether to use buggy property shadowing.
+     *
+     * THIS IS NOT RECOMMENDED.
      *
      * See https://github.com/bobthecow/mustache.php/pull/410
      */

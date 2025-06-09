@@ -47,9 +47,27 @@ class LambdaHelper
      */
     public function render($string)
     {
-        return $this->mustache
+        $value = $this->mustache
             ->loadLambda((string) $string, $this->delims)
             ->renderInternal($this->context);
+
+        return $this->mustache->getDoubleRenderLambdas() ? $value : $this->preventRender($value);
+    }
+
+    /**
+     * Prevent rendering of a string as a Mustache template.
+     *
+     * This is useful for returning a raw string from a lambda without processing it as a Mustache template.
+     *
+     * @see RenderedString
+     *
+     * @param string $value The raw string value to return
+     *
+     * @return RenderedString A RenderedString instance containing the raw value
+     */
+    public function preventRender($value)
+    {
+        return new RenderedString($value);
     }
 
     /**
