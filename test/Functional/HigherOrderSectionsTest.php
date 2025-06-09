@@ -231,6 +231,9 @@ class Foo
     public $name = 'Justin';
     public $lorem = 'Lorem ipsum dolor sit amet,';
 
+    public $doublewrap;
+    public $trimmer;
+
     public function wrapWithEm($text)
     {
         return sprintf('<em>%s</em>', $text);
