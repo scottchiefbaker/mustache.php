@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Mustache\Test\FiveThree\Functional;
+namespace Mustache\Test\Functional;
 
 use Mustache\Engine;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
