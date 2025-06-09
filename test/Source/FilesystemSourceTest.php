@@ -12,7 +12,7 @@
 namespace Mustache\Test\Source;
 
 use Mustache\Source\FilesystemSource;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use Mustache\Test\TestCase;
 
 /**
  * @group unit

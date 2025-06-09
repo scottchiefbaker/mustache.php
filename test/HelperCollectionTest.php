@@ -13,7 +13,6 @@ namespace Mustache\Test;
 
 use Mustache\HelperCollection;
 use Mustache\Exception\InvalidArgumentException;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class HelperCollectionTest extends TestCase
 {

@@ -14,7 +14,7 @@ namespace Mustache\Test\Cache;
 use Mustache\Cache\AbstractCache;
 use Mustache\Exception\InvalidArgumentException;
 use Mustache\Logger\StreamLogger;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use Mustache\Test\TestCase;
 
 class AbstractCacheTest extends TestCase
 {

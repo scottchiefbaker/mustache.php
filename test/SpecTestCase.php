@@ -12,7 +12,6 @@
 namespace Mustache\Test;
 
 use Mustache\Engine;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 abstract class SpecTestCase extends TestCase
 {

@@ -13,7 +13,7 @@ namespace Mustache\Test\Functional;
 
 use Mustache\Engine;
 use Mustache\Exception\SyntaxException;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use Mustache\Test\TestCase;
 
 /**
  * @group inheritance

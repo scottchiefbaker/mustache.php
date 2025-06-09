@@ -13,7 +13,6 @@ namespace Mustache\Test;
 
 use Mustache\Context;
 use Mustache\Exception\InvalidArgumentException;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @group unit

@@ -12,7 +12,7 @@
 namespace Mustache\Test\Functional;
 
 use Mustache\Engine;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use Mustache\Test\TestCase;
 
 /**
  * @group functional

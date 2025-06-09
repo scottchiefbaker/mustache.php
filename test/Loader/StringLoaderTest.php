@@ -12,7 +12,7 @@
 namespace Mustache\Test\Loader;
 
 use Mustache\Loader\StringLoader;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use Mustache\Test\TestCase;
 
 /**
  * @group unit

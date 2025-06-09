@@ -12,7 +12,7 @@
 namespace Mustache\Test\Exception;
 
 use Mustache\Exception\UnknownTemplateException;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use Mustache\Test\TestCase;
 
 class UnknownTemplateExceptionTest extends TestCase
 {

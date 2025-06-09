@@ -11,8 +11,6 @@
 
 namespace Mustache\Test;
 
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
-
 abstract class FunctionalTestCase extends TestCase
 {
     protected static $tempDir;

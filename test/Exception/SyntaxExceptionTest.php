@@ -13,7 +13,7 @@ namespace Mustache\Test\Exception;
 
 use Mustache\Exception\SyntaxException;
 use Mustache\Tokenizer;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use Mustache\Test\TestCase;
 
 class SyntaxExceptionTest extends TestCase
 {

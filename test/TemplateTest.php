@@ -14,7 +14,6 @@ namespace Mustache\Test;
 use Mustache\Context;
 use Mustache\Engine;
 use Mustache\Template;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @group unit

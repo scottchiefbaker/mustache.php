@@ -15,7 +15,7 @@ use Mustache\Exception\InvalidArgumentException;
 use Mustache\Exception\LogicException;
 use Mustache\Logger;
 use Mustache\Logger\StreamLogger;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use Mustache\Test\TestCase;
 
 /**
  * @group unit

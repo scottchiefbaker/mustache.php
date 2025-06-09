@@ -13,7 +13,7 @@ namespace Mustache\Test\Functional;
 
 use Mustache\Engine;
 use Mustache\Exception\UnknownFilterException;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use Mustache\Test\TestCase;
 
 /**
  * @group filters

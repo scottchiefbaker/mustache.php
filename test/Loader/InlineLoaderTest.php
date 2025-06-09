@@ -5,7 +5,7 @@ namespace Mustache\Test\Loader;
 use Mustache\Exception\InvalidArgumentException;
 use Mustache\Exception\UnknownTemplateException;
 use Mustache\Loader\InlineLoader;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use Mustache\Test\TestCase;
 
 /**
  * @group unit

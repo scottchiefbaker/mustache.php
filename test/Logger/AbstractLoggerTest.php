@@ -13,7 +13,7 @@ namespace Mustache\Test\Logger;
 
 use Mustache\Logger;
 use Mustache\Logger\AbstractLogger;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use Mustache\Test\TestCase;
 
 /**
  * @group unit

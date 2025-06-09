@@ -14,7 +14,6 @@ namespace Mustache\Test;
 use Mustache\Compiler;
 use Mustache\Exception\SyntaxException;
 use Mustache\Tokenizer;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @group unit

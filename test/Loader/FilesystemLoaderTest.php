@@ -14,7 +14,7 @@ namespace Mustache\Test\Loader;
 use Mustache\Exception\RuntimeException;
 use Mustache\Exception\UnknownTemplateException;
 use Mustache\Loader\FilesystemLoader;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use Mustache\Test\TestCase;
 
 /**
  * @group unit
