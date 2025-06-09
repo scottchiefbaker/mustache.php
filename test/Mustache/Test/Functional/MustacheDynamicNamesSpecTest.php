@@ -33,6 +33,7 @@ class Mustache_Test_Functional_MustacheDynamicNamesSpecTest extends Mustache_Tes
         if (!file_exists(dirname(__FILE__) . '/../../../../vendor/spec/specs/')) {
             $this->markTestSkipped('Mustache spec submodule not initialized: run "git submodule update --init"');
         }
+        $this->assertTrue(true);
     }
 
     /**
