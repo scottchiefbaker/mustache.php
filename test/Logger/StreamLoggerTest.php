@@ -30,7 +30,7 @@ class StreamLoggerTest extends TestCase
         $logger = new StreamLogger($stream);
         $logger->log(Logger::CRITICAL, 'message');
 
-        $this->assertEquals("CRITICAL: message\n", file_get_contents($name));
+        $this->assertSame("CRITICAL: message\n", file_get_contents($name));
     }
 
     public function acceptsStreamData()
@@ -118,7 +118,7 @@ class StreamLoggerTest extends TestCase
         rewind($stream);
         $result = fread($stream, 1024);
 
-        $this->assertEquals($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function getLogMessages()
@@ -174,24 +174,24 @@ class StreamLoggerTest extends TestCase
         $logger = new StreamLogger($stream);
 
         $logger->setLevel(Logger::ERROR);
-        $this->assertEquals(Logger::ERROR, $logger->getLevel());
+        $this->assertSame(Logger::ERROR, $logger->getLevel());
 
         $logger->log(Logger::WARNING, 'ignore this');
 
         $logger->setLevel(Logger::INFO);
-        $this->assertEquals(Logger::INFO, $logger->getLevel());
+        $this->assertSame(Logger::INFO, $logger->getLevel());
 
         $logger->log(Logger::WARNING, 'log this');
 
         $logger->setLevel(Logger::CRITICAL);
-        $this->assertEquals(Logger::CRITICAL, $logger->getLevel());
+        $this->assertSame(Logger::CRITICAL, $logger->getLevel());
 
         $logger->log(Logger::ERROR, 'ignore this');
 
         rewind($stream);
         $result = fread($stream, 1024);
 
-        $this->assertEquals("WARNING: log this\n", $result);
+        $this->assertSame("WARNING: log this\n", $result);
     }
 
     public function testThrowsInvalidArgumentExceptionWhenSettingUnknownLevels()

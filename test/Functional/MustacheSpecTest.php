@@ -40,7 +40,7 @@ class MustacheSpecTest extends SpecTestCase
     public function testCommentSpec($desc, $source, $partials, $data, $expected)
     {
         $template = self::loadTemplate($source, $partials);
-        $this->assertEquals($expected, $template->render($data), $desc);
+        $this->assertSame($expected, $template->render($data), $desc);
     }
 
     public function loadCommentSpec()
@@ -55,7 +55,7 @@ class MustacheSpecTest extends SpecTestCase
     public function testDelimitersSpec($desc, $source, $partials, $data, $expected)
     {
         $template = self::loadTemplate($source, $partials);
-        $this->assertEquals($expected, $template->render($data), $desc);
+        $this->assertSame($expected, $template->render($data), $desc);
     }
 
     public function loadDelimitersSpec()
@@ -70,7 +70,7 @@ class MustacheSpecTest extends SpecTestCase
     public function testInterpolationSpec($desc, $source, $partials, $data, $expected)
     {
         $template = self::loadTemplate($source, $partials);
-        $this->assertEquals($expected, $template->render($data), $desc);
+        $this->assertSame($expected, $template->render($data), $desc);
     }
 
     public function loadInterpolationSpec()
@@ -86,7 +86,7 @@ class MustacheSpecTest extends SpecTestCase
     public function testInvertedSpec($desc, $source, $partials, $data, $expected)
     {
         $template = self::loadTemplate($source, $partials);
-        $this->assertEquals($expected, $template->render($data), $desc);
+        $this->assertSame($expected, $template->render($data), $desc);
     }
 
     public function loadInvertedSpec()
@@ -101,7 +101,7 @@ class MustacheSpecTest extends SpecTestCase
     public function testPartialsSpec($desc, $source, $partials, $data, $expected)
     {
         $template = self::loadTemplate($source, $partials);
-        $this->assertEquals($expected, $template->render($data), $desc);
+        $this->assertSame($expected, $template->render($data), $desc);
     }
 
     public function loadPartialsSpec()
@@ -116,7 +116,7 @@ class MustacheSpecTest extends SpecTestCase
     public function testSectionsSpec($desc, $source, $partials, $data, $expected)
     {
         $template = self::loadTemplate($source, $partials);
-        $this->assertEquals($expected, $template->render($data), $desc);
+        $this->assertSame($expected, $template->render($data), $desc);
     }
 
     public function loadSectionsSpec()
@@ -131,7 +131,7 @@ class MustacheSpecTest extends SpecTestCase
     public function testLambdasSpec($desc, $source, $partials, $data, $expected)
     {
         $template = self::loadTemplate($source, $partials);
-        $this->assertEquals($expected, $template($this->prepareLambdasSpec($data)), $desc);
+        $this->assertSame($expected, $template($this->prepareLambdasSpec($data)), $desc);
     }
 
     public function loadLambdasSpec()

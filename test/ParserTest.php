@@ -201,7 +201,7 @@ class ParserTest extends TestCase
     {
         $parser = new Parser();
         $parser->setPragmas([Engine::PRAGMA_BLOCKS]);
-        $this->assertEquals($expected, $parser->parse($tokens));
+        $this->assertSame($expected, $parser->parse($tokens));
     }
 
     public function getInheritanceTokenSets()

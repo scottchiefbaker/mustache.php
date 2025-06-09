@@ -48,7 +48,7 @@ class MustacheDynamicNamesSpecTest extends SpecTestCase
     public function testDynamicNamesSpec($desc, $source, $partials, $data, $expected)
     {
         $template = self::loadTemplate($source, $partials);
-        $this->assertEquals($expected, $template->render($data), $desc);
+        $this->assertSame($expected, $template->render($data), $desc);
     }
 
     public function loadDynamicNamesSpec()

@@ -15,8 +15,8 @@ class InlineLoaderTest extends TestCase
     public function testLoadTemplates()
     {
         $loader = new InlineLoader(__FILE__, __COMPILER_HALT_OFFSET__);
-        $this->assertEquals('{{ foo }}', $loader->load('foo'));
-        $this->assertEquals('{{#bar}}BAR{{/bar}}', $loader->load('bar'));
+        $this->assertSame('{{ foo }}', $loader->load('foo'));
+        $this->assertSame('{{#bar}}BAR{{/bar}}', $loader->load('bar'));
     }
 
     public function testMissingTemplatesThrowExceptions()

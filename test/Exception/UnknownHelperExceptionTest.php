@@ -26,13 +26,13 @@ class UnknownHelperExceptionTest extends TestCase
     public function testMessage()
     {
         $e = new UnknownHelperException('beta');
-        $this->assertEquals('Unknown helper: beta', $e->getMessage());
+        $this->assertSame('Unknown helper: beta', $e->getMessage());
     }
 
     public function testGetHelperName()
     {
         $e = new UnknownHelperException('gamma');
-        $this->assertEquals('gamma', $e->getHelperName());
+        $this->assertSame('gamma', $e->getHelperName());
     }
 
     public function testPrevious()

@@ -36,12 +36,12 @@ class TemplateTest extends TestCase
         $context  = new Context();
 
         if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
-            $this->assertEquals($rendered, $template());
+            $this->assertSame($rendered, $template());
         }
 
-        $this->assertEquals($rendered, $template->render());
-        $this->assertEquals($rendered, $template->renderInternal($context));
-        $this->assertEquals($rendered, $template->render(['foo' => 'bar']));
+        $this->assertSame($rendered, $template->render());
+        $this->assertSame($rendered, $template->renderInternal($context));
+        $this->assertSame($rendered, $template->render(['foo' => 'bar']));
     }
 }
 

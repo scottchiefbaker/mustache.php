@@ -59,16 +59,16 @@ class EngineTest extends FunctionalTestCase
         $this->assertSame($logger, $mustache->getLogger());
         $this->assertSame($loader, $mustache->getLoader());
         $this->assertSame($partialsLoader, $mustache->getPartialsLoader());
-        $this->assertEquals('{{ foo }}', $partialsLoader->load('foo'));
+        $this->assertSame('{{ foo }}', $partialsLoader->load('foo'));
         $this->assertStringContainsString('__whot__', $mustache->getTemplateClassName('{{ foo }}'));
-        $this->assertEquals('strtoupper', $mustache->getEscape());
-        $this->assertEquals(ENT_QUOTES, $mustache->getEntityFlags());
-        $this->assertEquals('ISO-8859-1', $mustache->getCharset());
+        $this->assertSame('strtoupper', $mustache->getEscape());
+        $this->assertSame(ENT_QUOTES, $mustache->getEntityFlags());
+        $this->assertSame('ISO-8859-1', $mustache->getCharset());
         $this->assertTrue($mustache->hasHelper('foo'));
         $this->assertTrue($mustache->hasHelper('bar'));
         $this->assertFalse($mustache->hasHelper('baz'));
         $this->assertInstanceOf(FilesystemCache::class, $mustache->getCache());
-        $this->assertEquals([Engine::PRAGMA_FILTERS], $mustache->getPragmas());
+        $this->assertSame([Engine::PRAGMA_FILTERS], $mustache->getPragmas());
     }
 
     public static function getFoo()
@@ -92,10 +92,10 @@ class EngineTest extends FunctionalTestCase
         $template->expects($this->once())
             ->method('render')
             ->with($data)
-            ->will($this->returnValue($output));
+            ->willReturn($output);
 
-        $this->assertEquals($output, $mustache->render($source, $data));
-        $this->assertEquals($source, $mustache->source);
+        $this->assertSame($output, $mustache->render($source, $data));
+        $this->assertSame($source, $mustache->source);
     }
 
     public function testSettingServices()
@@ -219,7 +219,7 @@ class EngineTest extends FunctionalTestCase
             ]),
         ]);
 
-        $this->assertEquals('FOOBAZ', $mustache->render('{{>foo}}{{>bar}}{{>baz}}', []));
+        $this->assertSame('FOOBAZ', $mustache->render('{{>foo}}{{>bar}}{{>baz}}', []));
     }
 
     public function testHelpers()
@@ -254,8 +254,8 @@ class EngineTest extends FunctionalTestCase
 
         // ... and a functional test
         $tpl = $mustache->loadTemplate('{{foo}} - {{bar}} - {{#baz}}qux{{/baz}}');
-        $this->assertEquals('foo - BAR - __qux__', $tpl->render());
-        $this->assertEquals('foo - BAR - __qux__', $tpl->render(['qux' => "won't mess things up"]));
+        $this->assertSame('foo - BAR - __qux__', $tpl->render());
+        $this->assertSame('foo - BAR - __qux__', $tpl->render(['qux' => "won't mess things up"]));
     }
 
     public static function wrapWithUnderscores($text)
@@ -312,7 +312,7 @@ class EngineTest extends FunctionalTestCase
         ]);
 
         $result = $mustache->render('{{> foo }}{{> bar }}{{> baz }}', []);
-        $this->assertEquals('FOOBAR', $result);
+        $this->assertSame('FOOBAR', $result);
 
         $this->assertStringContainsString('WARNING: Partial not found: "baz"', file_get_contents($name));
     }
@@ -354,7 +354,7 @@ class EngineTest extends FunctionalTestCase
         $mustache = new Engine([
             'loader' => new ProductionFilesystemLoader($baseDir),
         ]);
-        $this->assertEquals('one contents', $mustache->render('one'));
+        $this->assertSame('one contents', $mustache->render('one'));
     }
 
     private function getLoggedMustache($level = Logger::ERROR)
@@ -378,10 +378,10 @@ class EngineTest extends FunctionalTestCase
         ]);
 
         $tpl = $mustache->loadTemplate('[[# a ]][[ b ]][[/a ]]');
-        $this->assertEquals('c', $tpl->render(['a' => true, 'b' => 'c']));
+        $this->assertSame('c', $tpl->render(['a' => true, 'b' => 'c']));
 
         $tpl = $mustache->loadTemplate('[[> one ]]');
-        $this->assertEquals('b', $tpl->render(['a' => 'b']));
+        $this->assertSame('b', $tpl->render(['a' => 'b']));
     }
 
     public function testBuggyPropertyShadowing()

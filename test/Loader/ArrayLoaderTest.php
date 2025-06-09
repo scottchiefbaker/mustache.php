@@ -26,7 +26,7 @@ class ArrayLoaderTest extends TestCase
             'foo' => 'bar',
         ]);
 
-        $this->assertEquals('bar', $loader->load('foo'));
+        $this->assertSame('bar', $loader->load('foo'));
     }
 
     public function testSetAndLoadTemplates()
@@ -34,17 +34,17 @@ class ArrayLoaderTest extends TestCase
         $loader = new ArrayLoader([
             'foo' => 'bar',
         ]);
-        $this->assertEquals('bar', $loader->load('foo'));
+        $this->assertSame('bar', $loader->load('foo'));
 
         $loader->setTemplate('baz', 'qux');
-        $this->assertEquals('qux', $loader->load('baz'));
+        $this->assertSame('qux', $loader->load('baz'));
 
         $loader->setTemplates([
             'foo' => 'FOO',
             'baz' => 'BAZ',
         ]);
-        $this->assertEquals('FOO', $loader->load('foo'));
-        $this->assertEquals('BAZ', $loader->load('baz'));
+        $this->assertSame('FOO', $loader->load('foo'));
+        $this->assertSame('BAZ', $loader->load('baz'));
     }
 
     public function testMissingTemplatesThrowExceptions()

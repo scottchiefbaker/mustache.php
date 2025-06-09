@@ -32,7 +32,7 @@ class HigherOrderSectionsTest extends FunctionalTestCase
      */
     public function testSectionCallback($data, $tpl, $expect)
     {
-        $this->assertEquals($expect, $this->mustache->render($tpl, $data));
+        $this->assertSame($expect, $this->mustache->render($tpl, $data));
     }
 
     public function sectionCallbackData()
@@ -60,7 +60,7 @@ class HigherOrderSectionsTest extends FunctionalTestCase
             'trim' => [get_class($foo), 'staticTrim'],
         ];
 
-        $this->assertEquals($data['name'], $tpl->render($data));
+        $this->assertSame($data['name'], $tpl->render($data));
     }
 
     public function testMonsters()
@@ -70,12 +70,12 @@ class HigherOrderSectionsTest extends FunctionalTestCase
         $frank = new Monster();
         $frank->title = 'Dr.';
         $frank->name  = 'Frankenstein';
-        $this->assertEquals('Dr. Frankenstein', $tpl->render($frank));
+        $this->assertSame('Dr. Frankenstein', $tpl->render($frank));
 
         $dracula = new Monster();
         $dracula->title = 'Count';
         $dracula->name  = 'Dracula';
-        $this->assertEquals('Count Dracula', $tpl->render($dracula));
+        $this->assertSame('Count Dracula', $tpl->render($dracula));
     }
 
     public function testPassthroughOptimization()
@@ -96,7 +96,7 @@ class HigherOrderSectionsTest extends FunctionalTestCase
         $foo = new Foo();
         $foo->wrap = [$foo, 'wrapWithEm'];
 
-        $this->assertEquals('<em>NAME</em>', $tpl->render($foo));
+        $this->assertSame('<em>NAME</em>', $tpl->render($foo));
     }
 
     public function testWithoutPassthroughOptimization()
@@ -111,14 +111,14 @@ class HigherOrderSectionsTest extends FunctionalTestCase
 
         $mustache->expects($this->once())
             ->method('loadLambda')
-            ->will($this->returnValue($mustache->loadTemplate('<em>{{ name }}</em>')));
+            ->willReturn($mustache->loadTemplate('<em>{{ name }}</em>'));
 
         $tpl = $mustache->loadTemplate('{{#wrap}}{{name}}{{/wrap}}');
 
         $foo = new Foo();
         $foo->wrap = [$foo, 'wrapWithEm'];
 
-        $this->assertEquals('<em>' . $foo->name . '</em>', $tpl->render($foo));
+        $this->assertSame('<em>' . $foo->name . '</em>', $tpl->render($foo));
     }
 
     /**
@@ -136,7 +136,7 @@ class HigherOrderSectionsTest extends FunctionalTestCase
         $tpl = $mustache->loadTemplate('{{#wrap}}{{name}}{{/wrap}}');
         $foo = new Foo();
         $foo->wrap = [$foo, 'wrapWithEm'];
-        $this->assertEquals('<em>' . $foo->name . '</em>', $tpl->render($foo));
+        $this->assertSame('<em>' . $foo->name . '</em>', $tpl->render($foo));
         $this->assertCount($expect, glob($cacheDir . '/*.php'));
     }
 
@@ -169,7 +169,7 @@ class HigherOrderSectionsTest extends FunctionalTestCase
             return sprintf('<div class="anonymous">%s</div>', $text);
         };
 
-        $this->assertEquals(sprintf('<div class="anonymous">%s</div>', $foo->name), $tpl->render($foo));
+        $this->assertSame(sprintf('<div class="anonymous">%s</div>', $foo->name), $tpl->render($foo));
     }
 
     public function testAnonymousSectionCallback()
@@ -180,8 +180,8 @@ class HigherOrderSectionsTest extends FunctionalTestCase
         $foo = new Bar();
         $foo->name = 'Luigi';
 
-        $this->assertEquals($foo->name, $one->render($foo));
-        $this->assertEquals(sprintf('<em>%s</em>', $foo->name), $two->render($foo));
+        $this->assertSame($foo->name, $one->render($foo));
+        $this->assertSame(sprintf('<em>%s</em>', $foo->name), $two->render($foo));
     }
 
     public function testViewArrayAnonymousSectionCallback()
@@ -195,7 +195,7 @@ class HigherOrderSectionsTest extends FunctionalTestCase
             },
         ];
 
-        $this->assertEquals(sprintf('[[%s]]', $data['name']), $tpl->render($data));
+        $this->assertSame(sprintf('[[%s]]', $data['name']), $tpl->render($data));
     }
 
     /**
@@ -203,7 +203,7 @@ class HigherOrderSectionsTest extends FunctionalTestCase
      */
     public function testNonTemplateLambdas($tpl, $data, $expect)
     {
-        $this->assertEquals($expect, $this->mustache->render($tpl, $data));
+        $this->assertSame($expect, $this->mustache->render($tpl, $data));
     }
 
     public function nonTemplateLambdasData()

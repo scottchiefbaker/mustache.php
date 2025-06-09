@@ -30,7 +30,7 @@ class ObjectSectionTest extends TestCase
     public function testBasicObject()
     {
         $tpl = $this->mustache->loadTemplate('{{#foo}}{{name}}{{/foo}}');
-        $this->assertEquals('Foo', $tpl->render(new Alpha()));
+        $this->assertSame('Foo', $tpl->render(new Alpha()));
     }
 
     /**
@@ -39,7 +39,7 @@ class ObjectSectionTest extends TestCase
     public function testObjectWithGet()
     {
         $tpl = $this->mustache->loadTemplate('{{#foo}}{{name}}{{/foo}}');
-        $this->assertEquals('Foo', $tpl->render(new Beta()));
+        $this->assertSame('Foo', $tpl->render(new Beta()));
     }
 
     /**
@@ -48,7 +48,7 @@ class ObjectSectionTest extends TestCase
     public function testSectionObjectWithGet()
     {
         $tpl = $this->mustache->loadTemplate('{{#bar}}{{#foo}}{{name}}{{/foo}}{{/bar}}');
-        $this->assertEquals('Foo', $tpl->render(new Gamma()));
+        $this->assertSame('Foo', $tpl->render(new Gamma()));
     }
 
     public function testSectionObjectWithFunction()
@@ -56,7 +56,7 @@ class ObjectSectionTest extends TestCase
         $tpl = $this->mustache->loadTemplate('{{#foo}}{{name}}{{/foo}}');
         $alpha = new Alpha();
         $alpha->foo = new Delta();
-        $this->assertEquals('Foo', $tpl->render($alpha));
+        $this->assertSame('Foo', $tpl->render($alpha));
     }
 }
 

@@ -34,7 +34,7 @@ class FiltersTest extends TestCase
     public function testSingleFilter($tpl, $helpers, $data, $expect)
     {
         $this->mustache->setHelpers($helpers);
-        $this->assertEquals($expect, $this->mustache->render($tpl, $data));
+        $this->assertSame($expect, $this->mustache->render($tpl, $data));
     }
 
     public function singleFilterData()
@@ -80,7 +80,7 @@ class FiltersTest extends TestCase
         $foo = new \StdClass();
         $foo->date = new \DateTime('1/1/2000', new \DateTimeZone('UTC'));
 
-        $this->assertEquals('[[2000-01-01 12:01:00]]', $tpl->render($foo));
+        $this->assertSame('[[2000-01-01 12:01:00]]', $tpl->render($foo));
     }
 
     const CHAINED_SECTION_FILTERS_TPL = <<<'EOS'
@@ -107,7 +107,7 @@ EOS;
             }, array_keys($value), $value);
         });
 
-        $this->assertEquals("0: bacon\n1: bacon\n2: bacon\n", $tpl->render(['word' => 'bacon']));
+        $this->assertSame("0: bacon\n1: bacon\n2: bacon\n", $tpl->render(['word' => 'bacon']));
     }
 
     /**
@@ -115,7 +115,7 @@ EOS;
      */
     public function testInterpolateFirst($tpl, $data, $expect)
     {
-        $this->assertEquals($expect, $this->mustache->render($tpl, $data));
+        $this->assertSame($expect, $this->mustache->render($tpl, $data));
     }
 
     public function interpolateFirstData()
@@ -197,7 +197,7 @@ EOS;
      */
     public function testLambdaFilters($tpl, $data, $expect)
     {
-        $this->assertEquals($expect, $this->mustache->render($tpl, $data));
+        $this->assertSame($expect, $this->mustache->render($tpl, $data));
     }
 
     public function lambdaFiltersData()

@@ -26,13 +26,13 @@ class UnknownFilterExceptionTest extends TestCase
     public function testMessage()
     {
         $e = new UnknownFilterException('sausage');
-        $this->assertEquals('Unknown filter: sausage', $e->getMessage());
+        $this->assertSame('Unknown filter: sausage', $e->getMessage());
     }
 
     public function testGetFilterName()
     {
         $e = new UnknownFilterException('eggs');
-        $this->assertEquals('eggs', $e->getFilterName());
+        $this->assertSame('eggs', $e->getFilterName());
     }
 
     public function testPrevious()

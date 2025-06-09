@@ -27,9 +27,9 @@ class ProductionFilesystemLoaderTest extends TestCase
         $baseDir = realpath(__DIR__ . '/../fixtures/templates');
         $loader = new ProductionFilesystemLoader($baseDir, ['extension' => '.ms']);
         $this->assertInstanceOf(Source::class, $loader->load('alpha'));
-        $this->assertEquals('alpha contents', $loader->load('alpha')->getSource());
+        $this->assertSame('alpha contents', $loader->load('alpha')->getSource());
         $this->assertInstanceOf(Source::class, $loader->load('beta.ms'));
-        $this->assertEquals('beta contents', $loader->load('beta.ms')->getSource());
+        $this->assertSame('beta contents', $loader->load('beta.ms')->getSource());
     }
 
     public function testTrailingSlashes()
@@ -37,7 +37,7 @@ class ProductionFilesystemLoaderTest extends TestCase
         // Not realpath, because it strips trailing slashes
         $baseDir = __DIR__ . '/../fixtures/templates/';
         $loader = new ProductionFilesystemLoader($baseDir);
-        $this->assertEquals('one contents', $loader->load('one')->getSource());
+        $this->assertSame('one contents', $loader->load('one')->getSource());
     }
 
     public function testConstructorWithProtocol()
@@ -45,16 +45,16 @@ class ProductionFilesystemLoaderTest extends TestCase
         $baseDir = realpath(__DIR__ . '/../fixtures/templates');
 
         $loader = new ProductionFilesystemLoader('file://' . $baseDir, ['extension' => '.ms']);
-        $this->assertEquals('alpha contents', $loader->load('alpha')->getSource());
-        $this->assertEquals('beta contents', $loader->load('beta.ms')->getSource());
+        $this->assertSame('alpha contents', $loader->load('alpha')->getSource());
+        $this->assertSame('beta contents', $loader->load('beta.ms')->getSource());
     }
 
     public function testLoadTemplates()
     {
         $baseDir = realpath(__DIR__ . '/../fixtures/templates');
         $loader = new ProductionFilesystemLoader($baseDir);
-        $this->assertEquals('one contents', $loader->load('one')->getSource());
-        $this->assertEquals('two contents', $loader->load('two.mustache')->getSource());
+        $this->assertSame('one contents', $loader->load('one')->getSource());
+        $this->assertSame('two contents', $loader->load('two.mustache')->getSource());
     }
 
     public function testEmptyExtensionString()
@@ -62,12 +62,12 @@ class ProductionFilesystemLoaderTest extends TestCase
         $baseDir = realpath(__DIR__ . '/../fixtures/templates');
 
         $loader = new ProductionFilesystemLoader($baseDir, ['extension' => '']);
-        $this->assertEquals('one contents', $loader->load('one.mustache')->getSource());
-        $this->assertEquals('alpha contents', $loader->load('alpha.ms')->getSource());
+        $this->assertSame('one contents', $loader->load('one.mustache')->getSource());
+        $this->assertSame('alpha contents', $loader->load('alpha.ms')->getSource());
 
         $loader = new ProductionFilesystemLoader($baseDir, ['extension' => null]);
-        $this->assertEquals('two contents', $loader->load('two.mustache')->getSource());
-        $this->assertEquals('beta contents', $loader->load('beta.ms')->getSource());
+        $this->assertSame('two contents', $loader->load('two.mustache')->getSource());
+        $this->assertSame('beta contents', $loader->load('beta.ms')->getSource());
     }
 
     public function testMissingBaseDirThrowsException()
@@ -98,11 +98,11 @@ class ProductionFilesystemLoaderTest extends TestCase
         $sizeKey = $sizeLoader->load('one.mustache')->getKey();
         $bothKey = $bothLoader->load('one.mustache')->getKey();
 
-        $this->assertNotEquals($noStatKey, $mtimeKey);
-        $this->assertNotEquals($noStatKey, $sizeKey);
-        $this->assertNotEquals($noStatKey, $bothKey);
-        $this->assertNotEquals($mtimeKey, $sizeKey);
-        $this->assertNotEquals($mtimeKey, $bothKey);
-        $this->assertNotEquals($sizeKey, $bothKey);
+        $this->assertNotSame($noStatKey, $mtimeKey);
+        $this->assertNotSame($noStatKey, $sizeKey);
+        $this->assertNotSame($noStatKey, $bothKey);
+        $this->assertNotSame($mtimeKey, $sizeKey);
+        $this->assertNotSame($mtimeKey, $bothKey);
+        $this->assertNotSame($sizeKey, $bothKey);
     }
 }

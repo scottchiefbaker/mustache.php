@@ -47,7 +47,7 @@ EOS;
         $tpl = $m->loadTemplate($src);
 
         $data = new ClassWithLambda();
-        $this->assertEquals($expected, $tpl->render($data));
+        $this->assertSame($expected, $tpl->render($data));
     }
 
     public function testLambdaInterpolationsInsidePartialsAreIndentedProperly()
@@ -77,7 +77,7 @@ EOS;
         $tpl = $m->loadTemplate($src);
 
         $data = new ClassWithLambda();
-        $this->assertEquals($expected, $tpl->render($data));
+        $this->assertSame($expected, $tpl->render($data));
     }
 }
 

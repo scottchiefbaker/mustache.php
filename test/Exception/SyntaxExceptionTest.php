@@ -28,7 +28,7 @@ class SyntaxExceptionTest extends TestCase
     {
         $token = [Tokenizer::TYPE => 'whatever'];
         $e = new SyntaxException('ignore this', $token);
-        $this->assertEquals($token, $e->getToken());
+        $this->assertSame($token, $e->getToken());
     }
 
     public function testPrevious()

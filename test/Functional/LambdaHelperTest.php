@@ -38,8 +38,8 @@ class LambdaHelperTest extends TestCase
             return strtoupper($mustache->render($text));
         };
 
-        $this->assertEquals('Mario', $one->render($foo));
-        $this->assertEquals('MARIO', $two->render($foo));
+        $this->assertSame('Mario', $one->render($foo));
+        $this->assertSame('MARIO', $two->render($foo));
     }
 
     public function testSectionLambdaHelperRespectsDelimiterChanges()
@@ -52,7 +52,7 @@ class LambdaHelperTest extends TestCase
             return $mustache->render($text) . '!';
         };
 
-        $this->assertEquals('hello world!', $tpl->render($data));
+        $this->assertSame('hello world!', $tpl->render($data));
     }
 
     public function testLambdaHelperIsInvokable()
@@ -66,7 +66,7 @@ class LambdaHelperTest extends TestCase
             return strtoupper($render($text));
         };
 
-        $this->assertEquals('Mario', $one->render($foo));
-        $this->assertEquals('MARIO', $two->render($foo));
+        $this->assertSame('Mario', $one->render($foo));
+        $this->assertSame('MARIO', $two->render($foo));
     }
 }

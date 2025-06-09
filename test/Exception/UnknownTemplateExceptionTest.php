@@ -26,13 +26,13 @@ class UnknownTemplateExceptionTest extends TestCase
     public function testMessage()
     {
         $e = new UnknownTemplateException('luigi');
-        $this->assertEquals('Unknown template: luigi', $e->getMessage());
+        $this->assertSame('Unknown template: luigi', $e->getMessage());
     }
 
     public function testGetTemplateName()
     {
         $e = new UnknownTemplateException('yoshi');
-        $this->assertEquals('yoshi', $e->getTemplateName());
+        $this->assertSame('yoshi', $e->getTemplateName());
     }
 
     public function testPrevious()

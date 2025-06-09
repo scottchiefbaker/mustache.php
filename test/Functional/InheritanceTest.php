@@ -117,7 +117,7 @@ class InheritanceTest extends TestCase
 
         $data = [];
 
-        $this->assertEquals('Default title', $tpl->render($data));
+        $this->assertSame('Default title', $tpl->render($data));
     }
 
     public function testDefaultContentRendersVariables()
@@ -128,7 +128,7 @@ class InheritanceTest extends TestCase
             'bar' => 'baz',
         ];
 
-        $this->assertEquals('default baz content', $tpl->render($data));
+        $this->assertSame('default baz content', $tpl->render($data));
     }
 
     public function testDefaultContentRendersTripleMustacheVariables()
@@ -139,7 +139,7 @@ class InheritanceTest extends TestCase
             'bar' => '<baz>',
         ];
 
-        $this->assertEquals('default <baz> content', $tpl->render($data));
+        $this->assertSame('default <baz> content', $tpl->render($data));
     }
 
     public function testDefaultContentRendersSections()
@@ -152,7 +152,7 @@ class InheritanceTest extends TestCase
             'bar' => ['baz' => 'qux'],
         ];
 
-        $this->assertEquals('default qux content', $tpl->render($data));
+        $this->assertSame('default qux content', $tpl->render($data));
     }
 
     public function testDefaultContentRendersNegativeSections()
@@ -166,7 +166,7 @@ class InheritanceTest extends TestCase
             'baz' => 'three',
         ];
 
-        $this->assertEquals('default three content', $tpl->render($data));
+        $this->assertSame('default three content', $tpl->render($data));
     }
 
     public function testMustacheInjectionInDefaultContent()
@@ -179,7 +179,7 @@ class InheritanceTest extends TestCase
             'bar' => ['baz' => '{{qux}}'],
         ];
 
-        $this->assertEquals('default {{qux}} content', $tpl->render($data));
+        $this->assertSame('default {{qux}} content', $tpl->render($data));
     }
 
     public function testDefaultContentRenderedInsideIncludedTemplates()
@@ -196,7 +196,7 @@ class InheritanceTest extends TestCase
 
         $data = [];
 
-        $this->assertEquals('default content', $tpl->render($data));
+        $this->assertSame('default content', $tpl->render($data));
     }
 
     public function testOverriddenContent()
@@ -213,7 +213,7 @@ class InheritanceTest extends TestCase
 
         $data = [];
 
-        $this->assertEquals('...sub template title...', $tpl->render($data));
+        $this->assertSame('...sub template title...', $tpl->render($data));
     }
 
     public function testOverriddenPartial()
@@ -230,7 +230,7 @@ class InheritanceTest extends TestCase
 
         $data = [];
 
-        $this->assertEquals('test |override1 default| |override2 default|', $tpl->render($data));
+        $this->assertSame('test |override1 default| |override2 default|', $tpl->render($data));
     }
 
     public function testBlocksDoNotLeakBetweenPartials()
@@ -247,7 +247,7 @@ class InheritanceTest extends TestCase
 
         $data = [];
 
-        $this->assertEquals('test |C B| |A D|', $tpl->render($data));
+        $this->assertSame('test |C B| |A D|', $tpl->render($data));
     }
 
     public function testDataDoesNotOverrideBlock()
@@ -266,7 +266,7 @@ class InheritanceTest extends TestCase
             'var' => 'var in data',
         ];
 
-        $this->assertEquals('var in template', $tpl->render($data));
+        $this->assertSame('var in template', $tpl->render($data));
     }
 
     public function testDataDoesNotOverrideDefaultBlockValue()
@@ -285,7 +285,7 @@ class InheritanceTest extends TestCase
             'var' => 'var in data',
         ];
 
-        $this->assertEquals('var in include', $tpl->render($data));
+        $this->assertSame('var in include', $tpl->render($data));
     }
 
     public function testOverridePartialWithNewlines()
@@ -302,7 +302,7 @@ class InheritanceTest extends TestCase
 
         $data = [];
 
-        $this->assertEquals("peaked\n\n:(\n", $tpl->render($data));
+        $this->assertSame("peaked\n\n:(\n", $tpl->render($data));
     }
 
     public function testInheritIndentationWhenOverridingAPartial()
@@ -320,7 +320,7 @@ class InheritanceTest extends TestCase
 
         $data = [];
 
-        $this->assertEquals(
+        $this->assertSame(
             'stop:
                     hammer time',
             $tpl->render($data)
@@ -343,7 +343,7 @@ class InheritanceTest extends TestCase
 
         $data = [];
 
-        $this->assertEquals(
+        $this->assertSame(
             'stop:
               collaborate_and_listen',
             $tpl->render($data)
@@ -364,7 +364,7 @@ class InheritanceTest extends TestCase
 
         $data = [];
 
-        $this->assertEquals('default one, override two', $tpl->render($data));
+        $this->assertSame('default one, override two', $tpl->render($data));
     }
 
     public function testSuperTemplatesWithNoParameters()
@@ -381,7 +381,7 @@ class InheritanceTest extends TestCase
 
         $data = [];
 
-        $this->assertEquals('default content|default content', $tpl->render($data));
+        $this->assertSame('default content|default content', $tpl->render($data));
     }
 
     public function testRecursionInInheritedTemplates()
@@ -399,7 +399,7 @@ class InheritanceTest extends TestCase
 
         $data = [];
 
-        $this->assertEquals('override override override don\'t recurse', $tpl->render($data));
+        $this->assertSame('override override override don\'t recurse', $tpl->render($data));
     }
 
     public function testTopLevelSubstitutionsTakePrecedenceInMultilevelInheritance()
@@ -418,7 +418,7 @@ class InheritanceTest extends TestCase
 
         $data = [];
 
-        $this->assertEquals('c', $tpl->render($data));
+        $this->assertSame('c', $tpl->render($data));
     }
 
     public function testMultiLevelInheritanceNoSubChild()
@@ -437,7 +437,7 @@ class InheritanceTest extends TestCase
 
         $data = [];
 
-        $this->assertEquals('p', $tpl->render($data));
+        $this->assertSame('p', $tpl->render($data));
     }
 
     public function testIgnoreTextInsideSuperTemplatesButParseArgs()
@@ -454,7 +454,7 @@ class InheritanceTest extends TestCase
 
         $data = [];
 
-        $this->assertEquals('hmm', $tpl->render($data));
+        $this->assertSame('hmm', $tpl->render($data));
     }
 
     public function testIgnoreTextInsideSuperTemplates()
@@ -471,7 +471,7 @@ class InheritanceTest extends TestCase
 
         $data = [];
 
-        $this->assertEquals('default content', $tpl->render($data));
+        $this->assertSame('default content', $tpl->render($data));
     }
 
     public function testInheritanceWithLazyEvaluation()
@@ -488,7 +488,7 @@ class InheritanceTest extends TestCase
 
         $data = ['items' => [1, 2, 3]];
 
-        $this->assertEquals('<1><2><3>', $tpl->render($data));
+        $this->assertSame('<1><2><3>', $tpl->render($data));
     }
 
     public function testInheritanceWithLazyEvaluationWhitespaceIgnored()
@@ -505,7 +505,7 @@ class InheritanceTest extends TestCase
 
         $data = ['items' => [1, 2, 3]];
 
-        $this->assertEquals('<1><2><3>', $tpl->render($data));
+        $this->assertSame('<1><2><3>', $tpl->render($data));
     }
 
     public function testInheritanceWithLazyEvaluationAndSections()
@@ -522,7 +522,7 @@ class InheritanceTest extends TestCase
 
         $data = ['items' => [1, 2, 3], 'more' => 'stuff'];
 
-        $this->assertEquals('<1> there is less <2> there is less <3> there is less ', $tpl->render($data));
+        $this->assertSame('<1> there is less <2> there is less <3> there is less ', $tpl->render($data));
     }
 
     /**

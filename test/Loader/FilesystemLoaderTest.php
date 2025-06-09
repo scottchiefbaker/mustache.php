@@ -25,8 +25,8 @@ class FilesystemLoaderTest extends TestCase
     {
         $baseDir = realpath(__DIR__ . '/../fixtures/templates');
         $loader = new FilesystemLoader($baseDir, ['extension' => '.ms']);
-        $this->assertEquals('alpha contents', $loader->load('alpha'));
-        $this->assertEquals('beta contents', $loader->load('beta.ms'));
+        $this->assertSame('alpha contents', $loader->load('alpha'));
+        $this->assertSame('beta contents', $loader->load('beta.ms'));
     }
 
     public function testTrailingSlashes()
@@ -34,35 +34,35 @@ class FilesystemLoaderTest extends TestCase
         // Not realpath, because it strips trailing slashes
         $baseDir = __DIR__ . '/../fixtures/templates/';
         $loader = new FilesystemLoader($baseDir);
-        $this->assertEquals('one contents', $loader->load('one'));
+        $this->assertSame('one contents', $loader->load('one'));
     }
 
     public function testConstructorWithProtocol()
     {
         $baseDir = realpath(__DIR__ . '/../fixtures/templates');
         $loader = new FilesystemLoader('test://' . $baseDir, ['extension' => '.ms']);
-        $this->assertEquals('alpha contents', $loader->load('alpha'));
-        $this->assertEquals('beta contents', $loader->load('beta.ms'));
+        $this->assertSame('alpha contents', $loader->load('alpha'));
+        $this->assertSame('beta contents', $loader->load('beta.ms'));
     }
 
     public function testLoadTemplates()
     {
         $baseDir = realpath(__DIR__ . '/../fixtures/templates');
         $loader = new FilesystemLoader($baseDir);
-        $this->assertEquals('one contents', $loader->load('one'));
-        $this->assertEquals('two contents', $loader->load('two.mustache'));
+        $this->assertSame('one contents', $loader->load('one'));
+        $this->assertSame('two contents', $loader->load('two.mustache'));
     }
 
     public function testEmptyExtensionString()
     {
         $baseDir = realpath(__DIR__ . '/../fixtures/templates');
         $loader = new FilesystemLoader($baseDir, ['extension' => '']);
-        $this->assertEquals('one contents', $loader->load('one.mustache'));
-        $this->assertEquals('alpha contents', $loader->load('alpha.ms'));
+        $this->assertSame('one contents', $loader->load('one.mustache'));
+        $this->assertSame('alpha contents', $loader->load('alpha.ms'));
 
         $loader = new FilesystemLoader($baseDir, ['extension' => null]);
-        $this->assertEquals('two contents', $loader->load('two.mustache'));
-        $this->assertEquals('beta contents', $loader->load('beta.ms'));
+        $this->assertSame('two contents', $loader->load('two.mustache'));
+        $this->assertSame('beta contents', $loader->load('beta.ms'));
     }
 
     public function testMissingBaseDirThrowsException()

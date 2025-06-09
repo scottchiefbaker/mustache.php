@@ -33,7 +33,7 @@ class MustacheInjectionTest extends TestCase
     public function testInjection($tpl, $data, $partials, $expect)
     {
         $this->mustache->setPartials($partials);
-        $this->assertEquals($expect, $this->mustache->render($tpl, $data));
+        $this->assertSame($expect, $this->mustache->render($tpl, $data));
     }
 
     public function injectionData()

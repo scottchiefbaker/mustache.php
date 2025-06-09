@@ -35,7 +35,7 @@ class ExamplesTest extends TestCase
         $mustache = new Engine([
             'partials' => $partials,
         ]);
-        $this->assertEquals($expected, $mustache->loadTemplate($source)->render($context));
+        $this->assertSame($expected, $mustache->loadTemplate($source)->render($context));
     }
 
     /**

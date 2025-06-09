@@ -30,7 +30,7 @@ class EngineTest extends TestCase
             'helpers' => $helpers,
         ]);
 
-        $this->assertEquals($expect, $mustache->render($tpl, $data));
+        $this->assertSame($expect, $mustache->render($tpl, $data));
     }
 
     public function pragmaData()

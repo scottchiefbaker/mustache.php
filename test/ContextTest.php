@@ -29,14 +29,14 @@ class ContextTest extends TestCase
             'foo' => 'FOO',
             'bar' => '<BAR>',
         ]);
-        $this->assertEquals('FOO', $two->find('foo'));
-        $this->assertEquals('<BAR>', $two->find('bar'));
+        $this->assertSame('FOO', $two->find('foo'));
+        $this->assertSame('<BAR>', $two->find('bar'));
 
         $obj = new \StdClass();
         $obj->name = 'NAME';
         $three = new Context($obj);
         $this->assertSame($obj, $three->last());
-        $this->assertEquals('NAME', $three->find('name'));
+        $this->assertSame('NAME', $three->find('name'));
     }
 
     public function testPushPopAndLast()
@@ -77,29 +77,29 @@ class ContextTest extends TestCase
         $string = 'some arbitrary string';
 
         $context->push($dummy);
-        $this->assertEquals('dummy', $context->find('name'));
+        $this->assertSame('dummy', $context->find('name'));
 
         $context->push($obj);
-        $this->assertEquals('obj', $context->find('name'));
+        $this->assertSame('obj', $context->find('name'));
 
         $context->pop();
-        $this->assertEquals('dummy', $context->find('name'));
+        $this->assertSame('dummy', $context->find('name'));
 
         $dummy->name = 'dummyer';
-        $this->assertEquals('dummyer', $context->find('name'));
+        $this->assertSame('dummyer', $context->find('name'));
 
         $context->push($arr);
-        $this->assertEquals('bee', $context->find('b'));
-        $this->assertEquals('see', $context->findDot('a.b.c'));
+        $this->assertSame('bee', $context->find('b'));
+        $this->assertSame('see', $context->findDot('a.b.c'));
 
         $dummy->name = 'dummy';
 
         $context->push($string);
         $this->assertSame($string, $context->last());
-        $this->assertEquals('dummy', $context->find('name'));
-        $this->assertEquals('see', $context->findDot('a.b.c'));
-        $this->assertEquals('<foo>', $context->find('foo'));
-        $this->assertEquals('<bar>', $context->findDot('bar'));
+        $this->assertSame('dummy', $context->find('name'));
+        $this->assertSame('see', $context->findDot('a.b.c'));
+        $this->assertSame('<foo>', $context->find('foo'));
+        $this->assertSame('<bar>', $context->findDot('bar'));
     }
 
     public function testArrayAccessFind()
@@ -110,8 +110,8 @@ class ContextTest extends TestCase
         ]);
 
         $context = new Context($access);
-        $this->assertEquals('bee', $context->find('b'));
-        $this->assertEquals('see', $context->findDot('a.b.c'));
+        $this->assertSame('bee', $context->find('b'));
+        $this->assertSame('see', $context->findDot('a.b.c'));
         $this->assertEquals(null, $context->findDot('a.b.c.d'));
     }
 
@@ -119,10 +119,10 @@ class ContextTest extends TestCase
     {
         $context = new Context(new AllTheThings());
 
-        $this->assertEquals('win', $context->find('foo'), 'method beats property');
-        $this->assertEquals('win', $context->find('bar'), 'property beats ArrayAccess');
-        $this->assertEquals('win', $context->find('baz'), 'ArrayAccess stands alone');
-        $this->assertEquals('win', $context->find('qux'), 'ArrayAccess beats private property');
+        $this->assertSame('win', $context->find('foo'), 'method beats property');
+        $this->assertSame('win', $context->find('bar'), 'property beats ArrayAccess');
+        $this->assertSame('win', $context->find('baz'), 'ArrayAccess stands alone');
+        $this->assertSame('win', $context->find('qux'), 'ArrayAccess beats private property');
     }
 
     public function testAnchoredDotNotation()
@@ -146,34 +146,34 @@ class ContextTest extends TestCase
         ];
 
         $context->push($a);
-        $this->assertEquals('a', $context->find('name'));
-        $this->assertEquals('', $context->findDot('.name'));
-        $this->assertEquals('a', $context->findAnchoredDot('.name'));
-        $this->assertEquals(1, $context->find('number'));
-        $this->assertEquals('', $context->findDot('.number'));
-        $this->assertEquals(1, $context->findAnchoredDot('.number'));
+        $this->assertSame('a', $context->find('name'));
+        $this->assertSame('', $context->findDot('.name'));
+        $this->assertSame('a', $context->findAnchoredDot('.name'));
+        $this->assertSame(1, $context->find('number'));
+        $this->assertSame('', $context->findDot('.number'));
+        $this->assertSame(1, $context->findAnchoredDot('.number'));
 
         $context->push($b);
-        $this->assertEquals('a', $context->find('name'));
-        $this->assertEquals(2, $context->find('number'));
-        $this->assertEquals('', $context->findDot('.name'));
-        $this->assertEquals('', $context->findDot('.number'));
-        $this->assertEquals('', $context->findAnchoredDot('.name'));
-        $this->assertEquals(2, $context->findAnchoredDot('.number'));
-        $this->assertEquals('baby bee', $context->findDot('child.name'));
-        $this->assertEquals('', $context->findDot('.child.name'));
-        $this->assertEquals('baby bee', $context->findAnchoredDot('.child.name'));
+        $this->assertSame('a', $context->find('name'));
+        $this->assertSame(2, $context->find('number'));
+        $this->assertSame('', $context->findDot('.name'));
+        $this->assertSame('', $context->findDot('.number'));
+        $this->assertSame('', $context->findAnchoredDot('.name'));
+        $this->assertSame(2, $context->findAnchoredDot('.number'));
+        $this->assertSame('baby bee', $context->findDot('child.name'));
+        $this->assertSame('', $context->findDot('.child.name'));
+        $this->assertSame('baby bee', $context->findAnchoredDot('.child.name'));
 
         $context->push($c);
-        $this->assertEquals('cee', $context->find('name'));
-        $this->assertEquals('', $context->findDot('.name'));
-        $this->assertEquals('cee', $context->findAnchoredDot('.name'));
-        $this->assertEquals(2, $context->find('number'));
-        $this->assertEquals('', $context->findDot('.number'));
-        $this->assertEquals('', $context->findAnchoredDot('.number'));
-        $this->assertEquals('baby bee', $context->findDot('child.name'));
-        $this->assertEquals('', $context->findDot('.child.name'));
-        $this->assertEquals('', $context->findAnchoredDot('.child.name'));
+        $this->assertSame('cee', $context->find('name'));
+        $this->assertSame('', $context->findDot('.name'));
+        $this->assertSame('cee', $context->findAnchoredDot('.name'));
+        $this->assertSame(2, $context->find('number'));
+        $this->assertSame('', $context->findDot('.number'));
+        $this->assertSame('', $context->findAnchoredDot('.number'));
+        $this->assertSame('baby bee', $context->findDot('child.name'));
+        $this->assertSame('', $context->findDot('.child.name'));
+        $this->assertSame('', $context->findAnchoredDot('.child.name'));
     }
 
     public function testAnchoredDotNotationThrowsExceptions()
@@ -232,7 +232,7 @@ class ContextTest extends TestCase
         $context->push($a);
         $context->push($b);
 
-        $this->assertEquals($context->find('name'), 'not null');
+        $this->assertSame($context->find('name'), 'not null');
     }
 }
 
@@ -270,7 +270,7 @@ class TestArrayAccess implements \ArrayAccess
     #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
-        if (is_null($offset)) {
+        if ($offset === null) {
             $this->container[] = $value;
         } else {
             $this->container[$offset] = $value;

@@ -23,8 +23,8 @@ class StringLoaderTest extends TestCase
     {
         $loader = new StringLoader();
 
-        $this->assertEquals('foo', $loader->load('foo'));
-        $this->assertEquals('{{ bar }}', $loader->load('{{ bar }}'));
-        $this->assertEquals("\n{{! comment }}\n", $loader->load("\n{{! comment }}\n"));
+        $this->assertSame('foo', $loader->load('foo'));
+        $this->assertSame('{{ bar }}', $loader->load('{{ bar }}'));
+        $this->assertSame("\n{{! comment }}\n", $loader->load("\n{{! comment }}\n"));
     }
 }

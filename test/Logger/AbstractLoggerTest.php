@@ -44,7 +44,7 @@ class AbstractLoggerTest extends TestCase
             [Logger::DEBUG, 'debug message', []],
         ];
 
-        $this->assertEquals($expected, $logger->log);
+        $this->assertSame($expected, $logger->log);
     }
 }
 

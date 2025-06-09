@@ -60,7 +60,7 @@ class MustacheInheritanceSpecTest extends SpecTestCase
         }
 
         $template = self::loadTemplate($source, $partials);
-        $this->assertEquals($expected, $template->render($data), $desc);
+        $this->assertSame($expected, $template->render($data), $desc);
     }
 
     public function loadInheritanceSpec()

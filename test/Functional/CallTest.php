@@ -30,7 +30,7 @@ class CallTest extends TestCase
 
         $data = ['label' => 'name', 'foo' => $foo];
 
-        $this->assertEquals('name: Bob', $tpl->render($data));
+        $this->assertSame('name: Bob', $tpl->render($data));
     }
 }
 

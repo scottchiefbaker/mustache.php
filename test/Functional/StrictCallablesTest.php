@@ -32,7 +32,7 @@ class StrictCallablesTest extends TestCase
         $data->yourname    = $name;
         $data->section = $section;
 
-        $this->assertEquals($expected, $tpl->render($data));
+        $this->assertSame($expected, $tpl->render($data));
     }
 
     public function callables()

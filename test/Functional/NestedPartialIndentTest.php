@@ -29,7 +29,7 @@ class NestedPartialIndentTest extends TestCase
             'partials' => $partials,
         ]);
         $tpl = $m->loadTemplate($src);
-        $this->assertEquals($expected, $tpl->render());
+        $this->assertSame($expected, $tpl->render());
     }
 
     public function partialsAndStuff()
