@@ -25,7 +25,10 @@
     "autoload": {
         "psr-4": {
             "Mustache\\": "src/"
-        }
+        },
+        "files": [
+            "src/compat.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
