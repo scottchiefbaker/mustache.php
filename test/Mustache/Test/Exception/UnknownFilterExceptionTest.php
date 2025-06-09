@@ -14,8 +14,8 @@ class Mustache_Test_Exception_UnknownFilterExceptionTest extends Yoast\PHPUnitPo
     public function testInstance()
     {
         $e = new Mustache_Exception_UnknownFilterException('bacon');
-        $this->assertTrue($e instanceof UnexpectedValueException);
-        $this->assertTrue($e instanceof Mustache_Exception);
+        $this->assertInstanceOf(UnexpectedValueException::class, $e);
+        $this->assertInstanceOf(Mustache_Exception::class, $e);
     }
 
     public function testMessage()

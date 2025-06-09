@@ -14,8 +14,8 @@ class Mustache_Test_Exception_UnknownTemplateExceptionTest extends Yoast\PHPUnit
     public function testInstance()
     {
         $e = new Mustache_Exception_UnknownTemplateException('mario');
-        $this->assertTrue($e instanceof InvalidArgumentException);
-        $this->assertTrue($e instanceof Mustache_Exception);
+        $this->assertInstanceOf(InvalidArgumentException::class, $e);
+        $this->assertInstanceOf(Mustache_Exception::class, $e);
     }
 
     public function testMessage()

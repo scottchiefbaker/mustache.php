@@ -14,8 +14,8 @@ class Mustache_Test_Exception_SyntaxExceptionTest extends Yoast\PHPUnitPolyfills
     public function testInstance()
     {
         $e = new Mustache_Exception_SyntaxException('whot', ['is' => 'this']);
-        $this->assertTrue($e instanceof LogicException);
-        $this->assertTrue($e instanceof Mustache_Exception);
+        $this->assertInstanceOf(LogicException::class, $e);
+        $this->assertInstanceOf(Mustache_Exception::class, $e);
     }
 
     public function testGetToken()

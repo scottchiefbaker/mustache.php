@@ -14,8 +14,8 @@ class Mustache_Test_Exception_UnknownHelperExceptionTest extends Yoast\PHPUnitPo
     public function testInstance()
     {
         $e = new Mustache_Exception_UnknownHelperException('alpha');
-        $this->assertTrue($e instanceof InvalidArgumentException);
-        $this->assertTrue($e instanceof Mustache_Exception);
+        $this->assertInstanceOf(InvalidArgumentException::class, $e);
+        $this->assertInstanceOf(Mustache_Exception::class, $e);
     }
 
     public function testMessage()
