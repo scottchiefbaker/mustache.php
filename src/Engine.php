@@ -34,7 +34,7 @@ use Mustache\Loader\StringLoader;
  */
 class Engine
 {
-    const VERSION      = '2.14.2';
+    const VERSION      = '3.0.0-alpha1';
     const SPEC_VERSION = '1.3.0';
 
     const PRAGMA_FILTERS       = 'FILTERS';
