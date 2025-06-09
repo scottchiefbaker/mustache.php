@@ -320,8 +320,8 @@ class Mustache_Test_ParserTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
      */
     public function testParserThrowsExceptions($tokens)
     {
-        $parser = new Mustache_Parser();
         $this->expectException(Mustache_Exception_SyntaxException::class);
+        $parser = new Mustache_Parser();
         $parser->parse($tokens);
     }
 

@@ -25,18 +25,16 @@ class Mustache_Test_TokenizerTest extends Yoast\PHPUnitPolyfills\TestCases\TestC
 
     public function testUnevenBracesThrowExceptions()
     {
-        $tokenizer = new Mustache_Tokenizer();
-
         $this->expectException(Mustache_Exception_SyntaxException::class);
+        $tokenizer = new Mustache_Tokenizer();
         $text = '{{{ name }}';
         $tokenizer->scan($text, null);
     }
 
     public function testUnevenBracesWithCustomDelimiterThrowExceptions()
     {
-        $tokenizer = new Mustache_Tokenizer();
-
         $this->expectException(Mustache_Exception_SyntaxException::class);
+        $tokenizer = new Mustache_Tokenizer();
         $text = '<%{ name %>';
         $tokenizer->scan($text, '<% %>');
     }
@@ -353,9 +351,8 @@ class Mustache_Test_TokenizerTest extends Yoast\PHPUnitPolyfills\TestCases\TestC
      */
     public function testUnclosedTagsThrowExceptions($text)
     {
-        $tokenizer = new Mustache_Tokenizer();
-
         $this->expectException(Mustache_Exception_SyntaxException::class);
+        $tokenizer = new Mustache_Tokenizer();
         $tokenizer->scan($text, null);
     }
 

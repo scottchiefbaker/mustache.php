@@ -173,9 +173,9 @@ class Mustache_Test_ContextTest extends Yoast\PHPUnitPolyfills\TestCases\TestCas
 
     public function testAnchoredDotNotationThrowsExceptions()
     {
+        $this->expectException(Mustache_Exception_InvalidArgumentException::class);
         $context = new Mustache_Context();
         $context->push(['a' => 1]);
-        $this->expectException(Mustache_Exception_InvalidArgumentException::class);
         $context->findAnchoredDot('a');
     }
 

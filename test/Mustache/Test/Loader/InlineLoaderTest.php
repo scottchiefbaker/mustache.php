@@ -23,8 +23,8 @@ class Mustache_Test_Loader_InlineLoaderTest extends Yoast\PHPUnitPolyfills\TestC
 
     public function testMissingTemplatesThrowExceptions()
     {
-        $loader = new Mustache_Loader_InlineLoader(__FILE__, __COMPILER_HALT_OFFSET__);
         $this->expectException(Mustache_Exception_UnknownTemplateException::class);
+        $loader = new Mustache_Loader_InlineLoader(__FILE__, __COMPILER_HALT_OFFSET__);
         $loader->load('not_a_real_template');
     }
 

@@ -38,11 +38,10 @@ class Mustache_Test_Logger_StreamLoggerTest extends Yoast\PHPUnitPolyfills\TestC
 
     public function testPrematurelyClosedStreamThrowsException()
     {
+        $this->expectException(Mustache_Exception_LogicException::class);
         $stream = tmpfile();
         $logger = new Mustache_Logger_StreamLogger($stream);
         fclose($stream);
-
-        $this->expectException(Mustache_Exception_LogicException::class);
         $logger->log(Mustache_Logger::CRITICAL, 'message');
     }
 
@@ -189,15 +188,15 @@ class Mustache_Test_Logger_StreamLoggerTest extends Yoast\PHPUnitPolyfills\TestC
 
     public function testThrowsInvalidArgumentExceptionWhenSettingUnknownLevels()
     {
-        $logger = new Mustache_Logger_StreamLogger(tmpfile());
         $this->expectException(Mustache_Exception_InvalidArgumentException::class);
+        $logger = new Mustache_Logger_StreamLogger(tmpfile());
         $logger->setLevel('bacon');
     }
 
     public function testThrowsInvalidArgumentExceptionWhenLoggingUnknownLevels()
     {
-        $logger = new Mustache_Logger_StreamLogger(tmpfile());
         $this->expectException(Mustache_Exception_InvalidArgumentException::class);
+        $logger = new Mustache_Logger_StreamLogger(tmpfile());
         $logger->log('bacon', 'CODE BACON ERROR!');
     }
 }

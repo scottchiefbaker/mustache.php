@@ -185,11 +185,11 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
 
     public function testImmutablePartialsLoadersThrowException()
     {
+        $this->expectException(Mustache_Exception_RuntimeException::class);
         $mustache = new Mustache_Engine([
             'partials_loader' => new Mustache_Loader_StringLoader(),
         ]);
 
-        $this->expectException(Mustache_Exception_RuntimeException::class);
         $mustache->setPartials(['foo' => '{{ foo }}']);
     }
 
@@ -248,15 +248,15 @@ class Mustache_Test_EngineTest extends Mustache_Test_FunctionalTestCase
 
     public function testSetHelpersThrowsExceptions()
     {
-        $mustache = new Mustache_Engine();
         $this->expectException(Mustache_Exception_InvalidArgumentException::class);
+        $mustache = new Mustache_Engine();
         $mustache->setHelpers('monkeymonkeymonkey');
     }
 
     public function testSetLoggerThrowsExceptions()
     {
-        $mustache = new Mustache_Engine();
         $this->expectException(Mustache_Exception_InvalidArgumentException::class);
+        $mustache = new Mustache_Engine();
         $mustache->setLogger(new StdClass());
     }
 

@@ -67,10 +67,9 @@ class Mustache_Test_Loader_FilesystemLoaderTest extends Yoast\PHPUnitPolyfills\T
 
     public function testMissingTemplateThrowsException()
     {
+        $this->expectException(Mustache_Exception_UnknownTemplateException::class);
         $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
         $loader = new Mustache_Loader_FilesystemLoader($baseDir);
-
-        $this->expectException(Mustache_Exception_UnknownTemplateException::class);
         $loader->load('fake');
     }
 }
