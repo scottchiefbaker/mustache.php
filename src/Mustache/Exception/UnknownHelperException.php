@@ -9,10 +9,12 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Exception;
+
 /**
  * Unknown helper exception.
  */
-class Mustache_Exception_UnknownHelperException extends InvalidArgumentException implements Mustache_Exception
+class UnknownHelperException extends InvalidArgumentException implements \Mustache\Exception
 {
     protected $helperName;
 

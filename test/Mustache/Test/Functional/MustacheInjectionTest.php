@@ -9,17 +9,22 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\Functional;
+
+use Mustache\Engine;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group mustache_injection
  * @group functional
  */
-class Mustache_Test_Functional_MustacheInjectionTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class MustacheInjectionTest extends TestCase
 {
     private $mustache;
 
     public function set_up()
     {
-        $this->mustache = new Mustache_Engine();
+        $this->mustache = new Engine();
     }
 
     /**

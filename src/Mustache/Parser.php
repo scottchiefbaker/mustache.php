@@ -9,12 +9,16 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache;
+
+use Mustache\Exception\SyntaxException;
+
 /**
  * Mustache Parser class.
  *
  * This class is responsible for turning a set of Mustache tokens into a parse tree.
  */
-class Mustache_Parser
+class Parser
 {
     private $lineNum;
     private $lineTokens;
@@ -38,9 +42,9 @@ class Mustache_Parser
         $this->lineTokens = 0;
         $this->pragmas    = $this->defaultPragmas;
 
-        $this->pragmaFilters      = isset($this->pragmas[Mustache_Engine::PRAGMA_FILTERS]);
-        $this->pragmaBlocks       = isset($this->pragmas[Mustache_Engine::PRAGMA_BLOCKS]);
-        $this->pragmaDynamicNames = isset($this->pragmas[Mustache_Engine::PRAGMA_DYNAMIC_NAMES]);
+        $this->pragmaFilters      = isset($this->pragmas[Engine::PRAGMA_FILTERS]);
+        $this->pragmaBlocks       = isset($this->pragmas[Engine::PRAGMA_BLOCKS]);
+        $this->pragmaDynamicNames = isset($this->pragmas[Engine::PRAGMA_DYNAMIC_NAMES]);
 
         return $this->buildTree($tokens);
     }
@@ -49,7 +53,7 @@ class Mustache_Parser
      * Enable pragmas across all templates, regardless of the presence of pragma
      * tags in the individual templates.
      *
-     * @internal Users should set global pragmas in Mustache_Engine, not here :)
+     * @internal Users should set global pragmas in Mustache\Engine, not here :)
      *
      * @param string[] $pragmas
      */
@@ -65,7 +69,7 @@ class Mustache_Parser
     /**
      * Helper method for recursively building a parse tree.
      *
-     * @throws Mustache_Exception_SyntaxException when nesting errors or mismatched section tags are encountered
+     * @throws SyntaxException when nesting errors or mismatched section tags are encountered
      *
      * @param array &$tokens Set of Mustache tokens
      * @param array $parent  Parent token (default: null)
@@ -79,113 +83,113 @@ class Mustache_Parser
         while (!empty($tokens)) {
             $token = array_shift($tokens);
 
-            if ($token[Mustache_Tokenizer::LINE] === $this->lineNum) {
+            if ($token[Tokenizer::LINE] === $this->lineNum) {
                 $this->lineTokens++;
             } else {
-                $this->lineNum    = $token[Mustache_Tokenizer::LINE];
+                $this->lineNum    = $token[Tokenizer::LINE];
                 $this->lineTokens = 0;
             }
 
-            if ($token[Mustache_Tokenizer::TYPE] !== Mustache_Tokenizer::T_COMMENT) {
-                if ($this->pragmaDynamicNames && isset($token[Mustache_Tokenizer::NAME])) {
+            if ($token[Tokenizer::TYPE] !== Tokenizer::T_COMMENT) {
+                if ($this->pragmaDynamicNames && isset($token[Tokenizer::NAME])) {
                     list($name, $isDynamic) = $this->getDynamicName($token);
                     if ($isDynamic) {
-                        $token[Mustache_Tokenizer::NAME]    = $name;
-                        $token[Mustache_Tokenizer::DYNAMIC] = true;
+                        $token[Tokenizer::NAME]    = $name;
+                        $token[Tokenizer::DYNAMIC] = true;
                     }
                 }
 
-                if ($this->pragmaFilters && isset($token[Mustache_Tokenizer::NAME])) {
-                    list($name, $filters) = $this->getNameAndFilters($token[Mustache_Tokenizer::NAME]);
+                if ($this->pragmaFilters && isset($token[Tokenizer::NAME])) {
+                    list($name, $filters) = $this->getNameAndFilters($token[Tokenizer::NAME]);
                     if (!empty($filters)) {
-                        $token[Mustache_Tokenizer::NAME]    = $name;
-                        $token[Mustache_Tokenizer::FILTERS] = $filters;
+                        $token[Tokenizer::NAME]    = $name;
+                        $token[Tokenizer::FILTERS] = $filters;
                     }
                 }
             }
 
-            switch ($token[Mustache_Tokenizer::TYPE]) {
-                case Mustache_Tokenizer::T_DELIM_CHANGE:
+            switch ($token[Tokenizer::TYPE]) {
+                case Tokenizer::T_DELIM_CHANGE:
                     $this->checkIfTokenIsAllowedInParent($parent, $token);
                     $this->clearStandaloneLines($nodes, $tokens);
                     break;
 
-                case Mustache_Tokenizer::T_SECTION:
-                case Mustache_Tokenizer::T_INVERTED:
+                case Tokenizer::T_SECTION:
+                case Tokenizer::T_INVERTED:
                     $this->checkIfTokenIsAllowedInParent($parent, $token);
                     $this->clearStandaloneLines($nodes, $tokens);
                     $nodes[] = $this->buildTree($tokens, $token);
                     break;
 
-                case Mustache_Tokenizer::T_END_SECTION:
+                case Tokenizer::T_END_SECTION:
                     if (!isset($parent)) {
                         $msg = sprintf(
                             'Unexpected closing tag: /%s on line %d',
-                            $token[Mustache_Tokenizer::NAME],
-                            $token[Mustache_Tokenizer::LINE]
+                            $token[Tokenizer::NAME],
+                            $token[Tokenizer::LINE]
                         );
-                        throw new Mustache_Exception_SyntaxException($msg, $token);
+                        throw new SyntaxException($msg, $token);
                     }
 
-                    $sameName = $token[Mustache_Tokenizer::NAME] !== $parent[Mustache_Tokenizer::NAME];
-                    $tokenDynamic = isset($token[Mustache_Tokenizer::DYNAMIC]) && $token[Mustache_Tokenizer::DYNAMIC];
-                    $parentDynamic = isset($parent[Mustache_Tokenizer::DYNAMIC]) && $parent[Mustache_Tokenizer::DYNAMIC];
+                    $sameName = $token[Tokenizer::NAME] !== $parent[Tokenizer::NAME];
+                    $tokenDynamic = isset($token[Tokenizer::DYNAMIC]) && $token[Tokenizer::DYNAMIC];
+                    $parentDynamic = isset($parent[Tokenizer::DYNAMIC]) && $parent[Tokenizer::DYNAMIC];
 
                     if ($sameName || ($tokenDynamic !== $parentDynamic)) {
                         $msg = sprintf(
                             'Nesting error: %s%s (on line %d) vs. %s%s (on line %d)',
                             $parentDynamic ? '*' : '',
-                            $parent[Mustache_Tokenizer::NAME],
-                            $parent[Mustache_Tokenizer::LINE],
+                            $parent[Tokenizer::NAME],
+                            $parent[Tokenizer::LINE],
                             $tokenDynamic ? '*' : '',
-                            $token[Mustache_Tokenizer::NAME],
-                            $token[Mustache_Tokenizer::LINE]
+                            $token[Tokenizer::NAME],
+                            $token[Tokenizer::LINE]
                         );
-                        throw new Mustache_Exception_SyntaxException($msg, $token);
+                        throw new SyntaxException($msg, $token);
                     }
 
                     $this->clearStandaloneLines($nodes, $tokens);
-                    $parent[Mustache_Tokenizer::END]   = $token[Mustache_Tokenizer::INDEX];
-                    $parent[Mustache_Tokenizer::NODES] = $nodes;
+                    $parent[Tokenizer::END]   = $token[Tokenizer::INDEX];
+                    $parent[Tokenizer::NODES] = $nodes;
 
                     return $parent;
 
-                case Mustache_Tokenizer::T_PARTIAL:
+                case Tokenizer::T_PARTIAL:
                     $this->checkIfTokenIsAllowedInParent($parent, $token);
                     //store the whitespace prefix for laters!
                     if ($indent = $this->clearStandaloneLines($nodes, $tokens)) {
-                        $token[Mustache_Tokenizer::INDENT] = $indent[Mustache_Tokenizer::VALUE];
+                        $token[Tokenizer::INDENT] = $indent[Tokenizer::VALUE];
                     }
                     $nodes[] = $token;
                     break;
 
-                case Mustache_Tokenizer::T_PARENT:
+                case Tokenizer::T_PARENT:
                     $this->checkIfTokenIsAllowedInParent($parent, $token);
                     $nodes[] = $this->buildTree($tokens, $token);
                     break;
 
-                case Mustache_Tokenizer::T_BLOCK_VAR:
+                case Tokenizer::T_BLOCK_VAR:
                     if ($this->pragmaBlocks) {
                         // BLOCKS pragma is enabled, let's do this!
-                        if (isset($parent) && $parent[Mustache_Tokenizer::TYPE] === Mustache_Tokenizer::T_PARENT) {
-                            $token[Mustache_Tokenizer::TYPE] = Mustache_Tokenizer::T_BLOCK_ARG;
+                        if (isset($parent) && $parent[Tokenizer::TYPE] === Tokenizer::T_PARENT) {
+                            $token[Tokenizer::TYPE] = Tokenizer::T_BLOCK_ARG;
                         }
                         $this->clearStandaloneLines($nodes, $tokens);
                         $nodes[] = $this->buildTree($tokens, $token);
                     } else {
                         // pretend this was just a normal "escaped" token...
-                        $token[Mustache_Tokenizer::TYPE] = Mustache_Tokenizer::T_ESCAPED;
+                        $token[Tokenizer::TYPE] = Tokenizer::T_ESCAPED;
                         // TODO: figure out how to figure out if there was a space after this dollar:
-                        $token[Mustache_Tokenizer::NAME] = '$' . $token[Mustache_Tokenizer::NAME];
+                        $token[Tokenizer::NAME] = '$' . $token[Tokenizer::NAME];
                         $nodes[] = $token;
                     }
                     break;
 
-                case Mustache_Tokenizer::T_PRAGMA:
-                    $this->enablePragma($token[Mustache_Tokenizer::NAME]);
+                case Tokenizer::T_PRAGMA:
+                    $this->enablePragma($token[Tokenizer::NAME]);
                     // no break
 
-                case Mustache_Tokenizer::T_COMMENT:
+                case Tokenizer::T_COMMENT:
                     $this->clearStandaloneLines($nodes, $tokens);
                     $nodes[] = $token;
                     break;
@@ -199,10 +203,10 @@ class Mustache_Parser
         if (isset($parent)) {
             $msg = sprintf(
                 'Missing closing tag: %s opened on line %d',
-                $parent[Mustache_Tokenizer::NAME],
-                $parent[Mustache_Tokenizer::LINE]
+                $parent[Tokenizer::NAME],
+                $parent[Tokenizer::LINE]
             );
-            throw new Mustache_Exception_SyntaxException($msg, $parent);
+            throw new SyntaxException($msg, $parent);
         }
 
         return $nodes;
@@ -238,7 +242,7 @@ class Mustache_Parser
 
         if ($next = reset($tokens)) {
             // If we're on a new line, bail.
-            if ($next[Mustache_Tokenizer::LINE] !== $this->lineNum) {
+            if ($next[Tokenizer::LINE] !== $this->lineNum) {
                 return;
             }
 
@@ -250,7 +254,7 @@ class Mustache_Parser
             if (count($tokens) !== 1) {
                 // Unless it's the last token in the template, the next token
                 // must end in newline for this to be standalone.
-                if (substr($next[Mustache_Tokenizer::VALUE], -1) !== "\n") {
+                if (substr($next[Tokenizer::VALUE], -1) !== "\n") {
                     return;
                 }
             }
@@ -276,8 +280,8 @@ class Mustache_Parser
      */
     private function tokenIsWhitespace(array $token)
     {
-        if ($token[Mustache_Tokenizer::TYPE] === Mustache_Tokenizer::T_TEXT) {
-            return preg_match('/^\s*$/', $token[Mustache_Tokenizer::VALUE]);
+        if ($token[Tokenizer::TYPE] === Tokenizer::T_TEXT) {
+            return preg_match('/^\s*$/', $token[Tokenizer::VALUE]);
         }
 
         return false;
@@ -286,27 +290,27 @@ class Mustache_Parser
     /**
      * Check whether a token is allowed inside a parent tag.
      *
-     * @throws Mustache_Exception_SyntaxException if an invalid token is found inside a parent tag
+     * @throws SyntaxException if an invalid token is found inside a parent tag
      *
      * @param array|null $parent
      * @param array      $token
      */
     private function checkIfTokenIsAllowedInParent($parent, array $token)
     {
-        if (isset($parent) && $parent[Mustache_Tokenizer::TYPE] === Mustache_Tokenizer::T_PARENT) {
-            throw new Mustache_Exception_SyntaxException('Illegal content in < parent tag', $token);
+        if (isset($parent) && $parent[Tokenizer::TYPE] === Tokenizer::T_PARENT) {
+            throw new SyntaxException('Illegal content in < parent tag', $token);
         }
     }
 
     /**
      * Parse dynamic names.
      *
-     * @throws Mustache_Exception_SyntaxException when a tag does not allow *
-     * @throws Mustache_Exception_SyntaxException on multiple *s, or dots or filters with *
+     * @throws SyntaxException when a tag does not allow *
+     * @throws SyntaxException on multiple *s, or dots or filters with *
      */
     private function getDynamicName(array $token)
     {
-        $name = $token[Mustache_Tokenizer::NAME];
+        $name = $token[Tokenizer::NAME];
         $isDynamic = false;
 
         if (preg_match('/^\s*\*\s*/', $name)) {
@@ -321,26 +325,26 @@ class Mustache_Parser
     /**
      * Check whether the given token supports dynamic tag names.
      *
-     * @throws Mustache_Exception_SyntaxException when a tag does not allow *
+     * @throws SyntaxException when a tag does not allow *
      *
      * @param array $token
      */
     private function ensureTagAllowsDynamicNames(array $token)
     {
-        switch ($token[Mustache_Tokenizer::TYPE]) {
-            case Mustache_Tokenizer::T_PARTIAL:
-            case Mustache_Tokenizer::T_PARENT:
-            case Mustache_Tokenizer::T_END_SECTION:
+        switch ($token[Tokenizer::TYPE]) {
+            case Tokenizer::T_PARTIAL:
+            case Tokenizer::T_PARENT:
+            case Tokenizer::T_END_SECTION:
                 return;
         }
 
         $msg = sprintf(
             'Invalid dynamic name: %s in %s tag',
-            $token[Mustache_Tokenizer::NAME],
-            Mustache_Tokenizer::getTagName($token[Mustache_Tokenizer::TYPE])
+            $token[Tokenizer::NAME],
+            Tokenizer::getTagName($token[Tokenizer::TYPE])
         );
 
-        throw new Mustache_Exception_SyntaxException($msg, $token);
+        throw new SyntaxException($msg, $token);
     }
 
 
@@ -369,15 +373,15 @@ class Mustache_Parser
         $this->pragmas[$name] = true;
 
         switch ($name) {
-            case Mustache_Engine::PRAGMA_BLOCKS:
+            case Engine::PRAGMA_BLOCKS:
                 $this->pragmaBlocks = true;
                 break;
 
-            case Mustache_Engine::PRAGMA_FILTERS:
+            case Engine::PRAGMA_FILTERS:
                 $this->pragmaFilters = true;
                 break;
 
-            case Mustache_Engine::PRAGMA_DYNAMIC_NAMES:
+            case Engine::PRAGMA_DYNAMIC_NAMES:
                 $this->pragmaDynamicNames = true;
                 break;
         }

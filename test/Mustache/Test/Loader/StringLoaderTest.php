@@ -9,14 +9,19 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\Loader;
+
+use Mustache\Loader\StringLoader;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group unit
  */
-class Mustache_Test_Loader_StringLoaderTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class StringLoaderTest extends TestCase
 {
     public function testLoadTemplates()
     {
-        $loader = new Mustache_Loader_StringLoader();
+        $loader = new StringLoader();
 
         $this->assertEquals('foo', $loader->load('foo'));
         $this->assertEquals('{{ bar }}', $loader->load('{{ bar }}'));

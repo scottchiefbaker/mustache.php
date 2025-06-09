@@ -9,17 +9,24 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test;
+
+use Mustache\Compiler;
+use Mustache\Exception\SyntaxException;
+use Mustache\Tokenizer;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group unit
  */
-class Mustache_Test_CompilerTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class CompilerTest extends TestCase
 {
     /**
      * @dataProvider getCompileValues
      */
     public function testCompile($source, array $tree, $name, $customEscaper, $entityFlags, $charset, $expected)
     {
-        $compiler = new Mustache_Compiler();
+        $compiler = new Compiler();
 
         $compiled = $compiler->compile($source, $tree, $name, $customEscaper, $charset, false, $entityFlags);
         foreach ($expected as $contains) {
@@ -31,12 +38,12 @@ class Mustache_Test_CompilerTest extends Yoast\PHPUnitPolyfills\TestCases\TestCa
     {
         return [
             ['', [], 'Banana', false, ENT_COMPAT, 'ISO-8859-1', [
-                "\nclass Banana extends Mustache_Template",
+                "\nclass Banana extends \Mustache\Template",
                 'return $buffer;',
             ]],
 
             ['', [$this->createTextToken('TEXT')], 'Monkey', false, ENT_COMPAT, 'UTF-8', [
-                "\nclass Monkey extends Mustache_Template",
+                "\nclass Monkey extends \Mustache\Template",
                 '$buffer .= $indent . \'TEXT\';',
                 'return $buffer;',
             ]],
@@ -45,8 +52,8 @@ class Mustache_Test_CompilerTest extends Yoast\PHPUnitPolyfills\TestCases\TestCa
                 '',
                 [
                     [
-                        Mustache_Tokenizer::TYPE => Mustache_Tokenizer::T_ESCAPED,
-                        Mustache_Tokenizer::NAME => 'name',
+                        Tokenizer::TYPE => Tokenizer::T_ESCAPED,
+                        Tokenizer::NAME => 'name',
                     ],
                 ],
                 'Monkey',
@@ -54,7 +61,7 @@ class Mustache_Test_CompilerTest extends Yoast\PHPUnitPolyfills\TestCases\TestCa
                 ENT_COMPAT,
                 'ISO-8859-1',
                 [
-                    "\nclass Monkey extends Mustache_Template",
+                    "\nclass Monkey extends \Mustache\Template",
                     '$value = $this->resolveValue($context->find(\'name\'), $context);',
                     '$buffer .= $indent . ($value === null ? \'\' : call_user_func($this->mustache->getEscape(), $value));',
                     'return $buffer;',
@@ -65,8 +72,8 @@ class Mustache_Test_CompilerTest extends Yoast\PHPUnitPolyfills\TestCases\TestCa
                 '',
                 [
                     [
-                        Mustache_Tokenizer::TYPE => Mustache_Tokenizer::T_ESCAPED,
-                        Mustache_Tokenizer::NAME => 'name',
+                        Tokenizer::TYPE => Tokenizer::T_ESCAPED,
+                        Tokenizer::NAME => 'name',
                     ],
                 ],
                 'Monkey',
@@ -74,7 +81,7 @@ class Mustache_Test_CompilerTest extends Yoast\PHPUnitPolyfills\TestCases\TestCa
                 ENT_COMPAT,
                 'ISO-8859-1',
                 [
-                    "\nclass Monkey extends Mustache_Template",
+                    "\nclass Monkey extends \Mustache\Template",
                     '$value = $this->resolveValue($context->find(\'name\'), $context);',
                     '$buffer .= $indent . ($value === null ? \'\' : htmlspecialchars($value, ' . ENT_COMPAT . ', \'ISO-8859-1\'));',
                     'return $buffer;',
@@ -85,8 +92,8 @@ class Mustache_Test_CompilerTest extends Yoast\PHPUnitPolyfills\TestCases\TestCa
                 '',
                 [
                     [
-                        Mustache_Tokenizer::TYPE => Mustache_Tokenizer::T_ESCAPED,
-                        Mustache_Tokenizer::NAME => 'name',
+                        Tokenizer::TYPE => Tokenizer::T_ESCAPED,
+                        Tokenizer::NAME => 'name',
                     ],
                 ],
                 'Monkey',
@@ -94,7 +101,7 @@ class Mustache_Test_CompilerTest extends Yoast\PHPUnitPolyfills\TestCases\TestCa
                 ENT_QUOTES,
                 'ISO-8859-1',
                 [
-                    "\nclass Monkey extends Mustache_Template",
+                    "\nclass Monkey extends \Mustache\Template",
                     '$value = $this->resolveValue($context->find(\'name\'), $context);',
                     '$buffer .= $indent . ($value === null ? \'\' : htmlspecialchars($value, ' . ENT_QUOTES . ', \'ISO-8859-1\'));',
                     'return $buffer;',
@@ -106,12 +113,12 @@ class Mustache_Test_CompilerTest extends Yoast\PHPUnitPolyfills\TestCases\TestCa
                 [
                     $this->createTextToken("foo\n"),
                     [
-                        Mustache_Tokenizer::TYPE => Mustache_Tokenizer::T_ESCAPED,
-                        Mustache_Tokenizer::NAME => 'name',
+                        Tokenizer::TYPE => Tokenizer::T_ESCAPED,
+                        Tokenizer::NAME => 'name',
                     ],
                     [
-                        Mustache_Tokenizer::TYPE => Mustache_Tokenizer::T_ESCAPED,
-                        Mustache_Tokenizer::NAME => '.',
+                        Tokenizer::TYPE => Tokenizer::T_ESCAPED,
+                        Tokenizer::NAME => '.',
                     ],
                     $this->createTextToken("'bar'"),
                 ],
@@ -120,7 +127,7 @@ class Mustache_Test_CompilerTest extends Yoast\PHPUnitPolyfills\TestCases\TestCa
                 ENT_COMPAT,
                 'UTF-8',
                 [
-                    "\nclass Monkey extends Mustache_Template",
+                    "\nclass Monkey extends \Mustache\Template",
                     "\$buffer .= \$indent . 'foo\n';",
                     '$value = $this->resolveValue($context->find(\'name\'), $context);',
                     '$buffer .= ($value === null ? \'\' : htmlspecialchars($value, ' . ENT_COMPAT . ', \'UTF-8\'));',
@@ -134,9 +141,9 @@ class Mustache_Test_CompilerTest extends Yoast\PHPUnitPolyfills\TestCases\TestCa
 
     public function testCompilerThrowsSyntaxException()
     {
-        $this->expectException(Mustache_Exception_SyntaxException::class);
-        $compiler = new Mustache_Compiler();
-        $compiler->compile('', [[Mustache_Tokenizer::TYPE => 'invalid']], 'SomeClass');
+        $this->expectException(SyntaxException::class);
+        $compiler = new Compiler();
+        $compiler->compile('', [[Tokenizer::TYPE => 'invalid']], 'SomeClass');
     }
 
     /**
@@ -145,8 +152,8 @@ class Mustache_Test_CompilerTest extends Yoast\PHPUnitPolyfills\TestCases\TestCa
     private function createTextToken($value)
     {
         return [
-            Mustache_Tokenizer::TYPE  => Mustache_Tokenizer::T_TEXT,
-            Mustache_Tokenizer::VALUE => $value,
+            Tokenizer::TYPE => Tokenizer::T_TEXT,
+            Tokenizer::VALUE => $value,
         ];
     }
 }

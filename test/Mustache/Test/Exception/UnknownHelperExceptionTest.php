@@ -9,24 +9,29 @@
  * file that was distributed with this source code.
  */
 
-class Mustache_Test_Exception_UnknownHelperExceptionTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+namespace Mustache\Test\Exception;
+
+use Mustache\Exception\UnknownHelperException;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
+class UnknownHelperExceptionTest extends TestCase
 {
     public function testInstance()
     {
-        $e = new Mustache_Exception_UnknownHelperException('alpha');
-        $this->assertInstanceOf(InvalidArgumentException::class, $e);
-        $this->assertInstanceOf(Mustache_Exception::class, $e);
+        $e = new UnknownHelperException('alpha');
+        $this->assertInstanceOf(\InvalidArgumentException::class, $e);
+        $this->assertInstanceOf(\Mustache\Exception::class, $e);
     }
 
     public function testMessage()
     {
-        $e = new Mustache_Exception_UnknownHelperException('beta');
+        $e = new UnknownHelperException('beta');
         $this->assertEquals('Unknown helper: beta', $e->getMessage());
     }
 
     public function testGetHelperName()
     {
-        $e = new Mustache_Exception_UnknownHelperException('gamma');
+        $e = new UnknownHelperException('gamma');
         $this->assertEquals('gamma', $e->getHelperName());
     }
 
@@ -36,8 +41,8 @@ class Mustache_Test_Exception_UnknownHelperExceptionTest extends Yoast\PHPUnitPo
             $this->markTestSkipped('Exception chaining requires at least PHP 5.3');
         }
 
-        $previous = new Exception();
-        $e = new Mustache_Exception_UnknownHelperException('foo', $previous);
+        $previous = new \Exception();
+        $e = new UnknownHelperException('foo', $previous);
         $this->assertSame($previous, $e->getPrevious());
     }
 }

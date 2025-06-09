@@ -9,19 +9,25 @@
  * file that was distributed with this source code.
  */
 
-class Mustache_Test_Exception_SyntaxExceptionTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+namespace Mustache\Test\Exception;
+
+use Mustache\Exception\SyntaxException;
+use Mustache\Tokenizer;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
+class SyntaxExceptionTest extends TestCase
 {
     public function testInstance()
     {
-        $e = new Mustache_Exception_SyntaxException('whot', ['is' => 'this']);
-        $this->assertInstanceOf(LogicException::class, $e);
-        $this->assertInstanceOf(Mustache_Exception::class, $e);
+        $e = new SyntaxException('whot', ['is' => 'this']);
+        $this->assertInstanceOf(\LogicException::class, $e);
+        $this->assertInstanceOf(\Mustache\Exception::class, $e);
     }
 
     public function testGetToken()
     {
-        $token = [Mustache_Tokenizer::TYPE => 'whatever'];
-        $e = new Mustache_Exception_SyntaxException('ignore this', $token);
+        $token = [Tokenizer::TYPE => 'whatever'];
+        $e = new SyntaxException('ignore this', $token);
         $this->assertEquals($token, $e->getToken());
     }
 
@@ -31,8 +37,8 @@ class Mustache_Test_Exception_SyntaxExceptionTest extends Yoast\PHPUnitPolyfills
             $this->markTestSkipped('Exception chaining requires at least PHP 5.3');
         }
 
-        $previous = new Exception();
-        $e = new Mustache_Exception_SyntaxException('foo', [], $previous);
+        $previous = new \Exception();
+        $e = new SyntaxException('foo', [], $previous);
 
         $this->assertSame($previous, $e->getPrevious());
     }

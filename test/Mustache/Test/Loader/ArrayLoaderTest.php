@@ -9,14 +9,20 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\Loader;
+
+use Mustache\Exception\UnknownTemplateException;
+use Mustache\Loader\ArrayLoader;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group unit
  */
-class Mustache_Test_Loader_ArrayLoaderTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class ArrayLoaderTest extends TestCase
 {
     public function testConstructor()
     {
-        $loader = new Mustache_Loader_ArrayLoader([
+        $loader = new ArrayLoader([
             'foo' => 'bar',
         ]);
 
@@ -25,7 +31,7 @@ class Mustache_Test_Loader_ArrayLoaderTest extends Yoast\PHPUnitPolyfills\TestCa
 
     public function testSetAndLoadTemplates()
     {
-        $loader = new Mustache_Loader_ArrayLoader([
+        $loader = new ArrayLoader([
             'foo' => 'bar',
         ]);
         $this->assertEquals('bar', $loader->load('foo'));
@@ -43,8 +49,8 @@ class Mustache_Test_Loader_ArrayLoaderTest extends Yoast\PHPUnitPolyfills\TestCa
 
     public function testMissingTemplatesThrowExceptions()
     {
-        $this->expectException(Mustache_Exception_UnknownTemplateException::class);
-        $loader = new Mustache_Loader_ArrayLoader();
+        $this->expectException(UnknownTemplateException::class);
+        $loader = new ArrayLoader();
         $loader->load('not_a_real_template');
     }
 }

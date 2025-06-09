@@ -9,10 +9,9 @@
  * file that was distributed with this source code.
  */
 
-/**
- * Mustache template Source interface.
- */
-interface Mustache_Source
+namespace Mustache;
+
+interface Source
 {
     /**
      * Get the Source key (used to generate the compiled class name).

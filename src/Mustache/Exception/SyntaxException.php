@@ -9,10 +9,12 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Exception;
+
 /**
  * Mustache syntax exception.
  */
-class Mustache_Exception_SyntaxException extends LogicException implements Mustache_Exception
+class SyntaxException extends LogicException implements \Mustache\Exception
 {
     protected $token;
 

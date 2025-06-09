@@ -9,18 +9,23 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\FiveThree\Functional;
+
+use Mustache\Engine;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group pragmas
  * @group functional
  */
-class Mustache_Test_FiveThree_Functional_EngineTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class EngineTest extends TestCase
 {
     /**
      * @dataProvider pragmaData
      */
     public function testPragmasConstructorOption($pragmas, $helpers, $data, $tpl, $expect)
     {
-        $mustache = new Mustache_Engine([
+        $mustache = new Engine([
             'pragmas' => $pragmas,
             'helpers' => $helpers,
         ]);
@@ -37,14 +42,14 @@ class Mustache_Test_FiveThree_Functional_EngineTest extends Yoast\PHPUnitPolyfil
         ];
 
         $data = [
-            'date' => new DateTime('1/1/2000', new DateTimeZone('UTC')),
+            'date' => new \DateTime('1/1/2000', new \DateTimeZone('UTC')),
         ];
 
         $tpl = '{{ date | longdate }}';
 
         return [
-            [[Mustache_Engine::PRAGMA_FILTERS], $helpers, $data, $tpl, '2000-01-01 12:01:00'],
-            [[],                                $helpers, $data, $tpl, ''],
+            [[Engine::PRAGMA_FILTERS], $helpers, $data, $tpl, '2000-01-01 12:01:00'],
+            [[],                       $helpers, $data, $tpl, ''],
         ];
     }
 }

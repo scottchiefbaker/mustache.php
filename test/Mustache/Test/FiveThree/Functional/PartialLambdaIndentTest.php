@@ -9,11 +9,16 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\FiveThree\Functional;
+
+use Mustache\Engine;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group lambdas
  * @group functional
  */
-class Mustache_Test_FiveThree_Functional_PartialLambdaIndentTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class PartialLambdaIndentTest extends TestCase
 {
     public function testLambdasInsidePartialsAreIndentedProperly()
     {
@@ -35,13 +40,13 @@ EOS;
 
 EOS;
 
-        $m = new Mustache_Engine([
+        $m = new Engine([
             'partials' => ['input' => $partial],
         ]);
 
         $tpl = $m->loadTemplate($src);
 
-        $data = new Mustache_Test_FiveThree_Functional_ClassWithLambda();
+        $data = new ClassWithLambda();
         $this->assertEquals($expected, $tpl->render($data));
     }
 
@@ -65,18 +70,18 @@ EOS;
 
 EOS;
 
-        $m = new Mustache_Engine([
+        $m = new Engine([
             'partials' => ['input' => $partial],
         ]);
 
         $tpl = $m->loadTemplate($src);
 
-        $data = new Mustache_Test_FiveThree_Functional_ClassWithLambda();
+        $data = new ClassWithLambda();
         $this->assertEquals($expected, $tpl->render($data));
     }
 }
 
-class Mustache_Test_FiveThree_Functional_ClassWithLambda
+class ClassWithLambda
 {
     public function _t()
     {

@@ -9,13 +9,17 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\Functional;
+
+use Mustache\Test\SpecTestCase;
+
 /**
  * A PHPUnit test case wrapping the Mustache Spec.
  *
  * @group mustache-spec
  * @group functional
  */
-class Mustache_Test_Functional_MustacheSpecTest extends Mustache_Test_SpecTestCase
+class MustacheSpecTest extends SpecTestCase
 {
     /**
      * For some reason data providers can't mark tests skipped, so this test exists

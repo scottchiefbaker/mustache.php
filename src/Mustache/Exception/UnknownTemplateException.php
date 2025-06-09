@@ -9,10 +9,12 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Exception;
+
 /**
  * Unknown template exception.
  */
-class Mustache_Exception_UnknownTemplateException extends InvalidArgumentException implements Mustache_Exception
+class UnknownTemplateException extends InvalidArgumentException implements \Mustache\Exception
 {
     protected $templateName;
 

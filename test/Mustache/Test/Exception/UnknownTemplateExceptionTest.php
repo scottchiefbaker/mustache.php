@@ -9,24 +9,29 @@
  * file that was distributed with this source code.
  */
 
-class Mustache_Test_Exception_UnknownTemplateExceptionTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+namespace Mustache\Test\Exception;
+
+use Mustache\Exception\UnknownTemplateException;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
+class UnknownTemplateExceptionTest extends TestCase
 {
     public function testInstance()
     {
-        $e = new Mustache_Exception_UnknownTemplateException('mario');
-        $this->assertInstanceOf(InvalidArgumentException::class, $e);
-        $this->assertInstanceOf(Mustache_Exception::class, $e);
+        $e = new UnknownTemplateException('mario');
+        $this->assertInstanceOf(\InvalidArgumentException::class, $e);
+        $this->assertInstanceOf(\Mustache\Exception::class, $e);
     }
 
     public function testMessage()
     {
-        $e = new Mustache_Exception_UnknownTemplateException('luigi');
+        $e = new UnknownTemplateException('luigi');
         $this->assertEquals('Unknown template: luigi', $e->getMessage());
     }
 
     public function testGetTemplateName()
     {
-        $e = new Mustache_Exception_UnknownTemplateException('yoshi');
+        $e = new UnknownTemplateException('yoshi');
         $this->assertEquals('yoshi', $e->getTemplateName());
     }
 
@@ -36,8 +41,8 @@ class Mustache_Test_Exception_UnknownTemplateExceptionTest extends Yoast\PHPUnit
             $this->markTestSkipped('Exception chaining requires at least PHP 5.3');
         }
 
-        $previous = new Exception();
-        $e = new Mustache_Exception_UnknownTemplateException('foo', $previous);
+        $previous = new \Exception();
+        $e = new UnknownTemplateException('foo', $previous);
         $this->assertSame($previous, $e->getPrevious());
     }
 }

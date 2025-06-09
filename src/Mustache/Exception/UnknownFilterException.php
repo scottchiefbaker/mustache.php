@@ -9,10 +9,12 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Exception;
+
 /**
  * Unknown filter exception.
  */
-class Mustache_Exception_UnknownFilterException extends UnexpectedValueException implements Mustache_Exception
+class UnknownFilterException extends \UnexpectedValueException implements \Mustache\Exception
 {
     protected $filterName;
 

@@ -9,24 +9,29 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\FiveThree\Functional;
+
+use Mustache\Engine;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group lambdas
  * @group functional
  */
-class Mustache_Test_FiveThree_Functional_HigherOrderSectionsTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class HigherOrderSectionsTest extends TestCase
 {
     private $mustache;
 
     public function set_up()
     {
-        $this->mustache = new Mustache_Engine();
+        $this->mustache = new Engine();
     }
 
     public function testAnonymousFunctionSectionCallback()
     {
         $tpl = $this->mustache->loadTemplate('{{#wrapper}}{{name}}{{/wrapper}}');
 
-        $foo = new Mustache_Test_FiveThree_Functional_Foo();
+        $foo = new Foo();
         $foo->name = 'Mario';
         $foo->wrapper = function ($text) {
             return sprintf('<div class="anonymous">%s</div>', $text);
@@ -40,7 +45,7 @@ class Mustache_Test_FiveThree_Functional_HigherOrderSectionsTest extends Yoast\P
         $one = $this->mustache->loadTemplate('{{name}}');
         $two = $this->mustache->loadTemplate('{{#wrap}}{{name}}{{/wrap}}');
 
-        $foo = new Mustache_Test_FiveThree_Functional_Foo();
+        $foo = new Foo();
         $foo->name = 'Luigi';
 
         $this->assertEquals($foo->name, $one->render($foo));
@@ -89,7 +94,7 @@ class Mustache_Test_FiveThree_Functional_HigherOrderSectionsTest extends Yoast\P
     }
 }
 
-class Mustache_Test_FiveThree_Functional_Foo
+class Foo
 {
     public $name  = 'Justin';
     public $lorem = 'Lorem ipsum dolor sit amet,';

@@ -9,18 +9,23 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\Functional;
+
+use Mustache\Engine;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group magic_methods
  * @group functional
  */
-class Mustache_Test_Functional_CallTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class CallTest extends TestCase
 {
     public function testCallEatsContext()
     {
-        $m = new Mustache_Engine();
+        $m = new Engine();
         $tpl = $m->loadTemplate('{{# foo }}{{ label }}: {{ name }}{{/ foo }}');
 
-        $foo = new Mustache_Test_Functional_ClassWithCall();
+        $foo = new ClassWithCall();
         $foo->name = 'Bob';
 
         $data = ['label' => 'name', 'foo' => $foo];
@@ -29,7 +34,7 @@ class Mustache_Test_Functional_CallTest extends Yoast\PHPUnitPolyfills\TestCases
     }
 }
 
-class Mustache_Test_Functional_ClassWithCall
+class ClassWithCall
 {
     public $name;
 

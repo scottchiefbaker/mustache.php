@@ -21,7 +21,7 @@ class GrandParentContext
             ['child_id' => 'parent1-child2'],
         ]];
 
-        $parent2 = new stdClass();
+        $parent2 = new \stdClass();
         $parent2->parent_id = 'parent2';
         $parent2->child_contexts = [
             ['child_id' => 'parent2-child1'],

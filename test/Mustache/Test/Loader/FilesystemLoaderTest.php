@@ -9,15 +9,22 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\Loader;
+
+use Mustache\Exception\RuntimeException;
+use Mustache\Exception\UnknownTemplateException;
+use Mustache\Loader\FilesystemLoader;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group unit
  */
-class Mustache_Test_Loader_FilesystemLoaderTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class FilesystemLoaderTest extends TestCase
 {
     public function testConstructor()
     {
         $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
-        $loader = new Mustache_Loader_FilesystemLoader($baseDir, ['extension' => '.ms']);
+        $loader = new FilesystemLoader($baseDir, ['extension' => '.ms']);
         $this->assertEquals('alpha contents', $loader->load('alpha'));
         $this->assertEquals('beta contents', $loader->load('beta.ms'));
     }
@@ -25,7 +32,7 @@ class Mustache_Test_Loader_FilesystemLoaderTest extends Yoast\PHPUnitPolyfills\T
     public function testTrailingSlashes()
     {
         $baseDir = dirname(__FILE__) . '/../../../fixtures/templates/';
-        $loader = new Mustache_Loader_FilesystemLoader($baseDir);
+        $loader = new FilesystemLoader($baseDir);
         $this->assertEquals('one contents', $loader->load('one'));
     }
 
@@ -33,7 +40,7 @@ class Mustache_Test_Loader_FilesystemLoaderTest extends Yoast\PHPUnitPolyfills\T
     {
         $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
 
-        $loader = new Mustache_Loader_FilesystemLoader('test://' . $baseDir, ['extension' => '.ms']);
+        $loader = new FilesystemLoader('test://' . $baseDir, ['extension' => '.ms']);
         $this->assertEquals('alpha contents', $loader->load('alpha'));
         $this->assertEquals('beta contents', $loader->load('beta.ms'));
     }
@@ -41,7 +48,7 @@ class Mustache_Test_Loader_FilesystemLoaderTest extends Yoast\PHPUnitPolyfills\T
     public function testLoadTemplates()
     {
         $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
-        $loader = new Mustache_Loader_FilesystemLoader($baseDir);
+        $loader = new FilesystemLoader($baseDir);
         $this->assertEquals('one contents', $loader->load('one'));
         $this->assertEquals('two contents', $loader->load('two.mustache'));
     }
@@ -50,26 +57,27 @@ class Mustache_Test_Loader_FilesystemLoaderTest extends Yoast\PHPUnitPolyfills\T
     {
         $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
 
-        $loader = new Mustache_Loader_FilesystemLoader($baseDir, ['extension' => '']);
+        $loader = new FilesystemLoader($baseDir, ['extension' => '']);
         $this->assertEquals('one contents', $loader->load('one.mustache'));
         $this->assertEquals('alpha contents', $loader->load('alpha.ms'));
 
-        $loader = new Mustache_Loader_FilesystemLoader($baseDir, ['extension' => null]);
+        $loader = new FilesystemLoader($baseDir, ['extension' => null]);
         $this->assertEquals('two contents', $loader->load('two.mustache'));
         $this->assertEquals('beta contents', $loader->load('beta.ms'));
     }
 
     public function testMissingBaseDirThrowsException()
     {
-        $this->expectException(Mustache_Exception_RuntimeException::class);
-        new Mustache_Loader_FilesystemLoader(dirname(__FILE__) . '/not_a_directory');
+        $this->expectException(RuntimeException::class);
+        new FilesystemLoader(dirname(__FILE__) . '/not_a_directory');
     }
 
     public function testMissingTemplateThrowsException()
     {
-        $this->expectException(Mustache_Exception_UnknownTemplateException::class);
+        $this->expectException(UnknownTemplateException::class);
         $baseDir = realpath(dirname(__FILE__) . '/../../../fixtures/templates');
-        $loader = new Mustache_Loader_FilesystemLoader($baseDir);
+        $loader = new FilesystemLoader($baseDir);
+
         $loader->load('fake');
     }
 }

@@ -9,14 +9,20 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\Logger;
+
+use Mustache\Logger;
+use Mustache\Logger\AbstractLogger;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group unit
  */
-class Mustache_Test_Logger_AbstractLoggerTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class AbstractLoggerTest extends TestCase
 {
     public function testEverything()
     {
-        $logger = new Mustache_Test_Logger_TestLogger();
+        $logger = new TestLogger();
 
         $logger->emergency('emergency message');
         $logger->alert('alert message');
@@ -28,21 +34,21 @@ class Mustache_Test_Logger_AbstractLoggerTest extends Yoast\PHPUnitPolyfills\Tes
         $logger->debug('debug message');
 
         $expected = [
-            [Mustache_Logger::EMERGENCY, 'emergency message', []],
-            [Mustache_Logger::ALERT, 'alert message', []],
-            [Mustache_Logger::CRITICAL, 'critical message', []],
-            [Mustache_Logger::ERROR, 'error message', []],
-            [Mustache_Logger::WARNING, 'warning message', []],
-            [Mustache_Logger::NOTICE, 'notice message', []],
-            [Mustache_Logger::INFO, 'info message', []],
-            [Mustache_Logger::DEBUG, 'debug message', []],
+            [Logger::EMERGENCY, 'emergency message', []],
+            [Logger::ALERT, 'alert message', []],
+            [Logger::CRITICAL, 'critical message', []],
+            [Logger::ERROR, 'error message', []],
+            [Logger::WARNING, 'warning message', []],
+            [Logger::NOTICE, 'notice message', []],
+            [Logger::INFO, 'info message', []],
+            [Logger::DEBUG, 'debug message', []],
         ];
 
         $this->assertEquals($expected, $logger->log);
     }
 }
 
-class Mustache_Test_Logger_TestLogger extends Mustache_Logger_AbstractLogger
+class TestLogger extends AbstractLogger
 {
     public $log = [];
 

@@ -9,25 +9,32 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test;
+
+use Mustache\Context;
+use Mustache\Engine;
+use Mustache\Template;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group unit
  */
-class Mustache_Test_TemplateTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class TemplateTest extends TestCase
 {
     public function testConstructor()
     {
-        $mustache = new Mustache_Engine();
-        $template = new Mustache_Test_TemplateStub($mustache);
+        $mustache = new Engine();
+        $template = new TemplateStub($mustache);
         $this->assertSame($mustache, $template->getMustache());
     }
 
     public function testRendering()
     {
         $rendered = '<< wheee >>';
-        $mustache = new Mustache_Engine();
-        $template = new Mustache_Test_TemplateStub($mustache);
+        $mustache = new Engine();
+        $template = new TemplateStub($mustache);
         $template->rendered = $rendered;
-        $context  = new Mustache_Context();
+        $context  = new Context();
 
         if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
             $this->assertEquals($rendered, $template());
@@ -39,7 +46,7 @@ class Mustache_Test_TemplateTest extends Yoast\PHPUnitPolyfills\TestCases\TestCa
     }
 }
 
-class Mustache_Test_TemplateStub extends Mustache_Template
+class TemplateStub extends Template
 {
     public $rendered;
 
@@ -48,7 +55,7 @@ class Mustache_Test_TemplateStub extends Mustache_Template
         return $this->mustache;
     }
 
-    public function renderInternal(Mustache_Context $context, $indent = '', $escape = false)
+    public function renderInternal(Context $context, $indent = '', $escape = false)
     {
         return $this->rendered;
     }

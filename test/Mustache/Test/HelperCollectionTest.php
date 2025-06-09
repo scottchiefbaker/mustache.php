@@ -9,14 +9,20 @@
  * file that was distributed with this source code.
  */
 
-class Mustache_Test_HelperCollectionTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+namespace Mustache\Test;
+
+use Mustache\HelperCollection;
+use Mustache\Exception\InvalidArgumentException;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
+class HelperCollectionTest extends TestCase
 {
     public function testConstructor()
     {
         $foo = [$this, 'getFoo'];
         $bar = 'BAR';
 
-        $helpers = new Mustache_HelperCollection([
+        $helpers = new HelperCollection([
             'foo' => $foo,
             'bar' => $bar,
         ]);
@@ -35,7 +41,7 @@ class Mustache_Test_HelperCollectionTest extends Yoast\PHPUnitPolyfills\TestCase
         $foo = [$this, 'getFoo'];
         $bar = 'BAR';
 
-        $helpers = new Mustache_HelperCollection();
+        $helpers = new HelperCollection();
         $this->assertTrue($helpers->isEmpty());
         $this->assertFalse($helpers->has('foo'));
         $this->assertFalse($helpers->has('bar'));
@@ -61,7 +67,7 @@ class Mustache_Test_HelperCollectionTest extends Yoast\PHPUnitPolyfills\TestCase
         $foo = [$this, 'getFoo'];
         $bar = 'BAR';
 
-        $helpers = new Mustache_HelperCollection();
+        $helpers = new HelperCollection();
         $this->assertTrue($helpers->isEmpty());
         $this->assertFalse($helpers->has('foo'));
         $this->assertFalse($helpers->has('bar'));
@@ -99,7 +105,7 @@ class Mustache_Test_HelperCollectionTest extends Yoast\PHPUnitPolyfills\TestCase
             $this->expectException($exception);
         }
 
-        $helpers = new Mustache_HelperCollection($helpers);
+        $helpers = new HelperCollection($helpers);
 
         foreach ($actions as $method => $args) {
             call_user_func_array([$helpers, $method], $args);

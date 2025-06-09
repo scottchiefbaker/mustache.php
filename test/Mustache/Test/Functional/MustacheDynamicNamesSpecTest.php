@@ -9,18 +9,22 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\Functional;
+use Mustache\Engine;
+use Mustache\Test\SpecTestCase;
+
 /**
  * A PHPUnit test case wrapping the Mustache Spec.
  *
  * @group mustache-spec
  * @group functional
  */
-class Mustache_Test_Functional_MustacheDynamicNamesSpecTest extends Mustache_Test_SpecTestCase
+class MustacheDynamicNamesSpecTest extends SpecTestCase
 {
     public static function set_up_before_class()
     {
-        self::$mustache = new Mustache_Engine([
-          'pragmas' => [Mustache_Engine::PRAGMA_DYNAMIC_NAMES],
+        self::$mustache = new Engine([
+          'pragmas' => [Engine::PRAGMA_DYNAMIC_NAMES],
         ]);
     }
 

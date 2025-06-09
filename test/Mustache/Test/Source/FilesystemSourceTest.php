@@ -9,15 +9,20 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\Source;
+
+use Mustache\Source\FilesystemSource;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group unit
  */
-class Mustache_Test_Source_FilesystemSourceTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class FilesystemSourceTest extends TestCase
 {
     public function testMissingTemplateThrowsException()
     {
-        $this->expectException(Mustache_Exception_RuntimeException::class);
-        $source = new Mustache_Source_FilesystemSource(dirname(__FILE__) . '/not_a_file.mustache', ['mtime']);
+        $this->expectException(\RuntimeException::class);
+        $source = new FilesystemSource(dirname(__FILE__) . '/not_a_file.mustache', ['mtime']);
         $source->getKey();
     }
 }

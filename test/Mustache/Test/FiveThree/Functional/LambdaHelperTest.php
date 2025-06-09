@@ -9,17 +9,22 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\FiveThree\Functional;
+
+use Mustache\Engine;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group lambdas
  * @group functional
  */
-class Mustache_Test_FiveThree_Functional_LambdaHelperTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class LambdaHelperTest extends TestCase
 {
     private $mustache;
 
     public function set_up()
     {
-        $this->mustache = new Mustache_Engine();
+        $this->mustache = new Engine();
     }
 
     public function testSectionLambdaHelper()
@@ -27,7 +32,7 @@ class Mustache_Test_FiveThree_Functional_LambdaHelperTest extends Yoast\PHPUnitP
         $one = $this->mustache->loadTemplate('{{name}}');
         $two = $this->mustache->loadTemplate('{{#lambda}}{{name}}{{/lambda}}');
 
-        $foo = new StdClass();
+        $foo = new \StdClass();
         $foo->name = 'Mario';
         $foo->lambda = function ($text, $mustache) {
             return strtoupper($mustache->render($text));
@@ -41,7 +46,7 @@ class Mustache_Test_FiveThree_Functional_LambdaHelperTest extends Yoast\PHPUnitP
     {
         $tpl = $this->mustache->loadTemplate("{{=<% %>=}}\n<%# bang %><% value %><%/ bang %>");
 
-        $data = new StdClass();
+        $data = new \StdClass();
         $data->value = 'hello world';
         $data->bang = function ($text, $mustache) {
             return $mustache->render($text) . '!';
@@ -55,7 +60,7 @@ class Mustache_Test_FiveThree_Functional_LambdaHelperTest extends Yoast\PHPUnitP
         $one = $this->mustache->loadTemplate('{{name}}');
         $two = $this->mustache->loadTemplate('{{#lambda}}{{name}}{{/lambda}}');
 
-        $foo = new StdClass();
+        $foo = new \StdClass();
         $foo->name = 'Mario';
         $foo->lambda = function ($text, $render) {
             return strtoupper($render($text));

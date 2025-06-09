@@ -9,17 +9,22 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\FiveThree\Functional;
+
+use Mustache\Engine;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group lambdas
  * @group functional
  */
-class Mustache_Test_FiveThree_Functional_ClosureQuirksTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class ClosureQuirksTest extends TestCase
 {
     private $mustache;
 
     public function set_up()
     {
-        $this->mustache = new Mustache_Engine();
+        $this->mustache = new Engine();
     }
 
     public function testClosuresDontLikeItWhenYouTouchTheirProperties()

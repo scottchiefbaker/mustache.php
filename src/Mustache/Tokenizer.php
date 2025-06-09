@@ -9,12 +9,17 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache;
+
+use Mustache\Exception\InvalidArgumentException;
+use Mustache\Exception\SyntaxException;
+
 /**
  * Mustache Tokenizer class.
  *
  * This class is responsible for turning raw template source into a set of Mustache tokens.
  */
-class Mustache_Tokenizer
+class Tokenizer
 {
     // Finite state machine states
     const IN_TEXT     = 0;
@@ -101,8 +106,8 @@ class Mustache_Tokenizer
     /**
      * Scan and tokenize template source.
      *
-     * @throws Mustache_Exception_SyntaxException when mismatched section tags are encountered
-     * @throws Mustache_Exception_InvalidArgumentException when $delimiters string is invalid
+     * @throws SyntaxException when mismatched section tags are encountered
+     * @throws InvalidArgumentException when $delimiters string is invalid
      *
      * @param string $text       Mustache template source to tokenize
      * @param string $delimiters Optionally, pass initial opening and closing delimiters (default: empty string)
@@ -203,7 +208,7 @@ class Mustache_Tokenizer
                                         $token[self::LINE]
                                     );
 
-                                    throw new Mustache_Exception_SyntaxException($msg, $token);
+                                    throw new SyntaxException($msg, $token);
                                 }
                             } else {
                                 $lastName = $token[self::NAME];
@@ -216,7 +221,7 @@ class Mustache_Tokenizer
                                         $token[self::LINE]
                                     );
 
-                                    throw new Mustache_Exception_SyntaxException($msg, $token);
+                                    throw new SyntaxException($msg, $token);
                                 }
                             }
                         }
@@ -287,7 +292,7 @@ class Mustache_Tokenizer
     /**
      * Change the current Mustache delimiters. Set new `otag` and `ctag` values.
      *
-     * @throws Mustache_Exception_SyntaxException when delimiter string is invalid
+     * @throws SyntaxException when delimiter string is invalid
      *
      * @param string $text  Mustache template source
      * @param int    $index Current tokenizer index
@@ -311,8 +316,8 @@ class Mustache_Tokenizer
 
         try {
             $this->setDelimiters(trim(substr($text, $startIndex, $closeIndex - $startIndex)));
-        } catch (Mustache_Exception_InvalidArgumentException $e) {
-            throw new Mustache_Exception_SyntaxException($e->getMessage(), $token);
+        } catch (InvalidArgumentException $e) {
+            throw new SyntaxException($e->getMessage(), $token);
         }
 
         $this->tokens[] = $token;
@@ -323,14 +328,14 @@ class Mustache_Tokenizer
     /**
      * Set the current Mustache `otag` and `ctag` delimiters.
      *
-     * @throws Mustache_Exception_InvalidArgumentException when delimiter string is invalid
+     * @throws InvalidArgumentException when delimiter string is invalid
      *
      * @param string $delimiters
      */
     private function setDelimiters($delimiters)
     {
         if (!preg_match('/^\s*(\S+)\s+(\S+)\s*$/', $delimiters, $matches)) {
-            throw new Mustache_Exception_InvalidArgumentException(sprintf('Invalid delimiters: %s', $delimiters));
+            throw new InvalidArgumentException(sprintf('Invalid delimiters: %s', $delimiters));
         }
 
         list($_, $otag, $ctag) = $matches;
@@ -384,7 +389,7 @@ class Mustache_Tokenizer
             $msg = sprintf('Unclosed tag on line %d', $this->line);
         }
 
-        throw new Mustache_Exception_SyntaxException($msg, [
+        throw new SyntaxException($msg, [
             self::TYPE  => $this->tagType,
             self::NAME  => $name,
             self::OTAG  => $this->otag,

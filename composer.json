@@ -23,13 +23,13 @@
         "yoast/phpunit-polyfills": "^2.0"
     },
     "autoload": {
-        "psr-0": {
-            "Mustache": "src/"
+        "psr-4": {
+            "Mustache\\": "src/Mustache/"
         }
     },
     "autoload-dev": {
-        "psr-0": {
-            "Mustache_Test": "test/"
+        "psr-4": {
+            "Mustache\\Test\\": "test/Mustache/Test/"
         }
     }
 }

@@ -9,13 +9,17 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\Functional;
+use Mustache\Engine;
+use Mustache\Test\SpecTestCase;
+
 /**
  * A PHPUnit test case wrapping the Mustache Spec.
  *
  * @group mustache-spec
  * @group functional
  */
-class Mustache_Test_Functional_MustacheInheritanceSpecTest extends Mustache_Test_SpecTestCase
+class MustacheInheritanceSpecTest extends SpecTestCase
 {
     private $whitespaceFailures = [
         'Standalone parent: A parent\'s opening and closing tags need not be on separate lines in order to be standalone',
@@ -27,8 +31,8 @@ class Mustache_Test_Functional_MustacheInheritanceSpecTest extends Mustache_Test
 
     public static function set_up_before_class()
     {
-        self::$mustache = new Mustache_Engine([
-          'pragmas' => [Mustache_Engine::PRAGMA_BLOCKS],
+        self::$mustache = new Engine([
+          'pragmas' => [Engine::PRAGMA_BLOCKS],
         ]);
     }
 

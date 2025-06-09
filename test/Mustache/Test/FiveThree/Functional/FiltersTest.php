@@ -9,17 +9,23 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\FiveThree\Functional;
+
+use Mustache\Engine;
+use Mustache\Exception\UnknownFilterException;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group filters
  * @group functional
  */
-class Mustache_Test_FiveThree_Functional_FiltersTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class FiltersTest extends TestCase
 {
     private $mustache;
 
     public function set_up()
     {
-        $this->mustache = new Mustache_Engine();
+        $this->mustache = new Engine();
     }
 
     /**
@@ -46,7 +52,7 @@ class Mustache_Test_FiveThree_Functional_FiltersTest extends Yoast\PHPUnitPolyfi
             [
                 '{{% FILTERS }}{{ date | longdate }}',
                 $helpers,
-                (object) ['date' => new DateTime('1/1/2000', new DateTimeZone('UTC'))],
+                (object) ['date' => new \DateTime('1/1/2000', new \DateTimeZone('UTC'))],
                 '2000-01-01 12:01:00',
             ],
 
@@ -72,7 +78,7 @@ class Mustache_Test_FiveThree_Functional_FiltersTest extends Yoast\PHPUnitPolyfi
         });
 
         $foo = new \StdClass();
-        $foo->date = new DateTime('1/1/2000', new DateTimeZone('UTC'));
+        $foo->date = new \DateTime('1/1/2000', new \DateTimeZone('UTC'));
 
         $this->assertEquals('[[2000-01-01 12:01:00]]', $tpl->render($foo));
     }
@@ -132,7 +138,7 @@ EOS;
      */
     public function testThrowsExceptionForBrokenPipes($tpl, $data)
     {
-        $this->expectException(Mustache_Exception_UnknownFilterException::class);
+        $this->expectException(UnknownFilterException::class);
         $this->mustache->render($tpl, $data);
     }
 

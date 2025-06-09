@@ -9,10 +9,14 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Exception;
+
+use Mustache\Exception;
+
 /**
  * Runtime exception.
  */
-class Mustache_Exception_RuntimeException extends RuntimeException implements Mustache_Exception
+class RuntimeException extends \RuntimeException implements Exception
 {
     // This space intentionally left blank.
 }

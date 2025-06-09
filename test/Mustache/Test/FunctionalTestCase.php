@@ -9,7 +9,11 @@
  * file that was distributed with this source code.
  */
 
-abstract class Mustache_Test_FunctionalTestCase extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+namespace Mustache\Test;
+
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
+abstract class FunctionalTestCase extends TestCase
 {
     protected static $tempDir;
 

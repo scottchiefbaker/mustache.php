@@ -9,10 +9,14 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache;
+
+use Mustache\Exception\InvalidArgumentException;
+
 /**
  * Mustache Template rendering Context.
  */
-class Mustache_Context
+class Context
 {
     private $stack      = [];
     private $blockStack = [];
@@ -23,7 +27,7 @@ class Mustache_Context
      * Mustache rendering Context constructor.
      *
      * @param mixed $context                Default rendering context (default: null)
-     * @param bool  $buggyPropertyShadowing See Mustache_Engine::useBuggyPropertyShadowing (default: false)
+     * @param bool  $buggyPropertyShadowing See Engine::useBuggyPropertyShadowing (default: false)
      */
     public function __construct($context = null, $buggyPropertyShadowing = false)
     {
@@ -163,9 +167,9 @@ class Mustache_Context
      * stack for the first value, rather than searching the whole context stack
      * and starting from there.
      *
-     * @see Mustache_Context::findDot
+     * @see Mustache\Context::findDot
      *
-     * @throws Mustache_Exception_InvalidArgumentException if given an invalid anchored dot $id
+     * @throws InvalidArgumentException if given an invalid anchored dot $id
      *
      * @param string $id Dotted variable selector
      *
@@ -176,7 +180,7 @@ class Mustache_Context
         $chunks = explode('.', $id);
         $first  = array_shift($chunks);
         if ($first !== '') {
-            throw new Mustache_Exception_InvalidArgumentException(sprintf('Unexpected id for findAnchoredDot: %s', $id));
+            throw new InvalidArgumentException(sprintf('Unexpected id for findAnchoredDot: %s', $id));
         }
 
         $value  = $this->last();
@@ -213,7 +217,7 @@ class Mustache_Context
     /**
      * Helper function to find a variable in the Context stack.
      *
-     * @see Mustache_Context::find
+     * @see Mustache\Context::find
      *
      * @param string $id    Variable name
      * @param array  $stack Context stack
@@ -227,7 +231,7 @@ class Mustache_Context
 
             switch (gettype($frame)) {
                 case 'object':
-                    if (!($frame instanceof Closure)) {
+                    if (!($frame instanceof \Closure)) {
                         // Note that is_callable() *will not work here*
                         // See https://github.com/bobthecow/mustache.php/wiki/Magic-Methods
                         if (method_exists($frame, $id)) {
@@ -242,7 +246,7 @@ class Mustache_Context
                         // Mustache.php <= 2.14.2
                         // See https://github.com/bobthecow/mustache.php/pull/410
                         if ($this->buggyPropertyShadowing) {
-                            if ($frame instanceof ArrayAccess && isset($frame[$id])) {
+                            if ($frame instanceof \ArrayAccess && isset($frame[$id])) {
                                 return $frame[$id];
                             }
                         } else {
@@ -253,7 +257,7 @@ class Mustache_Context
                                 }
                             }
 
-                            if ($frame instanceof ArrayAccess && $frame->offsetExists($id)) {
+                            if ($frame instanceof \ArrayAccess && $frame->offsetExists($id)) {
                                 return $frame[$id];
                             }
                         }

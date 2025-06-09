@@ -9,18 +9,24 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\Functional;
+
+use Mustache\Engine;
+use Mustache\Exception\SyntaxException;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group inheritance
  * @group functional
  */
-class Mustache_Test_Functional_InheritanceTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class InheritanceTest extends TestCase
 {
     private $mustache;
 
     public function set_up()
     {
-        $this->mustache = new Mustache_Engine([
-            'pragmas' => [Mustache_Engine::PRAGMA_BLOCKS],
+        $this->mustache = new Engine([
+            'pragmas' => [Engine::PRAGMA_BLOCKS],
         ]);
     }
 
@@ -524,7 +530,7 @@ class Mustache_Test_Functional_InheritanceTest extends Yoast\PHPUnitPolyfills\Te
      */
     public function testIllegalInheritanceExamples($partials, $data, $template)
     {
-        $this->expectException(Mustache_Exception_SyntaxException::class);
+        $this->expectException(SyntaxException::class);
         $this->expectExceptionMessage('Illegal content in < parent tag');
 
         $this->mustache->setPartials($partials);

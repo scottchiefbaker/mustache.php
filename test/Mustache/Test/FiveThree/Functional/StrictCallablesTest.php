@@ -9,21 +9,26 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\FiveThree\Functional;
+
+use Mustache\Engine;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group lambdas
  * @group functional
  */
-class Mustache_Test_FiveThree_Functional_StrictCallablesTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class StrictCallablesTest extends TestCase
 {
     /**
      * @dataProvider callables
      */
     public function testStrictCallables($strict, $name, $section, $expected)
     {
-        $mustache = new Mustache_Engine(['strict_callables' => $strict]);
+        $mustache = new Engine(['strict_callables' => $strict]);
         $tpl      = $mustache->loadTemplate('{{# section }}{{ yourname }}{{/ section }}');
 
-        $data = new StdClass();
+        $data = new \StdClass();
         $data->yourname    = $name;
         $data->section = $section;
 

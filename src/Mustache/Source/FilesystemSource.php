@@ -9,6 +9,11 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Source;
+
+use Mustache\Exception\RuntimeException;
+use Mustache\Source;
+
 /**
  * Mustache template Filesystem Source.
  *
@@ -17,7 +22,7 @@
  * It is more suitable for production use, and is used by default in the
  * ProductionFilesystemLoader.
  */
-class Mustache_Source_FilesystemSource implements Mustache_Source
+class FilesystemSource implements Source
 {
     private $fileName;
     private $statProps;
@@ -38,7 +43,7 @@ class Mustache_Source_FilesystemSource implements Mustache_Source
     /**
      * Get the Source key (used to generate the compiled class name).
      *
-     * @throws Mustache_Exception_RuntimeException when a source file cannot be read
+     * @throws RuntimeException when a source file cannot be read
      *
      * @return string
      */
@@ -54,7 +59,7 @@ class Mustache_Source_FilesystemSource implements Mustache_Source
             }
 
             if ($this->stat === false) {
-                throw new Mustache_Exception_RuntimeException(sprintf('Failed to read source file "%s".', $this->fileName));
+                throw new RuntimeException(sprintf('Failed to read source file "%s".', $this->fileName));
             }
 
             foreach ($this->statProps as $prop) {

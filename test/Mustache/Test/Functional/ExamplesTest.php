@@ -9,11 +9,16 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\Functional;
+
+use Mustache\Engine;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group examples
  * @group functional
  */
-class Mustache_Test_Functional_ExamplesTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class ExamplesTest extends TestCase
 {
     /**
      * Test everything in the `examples` directory.
@@ -27,7 +32,7 @@ class Mustache_Test_Functional_ExamplesTest extends Yoast\PHPUnitPolyfills\TestC
      */
     public function testExamples($context, $source, $partials, $expected)
     {
-        $mustache = new Mustache_Engine([
+        $mustache = new Engine([
             'partials' => $partials,
         ]);
         $this->assertEquals($expected, $mustache->loadTemplate($source)->render($context));

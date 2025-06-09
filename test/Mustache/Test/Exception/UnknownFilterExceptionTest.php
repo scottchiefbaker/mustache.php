@@ -9,24 +9,29 @@
  * file that was distributed with this source code.
  */
 
-class Mustache_Test_Exception_UnknownFilterExceptionTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+namespace Mustache\Test\Exception;
+
+use Mustache\Exception\UnknownFilterException;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
+class UnknownFilterExceptionTest extends TestCase
 {
     public function testInstance()
     {
-        $e = new Mustache_Exception_UnknownFilterException('bacon');
-        $this->assertInstanceOf(UnexpectedValueException::class, $e);
-        $this->assertInstanceOf(Mustache_Exception::class, $e);
+        $e = new UnknownFilterException('bacon');
+        $this->assertInstanceOf(\UnexpectedValueException::class, $e);
+        $this->assertInstanceOf(\Mustache\Exception::class, $e);
     }
 
     public function testMessage()
     {
-        $e = new Mustache_Exception_UnknownFilterException('sausage');
+        $e = new UnknownFilterException('sausage');
         $this->assertEquals('Unknown filter: sausage', $e->getMessage());
     }
 
     public function testGetFilterName()
     {
-        $e = new Mustache_Exception_UnknownFilterException('eggs');
+        $e = new UnknownFilterException('eggs');
         $this->assertEquals('eggs', $e->getFilterName());
     }
 
@@ -36,8 +41,8 @@ class Mustache_Test_Exception_UnknownFilterExceptionTest extends Yoast\PHPUnitPo
             $this->markTestSkipped('Exception chaining requires at least PHP 5.3');
         }
 
-        $previous = new Exception();
-        $e = new Mustache_Exception_UnknownFilterException('foo', $previous);
+        $previous = new \Exception();
+        $e = new UnknownFilterException('foo', $previous);
 
         $this->assertSame($previous, $e->getPrevious());
     }

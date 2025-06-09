@@ -20,7 +20,7 @@ class SectionIteratorObjects
 
     public function middle()
     {
-        return new ArrayIterator($this->_data);
+        return new \ArrayIterator($this->_data);
     }
 
     public $final = 'Then, surprisingly, it worked the final time.';

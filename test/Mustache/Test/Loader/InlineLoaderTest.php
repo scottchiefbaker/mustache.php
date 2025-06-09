@@ -1,43 +1,41 @@
 <?php
 
-/*
- * This file is part of Mustache.php.
- *
- * (c) 2010-2017 Justin Hileman
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+namespace Mustache\Test\Loader;
+
+use Mustache\Exception\InvalidArgumentException;
+use Mustache\Exception\UnknownTemplateException;
+use Mustache\Loader\InlineLoader;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @group unit
  */
-class Mustache_Test_Loader_InlineLoaderTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class InlineLoaderTest extends TestCase
 {
     public function testLoadTemplates()
     {
-        $loader = new Mustache_Loader_InlineLoader(__FILE__, __COMPILER_HALT_OFFSET__);
+        $loader = new InlineLoader(__FILE__, __COMPILER_HALT_OFFSET__);
         $this->assertEquals('{{ foo }}', $loader->load('foo'));
         $this->assertEquals('{{#bar}}BAR{{/bar}}', $loader->load('bar'));
     }
 
     public function testMissingTemplatesThrowExceptions()
     {
-        $this->expectException(Mustache_Exception_UnknownTemplateException::class);
-        $loader = new Mustache_Loader_InlineLoader(__FILE__, __COMPILER_HALT_OFFSET__);
+        $this->expectException(UnknownTemplateException::class);
+        $loader = new InlineLoader(__FILE__, __COMPILER_HALT_OFFSET__);
         $loader->load('not_a_real_template');
     }
 
     public function testInvalidOffsetThrowsException()
     {
-        $this->expectException(Mustache_Exception_InvalidArgumentException::class);
-        new Mustache_Loader_InlineLoader(__FILE__, 'notanumber');
+        $this->expectException(InvalidArgumentException::class);
+        new InlineLoader(__FILE__, 'notanumber');
     }
 
     public function testInvalidFileThrowsException()
     {
-        $this->expectException(Mustache_Exception_InvalidArgumentException::class);
-        new Mustache_Loader_InlineLoader('notarealfile', __COMPILER_HALT_OFFSET__);
+        $this->expectException(InvalidArgumentException::class);
+        new InlineLoader('notarealfile', __COMPILER_HALT_OFFSET__);
     }
 }
 

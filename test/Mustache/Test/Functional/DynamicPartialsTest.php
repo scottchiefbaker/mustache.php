@@ -9,18 +9,24 @@
  * file that was distributed with this source code.
  */
 
+namespace Mustache\Test\Functional;
+
+use Mustache\Engine;
+use Mustache\Exception\SyntaxException;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
 /**
  * @group dynamic-names
  * @group functional
  */
-class Mustache_Test_Functional_DynamicPartialsTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class DynamicPartialsTest extends TestCase
 {
     private $mustache;
 
     public function set_up()
     {
-        $this->mustache = new Mustache_Engine([
-            'pragmas' => [Mustache_Engine::PRAGMA_DYNAMIC_NAMES],
+        $this->mustache = new Engine([
+            'pragmas' => [Engine::PRAGMA_DYNAMIC_NAMES],
         ]);
     }
 
@@ -61,7 +67,7 @@ class Mustache_Test_Functional_DynamicPartialsTest extends Yoast\PHPUnitPolyfill
      */
     public function testDynamicNameParseErrors($template)
     {
-        $this->expectException(Mustache_Exception_SyntaxException::class);
+        $this->expectException(SyntaxException::class);
         $this->expectExceptionMessage('Nesting error:');
         $this->mustache->render($template);
     }
