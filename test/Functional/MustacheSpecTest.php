@@ -27,7 +27,7 @@ class MustacheSpecTest extends SpecTestCase
      */
     public function testSpecInitialized()
     {
-        if (!file_exists(__DIR__ . '/../../vendor/spec/specs/')) {
+        if (!file_exists(__DIR__ . '/../../spec/specs/')) {
             $this->markTestSkipped('Mustache spec submodule not initialized: run "git submodule update --init"');
         }
         $this->assertTrue(true);
