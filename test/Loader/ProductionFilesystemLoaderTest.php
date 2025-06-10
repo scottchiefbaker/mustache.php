@@ -17,9 +17,6 @@ use Mustache\Loader\ProductionFilesystemLoader;
 use Mustache\Source;
 use Mustache\Test\TestCase;
 
-/**
- * @group unit
- */
 class ProductionFilesystemLoaderTest extends TestCase
 {
     public function testConstructor()

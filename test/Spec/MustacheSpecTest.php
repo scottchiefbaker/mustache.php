@@ -9,15 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Mustache\Test\Functional;
+namespace Mustache\Test\Spec;
 
 use Mustache\Test\SpecTestCase;
 
 /**
  * A PHPUnit test case wrapping the Mustache Spec.
  *
- * @group mustache-spec
- * @group functional
+ * @group spec
  */
 class MustacheSpecTest extends SpecTestCase
 {
@@ -34,7 +33,6 @@ class MustacheSpecTest extends SpecTestCase
     }
 
     /**
-     * @group comments
      * @dataProvider loadCommentSpec
      */
     public function testCommentSpec($desc, $source, $partials, $data, $expected)
@@ -49,7 +47,6 @@ class MustacheSpecTest extends SpecTestCase
     }
 
     /**
-     * @group delimiters
      * @dataProvider loadDelimitersSpec
      */
     public function testDelimitersSpec($desc, $source, $partials, $data, $expected)
@@ -64,7 +61,6 @@ class MustacheSpecTest extends SpecTestCase
     }
 
     /**
-     * @group interpolation
      * @dataProvider loadInterpolationSpec
      */
     public function testInterpolationSpec($desc, $source, $partials, $data, $expected)
@@ -79,8 +75,6 @@ class MustacheSpecTest extends SpecTestCase
     }
 
     /**
-     * @group inverted
-     * @group inverted-sections
      * @dataProvider loadInvertedSpec
      */
     public function testInvertedSpec($desc, $source, $partials, $data, $expected)
@@ -95,7 +89,6 @@ class MustacheSpecTest extends SpecTestCase
     }
 
     /**
-     * @group partials
      * @dataProvider loadPartialsSpec
      */
     public function testPartialsSpec($desc, $source, $partials, $data, $expected)
@@ -110,7 +103,6 @@ class MustacheSpecTest extends SpecTestCase
     }
 
     /**
-     * @group sections
      * @dataProvider loadSectionsSpec
      */
     public function testSectionsSpec($desc, $source, $partials, $data, $expected)
@@ -125,7 +117,6 @@ class MustacheSpecTest extends SpecTestCase
     }
 
     /**
-     * @group lambdas
      * @dataProvider loadLambdasSpec
      */
     public function testLambdasSpec($desc, $source, $partials, $data, $expected)

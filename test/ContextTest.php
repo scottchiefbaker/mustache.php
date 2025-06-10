@@ -14,9 +14,6 @@ namespace Mustache\Test;
 use Mustache\Context;
 use Mustache\Exception\InvalidArgumentException;
 
-/**
- * @group unit
- */
 class ContextTest extends TestCase
 {
     public function testConstructor()

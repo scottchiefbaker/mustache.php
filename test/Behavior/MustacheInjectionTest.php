@@ -9,15 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Mustache\Test\Functional;
+namespace Mustache\Test\Behavior;
 
 use Mustache\Engine;
 use Mustache\Test\TestCase;
 
-/**
- * @group mustache_injection
- * @group functional
- */
 class MustacheInjectionTest extends TestCase
 {
     private $mustache;

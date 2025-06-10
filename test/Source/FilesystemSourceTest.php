@@ -14,9 +14,6 @@ namespace Mustache\Test\Source;
 use Mustache\Source\FilesystemSource;
 use Mustache\Test\TestCase;
 
-/**
- * @group unit
- */
 class FilesystemSourceTest extends TestCase
 {
     public function testMissingTemplateThrowsException()

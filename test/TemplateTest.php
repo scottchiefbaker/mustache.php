@@ -15,9 +15,6 @@ use Mustache\Context;
 use Mustache\Engine;
 use Mustache\Template;
 
-/**
- * @group unit
- */
 class TemplateTest extends TestCase
 {
     public function testConstructor()

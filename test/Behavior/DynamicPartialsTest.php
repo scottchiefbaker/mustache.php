@@ -9,16 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Mustache\Test\Functional;
+namespace Mustache\Test\Behavior;
 
 use Mustache\Engine;
 use Mustache\Exception\SyntaxException;
 use Mustache\Test\TestCase;
 
-/**
- * @group dynamic-names
- * @group functional
- */
 class DynamicPartialsTest extends TestCase
 {
     private $mustache;

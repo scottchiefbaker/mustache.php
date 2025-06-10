@@ -9,14 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Mustache\Test\Functional;
+namespace Mustache\Test\Behavior;
 
 use Mustache\Engine;
 use Mustache\Test\TestCase;
 
 /**
  * @group examples
- * @group functional
  */
 class ExamplesTest extends TestCase
 {

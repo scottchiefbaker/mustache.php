@@ -14,9 +14,6 @@ namespace Mustache\Test\Loader;
 use Mustache\Loader\StringLoader;
 use Mustache\Test\TestCase;
 
-/**
- * @group unit
- */
 class StringLoaderTest extends TestCase
 {
     public function testLoadTemplates()

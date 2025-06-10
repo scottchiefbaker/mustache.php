@@ -9,15 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Mustache\Test\Functional;
+namespace Mustache\Test\Behavior;
 
 use Mustache\Engine;
 use Mustache\Test\TestCase;
 
-/**
- * @group magic_methods
- * @group functional
- */
 class CallTest extends TestCase
 {
     public function testCallEatsContext()

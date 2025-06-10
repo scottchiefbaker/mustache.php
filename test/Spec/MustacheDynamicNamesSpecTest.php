@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Mustache\Test\Functional;
+namespace Mustache\Test\Spec;
 
 use Mustache\Engine;
 use Mustache\Test\SpecTestCase;
@@ -17,8 +17,7 @@ use Mustache\Test\SpecTestCase;
 /**
  * A PHPUnit test case wrapping the Mustache Spec.
  *
- * @group mustache-spec
- * @group functional
+ * @group spec
  */
 class MustacheDynamicNamesSpecTest extends SpecTestCase
 {
@@ -42,7 +41,6 @@ class MustacheDynamicNamesSpecTest extends SpecTestCase
     }
 
     /**
-     * @group dynamic-names
      * @dataProvider loadDynamicNamesSpec
      */
     public function testDynamicNamesSpec($desc, $source, $partials, $data, $expected)

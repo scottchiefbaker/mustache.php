@@ -26,9 +26,6 @@ use Mustache\Parser;
 use Mustache\Template;
 use Mustache\Tokenizer;
 
-/**
- * @group unit
- */
 class EngineTest extends FunctionalTestCase
 {
     public function testConstructor()
@@ -137,9 +134,6 @@ class EngineTest extends FunctionalTestCase
         $this->assertSame($cache, $mustache->getCache());
     }
 
-    /**
-     * @group functional
-     */
     public function testCache()
     {
         $mustache = new Engine([
@@ -391,6 +385,39 @@ class EngineTest extends FunctionalTestCase
 
         $mustache = new Engine(['buggy_property_shadowing' => true]);
         $this->assertTrue($mustache->useBuggyPropertyShadowing());
+    }
+
+    /**
+     * @dataProvider pragmaData
+     */
+    public function testPragmasConstructorOption($pragmas, $helpers, $data, $tpl, $expect)
+    {
+        $mustache = new Engine([
+            'pragmas' => $pragmas,
+            'helpers' => $helpers,
+        ]);
+
+        $this->assertSame($expect, $mustache->render($tpl, $data));
+    }
+
+    public function pragmaData()
+    {
+        $helpers = [
+            'longdate' => function (\DateTime $value) {
+                return $value->format('Y-m-d h:m:s');
+            },
+        ];
+
+        $data = [
+            'date' => new \DateTime('1/1/2000', new \DateTimeZone('UTC')),
+        ];
+
+        $tpl = '{{ date | longdate }}';
+
+        return [
+            [[Engine::PRAGMA_FILTERS], $helpers, $data, $tpl, '2000-01-01 12:01:00'],
+            [[],                       $helpers, $data, $tpl, ''],
+        ];
     }
 }
 

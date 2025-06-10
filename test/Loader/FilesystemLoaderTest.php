@@ -16,9 +16,6 @@ use Mustache\Exception\UnknownTemplateException;
 use Mustache\Loader\FilesystemLoader;
 use Mustache\Test\TestCase;
 
-/**
- * @group unit
- */
 class FilesystemLoaderTest extends TestCase
 {
     public function testConstructor()

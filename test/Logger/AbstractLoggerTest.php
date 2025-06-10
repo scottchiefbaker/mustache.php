@@ -15,9 +15,6 @@ use Mustache\Logger;
 use Mustache\Logger\AbstractLogger;
 use Mustache\Test\TestCase;
 
-/**
- * @group unit
- */
 class AbstractLoggerTest extends TestCase
 {
     public function testEverything()

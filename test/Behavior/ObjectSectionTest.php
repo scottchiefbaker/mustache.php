@@ -9,15 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Mustache\Test\Functional;
+namespace Mustache\Test\Behavior;
 
 use Mustache\Engine;
 use Mustache\Test\TestCase;
 
-/**
- * @group sections
- * @group functional
- */
 class ObjectSectionTest extends TestCase
 {
     private $mustache;
@@ -33,18 +29,12 @@ class ObjectSectionTest extends TestCase
         $this->assertSame('Foo', $tpl->render(new Alpha()));
     }
 
-    /**
-     * @group magic_methods
-     */
     public function testObjectWithGet()
     {
         $tpl = $this->mustache->loadTemplate('{{#foo}}{{name}}{{/foo}}');
         $this->assertSame('Foo', $tpl->render(new Beta()));
     }
 
-    /**
-     * @group magic_methods
-     */
     public function testSectionObjectWithGet()
     {
         $tpl = $this->mustache->loadTemplate('{{#bar}}{{#foo}}{{name}}{{/foo}}{{/bar}}');

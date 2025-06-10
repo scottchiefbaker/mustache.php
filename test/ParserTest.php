@@ -16,9 +16,6 @@ use Mustache\Exception\SyntaxException;
 use Mustache\Parser;
 use Mustache\Tokenizer;
 
-/**
- * @group unit
- */
 class ParserTest extends TestCase
 {
     /**

@@ -14,9 +14,6 @@ namespace Mustache\Test\Cache;
 use Mustache\Cache\FilesystemCache;
 use Mustache\Test\FunctionalTestCase;
 
-/**
- * @group functional
- */
 class FilesystemCacheTest extends FunctionalTestCase
 {
     public function testCacheGetNone()

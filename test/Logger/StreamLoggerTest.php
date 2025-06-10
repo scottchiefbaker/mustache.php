@@ -17,9 +17,6 @@ use Mustache\Logger;
 use Mustache\Logger\StreamLogger;
 use Mustache\Test\TestCase;
 
-/**
- * @group unit
- */
 class StreamLoggerTest extends TestCase
 {
     /**

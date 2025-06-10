@@ -9,15 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Mustache\Test\Functional;
+namespace Mustache\Test;
 
 use Mustache\Engine;
-use Mustache\Test\TestCase;
 
-/**
- * @group lambdas
- * @group functional
- */
 class LambdaHelperTest extends TestCase
 {
     private $mustache;

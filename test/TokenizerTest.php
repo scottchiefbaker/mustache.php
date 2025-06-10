@@ -15,9 +15,6 @@ use Mustache\Exception\InvalidArgumentException;
 use Mustache\Exception\SyntaxException;
 use Mustache\Tokenizer;
 
-/**
- * @group unit
- */
 class TokenizerTest extends TestCase
 {
     /**

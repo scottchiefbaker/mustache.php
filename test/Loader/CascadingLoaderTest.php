@@ -16,9 +16,6 @@ use Mustache\Loader\ArrayLoader;
 use Mustache\Loader\CascadingLoader;
 use Mustache\Test\TestCase;
 
-/**
- * @group unit
- */
 class CascadingLoaderTest extends TestCase
 {
     public function testLoadTemplates()

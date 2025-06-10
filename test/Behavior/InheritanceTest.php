@@ -9,16 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Mustache\Test\Functional;
+namespace Mustache\Test\Behavior;
 
 use Mustache\Engine;
 use Mustache\Exception\SyntaxException;
 use Mustache\Test\TestCase;
 
-/**
- * @group inheritance
- * @group functional
- */
 class InheritanceTest extends TestCase
 {
     private $mustache;

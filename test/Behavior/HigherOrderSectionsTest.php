@@ -9,15 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Mustache\Test\Functional;
+namespace Mustache\Test\Behavior;
 
 use Mustache\Engine;
 use Mustache\Test\FunctionalTestCase;
 
-/**
- * @group lambdas
- * @group functional
- */
 class HigherOrderSectionsTest extends FunctionalTestCase
 {
     private $mustache;

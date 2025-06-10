@@ -7,9 +7,6 @@ use Mustache\Exception\UnknownTemplateException;
 use Mustache\Loader\InlineLoader;
 use Mustache\Test\TestCase;
 
-/**
- * @group unit
- */
 class InlineLoaderTest extends TestCase
 {
     public function testLoadTemplates()

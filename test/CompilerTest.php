@@ -15,9 +15,6 @@ use Mustache\Compiler;
 use Mustache\Exception\SyntaxException;
 use Mustache\Tokenizer;
 
-/**
- * @group unit
- */
 class CompilerTest extends TestCase
 {
     /**

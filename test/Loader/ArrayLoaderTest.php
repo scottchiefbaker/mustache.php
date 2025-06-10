@@ -15,9 +15,6 @@ use Mustache\Exception\UnknownTemplateException;
 use Mustache\Loader\ArrayLoader;
 use Mustache\Test\TestCase;
 
-/**
- * @group unit
- */
 class ArrayLoaderTest extends TestCase
 {
     public function testConstructor()

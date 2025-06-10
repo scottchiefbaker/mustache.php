@@ -9,16 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Mustache\Test\Functional;
+namespace Mustache\Test\Behavior;
 
 use Mustache\Engine;
 use Mustache\Exception\UnknownFilterException;
 use Mustache\Test\TestCase;
 
-/**
- * @group filters
- * @group functional
- */
 class FiltersTest extends TestCase
 {
     private $mustache;
@@ -192,7 +188,6 @@ EOS;
     }
 
     /**
-     * @group lambdas
      * @dataProvider lambdaFiltersData
      */
     public function testLambdaFilters($tpl, $data, $expect)
