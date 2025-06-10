@@ -26,11 +26,7 @@ class UnknownFilterException extends \UnexpectedValueException implements \Musta
     {
         $this->filterName = $filterName;
         $message = sprintf('Unknown filter: %s', $filterName);
-        if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
-            parent::__construct($message, 0, $previous);
-        } else {
-            parent::__construct($message); // @codeCoverageIgnore
-        }
+        parent::__construct($message, 0, $previous);
     }
 
     public function getFilterName()

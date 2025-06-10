@@ -35,10 +35,8 @@ class TemplateTest extends TestCase
         $template->rendered = $rendered;
         $context  = new Context();
 
-        if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
-            $this->assertSame($rendered, $template());
-        }
 
+        $this->assertSame($rendered, $template());
         $this->assertSame($rendered, $template->render());
         $this->assertSame($rendered, $template->renderInternal($context));
         $this->assertSame($rendered, $template->render(['foo' => 'bar']));

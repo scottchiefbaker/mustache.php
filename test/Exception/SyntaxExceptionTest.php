@@ -33,10 +33,6 @@ class SyntaxExceptionTest extends TestCase
 
     public function testPrevious()
     {
-        if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-            $this->markTestSkipped('Exception chaining requires at least PHP 5.3');
-        }
-
         $previous = new \Exception();
         $e = new SyntaxException('foo', [], $previous);
 

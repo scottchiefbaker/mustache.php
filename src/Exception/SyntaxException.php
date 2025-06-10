@@ -26,11 +26,7 @@ class SyntaxException extends LogicException implements \Mustache\Exception
     public function __construct($msg, array $token, $previous = null)
     {
         $this->token = $token;
-        if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
-            parent::__construct($msg, 0, $previous);
-        } else {
-            parent::__construct($msg); // @codeCoverageIgnore
-        }
+        parent::__construct($msg, 0, $previous);
     }
 
     /**

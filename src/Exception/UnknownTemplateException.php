@@ -26,11 +26,7 @@ class UnknownTemplateException extends InvalidArgumentException implements \Must
     {
         $this->templateName = $templateName;
         $message = sprintf('Unknown template: %s', $templateName);
-        if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
-            parent::__construct($message, 0, $previous);
-        } else {
-            parent::__construct($message); // @codeCoverageIgnore
-        }
+        parent::__construct($message, 0, $previous);
     }
 
     public function getTemplateName()

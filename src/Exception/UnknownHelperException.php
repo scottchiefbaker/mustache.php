@@ -26,11 +26,7 @@ class UnknownHelperException extends InvalidArgumentException implements \Mustac
     {
         $this->helperName = $helperName;
         $message = sprintf('Unknown helper: %s', $helperName);
-        if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
-            parent::__construct($message, 0, $previous);
-        } else {
-            parent::__construct($message); // @codeCoverageIgnore
-        }
+        parent::__construct($message, 0, $previous);
     }
 
     public function getHelperName()
