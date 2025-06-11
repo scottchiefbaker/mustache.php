@@ -144,6 +144,19 @@ class Engine
      *         // This currently defaults to false, but will default to true in v3.0.
      *         'strict_callables' => true,
      *
+     *        // Enable buggy property shadowing. Per the Mustache spec, keys of a value higher in the context stack
+     *        // shadow similarly named keys lower in the stack. For example, in the template
+     *        // `{{# foo }}{{ bar }}{{/ foo }}` if the value for `foo` has a method, property, or key named `bar`, it
+     *        // will prevent looking lower in the context stack for a another value named `bar`.
+     *        //
+     *        // Setting the value of an array key to null prevents lookups higher in the context stack. The behavior
+     *        // should have been identical for object properties (and ArrayAccess) as well, but a bug in the context
+     *        // lookup logic meant that a property which exists but is set to null would not prevent further context
+     *        // lookup.
+     *        //
+     *        // This bug was fixed in v3.0.0, but the buggy behavior can be preserved by setting this option to true.
+     *        'buggy_property_shadowing' => false,
+     *
      *         // Enable pragmas across all templates, regardless of the presence of pragma tags in the individual
      *         // templates.
      *         'pragmas' => [\Mustache\Engine::PRAGMA_FILTERS],
