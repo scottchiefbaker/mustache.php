@@ -115,12 +115,12 @@ class Context
      * the initial chunk of the dotted name, each subsequent chunk is searched for only within the value of the previous
      * result. For example, given the following context stack:
      *
-     *     $data = array(
+     *     $data = [
      *         'name' => 'Fred',
-     *         'child' => array(
+     *         'child' => [
      *             'name' => 'Bob'
-     *         ),
-     *     );
+     *         ],
+     *     ];
      *
      * ... and the Mustache following template:
      *

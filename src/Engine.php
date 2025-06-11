@@ -80,7 +80,7 @@ class Engine
      *
      * Passing an $options array allows overriding certain Mustache options during instantiation:
      *
-     *     $options = array(
+     *     $options = [
      *         // The class prefix for compiled templates. Defaults to '__Mustache_'.
      *         'template_class_prefix' => '__MyTemplates_',
      *
@@ -112,14 +112,14 @@ class Engine
      *
      *         // An array of Mustache partials. Useful for quick-and-dirty string template loading, but not as
      *         // efficient or lazy as a Filesystem (or database) loader.
-     *         'partials' => array('foo' => file_get_contents(__DIR__.'/views/partials/foo.mustache')),
+     *         'partials' => ['foo' => file_get_contents(__DIR__.'/views/partials/foo.mustache')],
      *
      *         // An array of 'helpers'. Helpers can be global variables or objects, closures (e.g. for higher order
      *         // sections), or any other valid Mustache context value. They will be prepended to the context stack,
      *         // so they will be available in any template loaded by this Mustache instance.
-     *         'helpers' => array('i18n' => function ($text) {
+     *         'helpers' => ['i18n' => function ($text) {
      *             // do something translatey here...
-     *         }),
+     *         }],
      *
      *         // An 'escape' callback, responsible for escaping double-mustache variables.
      *         'escape' => function ($value) {
@@ -138,7 +138,7 @@ class Engine
      *         'logger' => new \Mustache\Logger\StreamLogger('php://stderr'),
      *
      *         // Only treat \Closure instances and invokable classes as callable. If true, values like
-     *         // `array('ClassName', 'methodName')` and `array($classInstance, 'methodName')`, which are traditionally
+     *         // `['ClassName', 'methodName']` and `[$classInstance, 'methodName']`, which are traditionally
      *         // "callable" in PHP, are not called to resolve variables for interpolation or section contexts. This
      *         // helps protect against arbitrary code execution when user input is passed directly into the template.
      *         // This currently defaults to false, but will default to true in v3.0.
@@ -147,11 +147,9 @@ class Engine
      *         // Enable pragmas across all templates, regardless of the presence of pragma tags in the individual
      *         // templates.
      *         'pragmas' => [\Mustache\Engine::PRAGMA_FILTERS],
-     *     );
+     *     ];
      *
      * @throws InvalidArgumentException If `escape` option is not callable
-     *
-     * @param array $options (default: array())
      */
     public function __construct(array $options = [])
     {
@@ -245,7 +243,6 @@ class Engine
      * @see Mustache\Template::render
      *
      * @param string $template
-     * @param mixed  $context  (default: array())
      *
      * @return string Rendered template
      */
@@ -362,8 +359,6 @@ class Engine
      * Set partials for the current partials Loader instance.
      *
      * @throws RuntimeException If the current Loader instance is immutable
-     *
-     * @param array $partials (default: array())
      */
     public function setPartials(array $partials = [])
     {

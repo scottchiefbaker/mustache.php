@@ -43,11 +43,11 @@ abstract class Template
      *
      *     $m = new \Mustache\Engine;
      *     $tpl = $m->loadTemplate('Hello, {{ name }}!');
-     *     echo $tpl(array('name' => 'World')); // "Hello, World!"
+     *     echo $tpl(['name' => 'World']); // "Hello, World!"
      *
      * @see \Mustache\Template::render
      *
-     * @param mixed $context Array or object rendering context (default: array())
+     * @param mixed $context Array or object rendering context (default: [])
      *
      * @return string Rendered template
      */
@@ -59,7 +59,7 @@ abstract class Template
     /**
      * Render this template given the rendering context.
      *
-     * @param mixed $context Array or object rendering context (default: array())
+     * @param mixed $context Array or object rendering context (default: [])
      *
      * @return string Rendered template
      */
@@ -95,19 +95,19 @@ abstract class Template
      * between between a list of things (numeric, normalized array) and a set of variables to be used as section context
      * (associative array). In other words, this will be iterated over:
      *
-     *     $items = array(
-     *         array('name' => 'foo'),
-     *         array('name' => 'bar'),
-     *         array('name' => 'baz'),
-     *     );
+     *     $items = [
+     *         ['name' => 'foo'],
+     *         ['name' => 'bar'],
+     *         ['name' => 'baz'],
+     *     ];
      *
      * ... but this will be used as a section context block:
      *
-     *     $items = array(
-     *         1        => array('name' => 'foo'),
-     *         'banana' => array('name' => 'bar'),
-     *         42       => array('name' => 'baz'),
-     *     );
+     *     $items = [
+     *         1        => ['name' => 'foo'],
+     *         'banana' => ['name' => 'bar'],
+     *         42       => ['name' => 'baz'],
+     *     ];
      *
      * @param mixed $value
      *

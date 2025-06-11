@@ -20,7 +20,7 @@ A quick example:
 ```php
 <?php
 $m = new \Mustache\Engine(['entity_flags' => ENT_QUOTES]);
-echo $m->render('Hello {{planet}}', array('planet' => 'World!')); // "Hello World!"
+echo $m->render('Hello {{planet}}', ['planet' => 'World!']); // "Hello World!"
 ```
 
 

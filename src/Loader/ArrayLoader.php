@@ -36,7 +36,7 @@ class ArrayLoader implements Loader, MutableLoader
     /**
      * ArrayLoader constructor.
      *
-     * @param array $templates Associative array of Template source (default: array())
+     * @param array $templates Associative array of Template source (default: [])
      */
     public function __construct(array $templates = [])
     {

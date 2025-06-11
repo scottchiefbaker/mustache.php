@@ -32,11 +32,11 @@ class ProductionFilesystemLoader extends FilesystemLoader
      *
      * Passing an $options array allows overriding certain Loader options during instantiation:
      *
-     *     $options = array(
+     *     $options = [
      *         // The filename extension used for Mustache templates. Defaults to '.mustache'
      *         'extension' => '.ms',
-     *         'stat_props' => array('size', 'mtime'),
-     *     );
+     *         'stat_props' => ['size', 'mtime'],
+     *     ];
      *
      * Specifying 'stat_props' overrides the stat properties used to invalidate the template cache. By default, this
      * uses 'mtime' and 'size', but this can be set to any of the properties supported by stat():
@@ -45,7 +45,7 @@ class ProductionFilesystemLoader extends FilesystemLoader
      *
      * You can also disable filesystem stat entirely:
      *
-     *     $options = array('stat_props' => null);
+     *     $options = ['stat_props' => null];
      *
      * But with great power comes great responsibility. Namely, if you disable stat-based cache invalidation,
      * YOU MUST CLEAR THE TEMPLATE CACHE YOURSELF when your templates change. Make it part of your build or deploy
@@ -54,7 +54,7 @@ class ProductionFilesystemLoader extends FilesystemLoader
      * @throws RuntimeException if $baseDir does not exist
      *
      * @param string $baseDir Base directory containing Mustache template files.
-     * @param array  $options Array of Loader options (default: array())
+     * @param array  $options Loader options (default: [])
      */
     public function __construct($baseDir, array $options = [])
     {

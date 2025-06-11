@@ -25,10 +25,10 @@ use Mustache\Loader;
  *
  * This is probably the most useful Mustache Loader implementation. It can be used for partials and normal Templates:
  *
- *     $m = new \Mustache\Engine(array(
+ *     $m = new \Mustache\Engine([
  *          'loader'          => new FilesystemLoader(__DIR__.'/views'),
  *          'partials_loader' => new FilesystemLoader(__DIR__.'/views/partials'),
- *     ));
+ *     ]);
  */
 class FilesystemLoader implements Loader
 {
@@ -41,15 +41,15 @@ class FilesystemLoader implements Loader
      *
      * Passing an $options array allows overriding certain Loader options during instantiation:
      *
-     *     $options = array(
+     *     $options = [
      *         // The filename extension used for Mustache templates. Defaults to '.mustache'
      *         'extension' => '.ms',
-     *     );
+     *     ];
      *
      * @throws RuntimeException if $baseDir does not exist
      *
      * @param string $baseDir Base directory containing Mustache template files
-     * @param array  $options Array of Loader options (default: array())
+     * @param array  $options Loader options (default: [])
      */
     public function __construct($baseDir, array $options = [])
     {

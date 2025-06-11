@@ -37,9 +37,9 @@ use Mustache\Loader;
  *
  * The InlineLoader is well-suited to micro-frameworks such as Silex:
  *
- *     $app->register(new MustacheServiceProvider, array(
+ *     $app->register(new MustacheServiceProvider, [
  *         'mustache.loader' => new InlineLoader(__FILE__, __COMPILER_HALT_OFFSET__)
- *     ));
+ *     ]);
  *
  *     $app->get('/{name}', function ($name) use ($app) {
  *         return $app['mustache']->render('hello', compact('name'));

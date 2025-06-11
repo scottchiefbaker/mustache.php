@@ -25,10 +25,10 @@ class CascadingLoader implements Loader
     /**
      * Construct a CascadingLoader with an array of loaders.
      *
-     *     $loader = new CascadingLoader(array(
+     *     $loader = new CascadingLoader([
      *         new InlineLoader(__FILE__, __COMPILER_HALT_OFFSET__),
      *         new FilesystemLoader(__DIR__.'/templates')
-     *     ));
+     *     ]);
      *
      * @param Loader[] $loaders
      */

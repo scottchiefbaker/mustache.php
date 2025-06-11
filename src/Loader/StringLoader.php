@@ -25,7 +25,7 @@ use Mustache\Loader;
  *
  *     $m = new \Mustache\Engine;
  *     $tpl = $m->loadTemplate('{{ foo }}');
- *     echo $tpl->render(array('foo' => 'bar')); // "bar"
+ *     echo $tpl->render(['foo' => 'bar']); // "bar"
  */
 class StringLoader implements Loader
 {
