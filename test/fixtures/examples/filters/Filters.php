@@ -64,34 +64,22 @@ class Filters
         'wy' => 'Wyoming',
     ];
 
-    // The next few functions are ugly, because they have to work in PHP 5.2...
-    // for everyone who doesn't have to support 5.2, please, for the love, make
-    // your ViewModel return closures rather than `array($this, '...')`
-    //
-    // :)
-
     public function upcase()
     {
-        return [$this, '_upcase'];
-    }
-
-    public function _upcase($val)
-    {
-        return strtoupper($val);
+        return function($val) {
+            return strtoupper($val);
+        };
     }
 
     public function eachPair()
     {
-        return [$this, '_eachPair'];
-    }
+        return function($val) {
+            $ret = [];
+            foreach ($val as $key => $value) {
+                array_push($ret, compact('key', 'value'));
+            }
 
-    public function _eachPair($val)
-    {
-        $ret = [];
-        foreach ($val as $key => $value) {
-            array_push($ret, compact('key', 'value'));
-        }
-
-        return $ret;
+            return $ret;
+        };
     }
 }
