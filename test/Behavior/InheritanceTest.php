@@ -524,7 +524,7 @@ class InheritanceTest extends TestCase
     /**
      * @dataProvider getIllegalInheritanceExamples
      */
-    public function testIllegalInheritanceExamples($partials, $data, $template)
+    public function testIllegalInheritanceExamples(array $partials, array $data, $template)
     {
         $this->expectException(SyntaxException::class);
         $this->expectExceptionMessage('Illegal content in < parent tag');
@@ -537,7 +537,7 @@ class InheritanceTest extends TestCase
     /**
      * @dataProvider getLegalInheritanceExamples
      */
-    public function testLegalInheritanceExamples($partials, $data, $template, $expect)
+    public function testLegalInheritanceExamples(array $partials, array $data, $template, $expect)
     {
         $this->mustache->setPartials($partials);
         $tpl = $this->mustache->loadTemplate($template);

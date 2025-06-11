@@ -133,7 +133,7 @@ class MustacheSpecTest extends SpecTestCase
     /**
      * Extract and lambdafy any 'lambda' values found in the $data array.
      */
-    private function prepareLambdasSpec($data)
+    private function prepareLambdasSpec(array $data)
     {
         foreach ($data as $key => $val) {
             if (isset($val['__tag__']) && $val['__tag__'] === 'code') {

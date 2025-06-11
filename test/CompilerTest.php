@@ -20,7 +20,7 @@ class CompilerTest extends TestCase
     /**
      * @dataProvider getCompileValues
      */
-    public function testCompile($source, array $tree, $name, $customEscaper, $entityFlags, $charset, $expected)
+    public function testCompile($source, array $tree, $name, $customEscaper, $entityFlags, $charset, array $expected)
     {
         $compiler = new Compiler();
 

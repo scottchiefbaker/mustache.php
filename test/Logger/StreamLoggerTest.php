@@ -106,7 +106,7 @@ class StreamLoggerTest extends TestCase
     /**
      * @dataProvider getLogMessages
      */
-    public function testLogging($level, $message, $context, $expected)
+    public function testLogging($level, $message, array $context, $expected)
     {
         $stream = tmpfile();
         $logger = new StreamLogger($stream, Logger::DEBUG);

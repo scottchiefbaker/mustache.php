@@ -21,7 +21,7 @@ class ParserTest extends TestCase
     /**
      * @dataProvider getTokenSets
      */
-    public function testParse($tokens, $expected)
+    public function testParse(array $tokens, array $expected)
     {
         $parser = new Parser();
         $this->assertEquals($expected, $parser->parse($tokens));
@@ -193,7 +193,7 @@ class ParserTest extends TestCase
     /**
      * @dataProvider getInheritanceTokenSets
      */
-    public function testParseWithInheritance($tokens, $expected)
+    public function testParseWithInheritance(array $tokens, array $expected)
     {
         $parser = new Parser();
         $parser->setPragmas([Engine::PRAGMA_BLOCKS]);
@@ -321,7 +321,7 @@ class ParserTest extends TestCase
     /**
      * @dataProvider getBadParseTrees
      */
-    public function testParserThrowsExceptions($tokens)
+    public function testParserThrowsExceptions(array $tokens)
     {
         $this->expectException(SyntaxException::class);
         $parser = new Parser();

@@ -26,7 +26,7 @@ class MustacheInjectionTest extends TestCase
     /**
      * @dataProvider injectionData
      */
-    public function testInjection($tpl, $data, $partials, $expect)
+    public function testInjection($tpl, array $data, array $partials, $expect)
     {
         $this->mustache->setPartials($partials);
         $this->assertSame($expect, $this->mustache->render($tpl, $data));

@@ -394,7 +394,7 @@ class EngineTest extends FunctionalTestCase
     /**
      * @dataProvider pragmaData
      */
-    public function testPragmasConstructorOption($pragmas, $helpers, $data, $tpl, $expect)
+    public function testPragmasConstructorOption(array $pragmas, array $helpers, array $data, $tpl, $expect)
     {
         $mustache = new Engine([
             'pragmas' => $pragmas,

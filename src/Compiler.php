@@ -228,7 +228,7 @@ class Compiler
      *
      * @return string Generated PHP source code
      */
-    private function writeCode($tree, $name)
+    private function writeCode(array $tree, $name)
     {
         $code     = $this->walk($tree);
         $sections = implode("\n", $this->sections);
@@ -262,7 +262,7 @@ class Compiler
      *
      * @return string Generated PHP source code
      */
-    private function blockVar($nodes, $id, $start, $end, $otag, $ctag, $level)
+    private function blockVar(array $nodes, $id, $start, $end, $otag, $ctag, $level)
     {
         $id = var_export($id, true);
 
@@ -313,7 +313,7 @@ class Compiler
      *
      * @return string key of new block function
      */
-    private function block($nodes)
+    private function block(array $nodes)
     {
         $code = $this->walk($nodes, 0);
         $key = ucfirst(md5($code));
@@ -377,7 +377,7 @@ class Compiler
      *
      * @return string Generated section PHP source code
      */
-    private function section($nodes, $id, $filters, $start, $end, $otag, $ctag, $level)
+    private function section(array $nodes, $id, $filters, $start, $end, $otag, $ctag, $level)
     {
         $source   = var_export(substr($this->source, $start, $end - $start), true);
         $callable = $this->getCallable();
@@ -422,7 +422,7 @@ class Compiler
      *
      * @return string Generated inverted section PHP source code
      */
-    private function invertedSection($nodes, $id, $filters, $level)
+    private function invertedSection(array $nodes, $id, $filters, $level)
     {
         $method  = $this->getFindMethod($id);
         $id      = var_export($id, true);

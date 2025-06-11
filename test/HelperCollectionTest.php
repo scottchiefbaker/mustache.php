@@ -98,7 +98,7 @@ class HelperCollectionTest extends TestCase
     /**
      * @dataProvider getInvalidHelperArguments
      */
-    public function testHelperCollectionIsntAfraidToThrowExceptions($helpers = [], $actions = [], $exception = null)
+    public function testHelperCollectionIsntAfraidToThrowExceptions($helpers = [], array $actions = [], $exception = null)
     {
         if ($exception) {
             $this->expectException($exception);

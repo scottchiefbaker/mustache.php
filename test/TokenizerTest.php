@@ -20,7 +20,7 @@ class TokenizerTest extends TestCase
     /**
      * @dataProvider getTokens
      */
-    public function testScan($text, $delimiters, $expected)
+    public function testScan($text, $delimiters, array $expected)
     {
         $tokenizer = new Tokenizer();
         $this->assertSame($expected, $tokenizer->scan($text, $delimiters));

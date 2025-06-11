@@ -27,7 +27,7 @@ class FiltersTest extends TestCase
     /**
      * @dataProvider singleFilterData
      */
-    public function testSingleFilter($tpl, $helpers, $data, $expect)
+    public function testSingleFilter($tpl, array $helpers, $data, $expect)
     {
         $this->mustache->setHelpers($helpers);
         $this->assertSame($expect, $this->mustache->render($tpl, $data));
@@ -109,7 +109,7 @@ EOS;
     /**
      * @dataProvider interpolateFirstData
      */
-    public function testInterpolateFirst($tpl, $data, $expect)
+    public function testInterpolateFirst($tpl, array $data, $expect)
     {
         $this->assertSame($expect, $this->mustache->render($tpl, $data));
     }
@@ -132,7 +132,7 @@ EOS;
     /**
      * @dataProvider brokenPipeData
      */
-    public function testThrowsExceptionForBrokenPipes($tpl, $data)
+    public function testThrowsExceptionForBrokenPipes($tpl, array $data)
     {
         $this->expectException(UnknownFilterException::class);
         $this->mustache->render($tpl, $data);
@@ -190,7 +190,7 @@ EOS;
     /**
      * @dataProvider lambdaFiltersData
      */
-    public function testLambdaFilters($tpl, $data, $expect)
+    public function testLambdaFilters($tpl, array $data, $expect)
     {
         $this->assertSame($expect, $this->mustache->render($tpl, $data));
     }

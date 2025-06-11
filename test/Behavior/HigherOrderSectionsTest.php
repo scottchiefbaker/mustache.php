@@ -209,7 +209,7 @@ class HigherOrderSectionsTest extends FunctionalTestCase
     /**
      * @dataProvider nonTemplateLambdasData
      */
-    public function testNonTemplateLambdas($tpl, $data, $expect)
+    public function testNonTemplateLambdas($tpl, array $data, $expect)
     {
         $this->assertSame($expect, $this->mustache->render($tpl, $data));
     }
