@@ -46,13 +46,17 @@ class MustacheInjectionTest extends TestCase
         ];
 
         $lambdaInterpolationData = [
-            'a' => [$this, 'lambdaInterpolationCallback'],
+            'a' => function () {
+                return '{{ b }}';
+            },
             'b' => '{{ c }}',
             'c' => 'FAIL',
         ];
 
         $lambdaSectionData = [
-            'a' => [$this, 'lambdaSectionCallback'],
+            'a' => function ($text) {
+                return "{{ $text }}";
+            },
             'b' => '{{ c }}',
             'c' => 'FAIL',
         ];
@@ -70,15 +74,5 @@ class MustacheInjectionTest extends TestCase
             ['{{ a }}',           $lambdaInterpolationData, [], '{{ c }}'],
             ['{{# a }}b{{/ a }}', $lambdaSectionData,       [], '{{ c }}'],
         ];
-    }
-
-    public static function lambdaInterpolationCallback()
-    {
-        return '{{ b }}';
-    }
-
-    public static function lambdaSectionCallback($text)
-    {
-        return '{{ ' . $text . ' }}';
     }
 }

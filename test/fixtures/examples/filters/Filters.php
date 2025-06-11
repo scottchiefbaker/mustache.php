@@ -66,14 +66,14 @@ class Filters
 
     public function upcase()
     {
-        return function($val) {
+        return function ($val) {
             return strtoupper($val);
         };
     }
 
     public function eachPair()
     {
-        return function($val) {
+        return function ($val) {
             $ret = [];
             foreach ($val as $key => $value) {
                 array_push($ret, compact('key', 'value'));

@@ -15,7 +15,12 @@ class I18n
     public $name = 'Bob';
 
     // Add a {{#__}} lambda for i18n
-    public $__ = [__CLASS__, '__trans'];
+    public function __()
+    {
+        return function ($text) {
+            return self::__trans($text);
+        };
+    }
 
     // A *very* small i18n dictionary :)
     private static $dictionary = [

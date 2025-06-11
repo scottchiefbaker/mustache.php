@@ -25,8 +25,8 @@ class StrictCallablesTest extends TestCase
         $tpl      = $mustache->loadTemplate('{{# section }}{{ yourname }}{{/ section }}');
 
         $data = new \StdClass();
-        $data->yourname    = $name;
-        $data->section = $section;
+        $data->yourname = $name;
+        $data->section  = $section;
 
         $this->assertSame($expected, $tpl->render($data));
     }

@@ -218,7 +218,9 @@ class EngineTest extends FunctionalTestCase
 
     public function testHelpers()
     {
-        $foo = [$this, 'getFoo'];
+        $foo = function () {
+            return $this->getFoo();
+        };
         $bar = 'BAR';
         $mustache = new Engine(['helpers' => [
             'foo' => $foo,
@@ -238,7 +240,9 @@ class EngineTest extends FunctionalTestCase
         $mustache->addHelper('bar', $bar);
         $this->assertSame($bar, $mustache->getHelper('bar'));
 
-        $baz = [$this, 'wrapWithUnderscores'];
+        $baz = function ($text) {
+            return self::wrapWithUnderscores($text);
+        };
         $this->assertFalse($mustache->hasHelper('baz'));
         $this->assertFalse($helpers->has('baz'));
 

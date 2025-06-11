@@ -34,10 +34,14 @@ class HigherOrderSectionsTest extends FunctionalTestCase
     public function sectionCallbackData()
     {
         $foo = new Foo();
-        $foo->doublewrap = [$foo, 'wrapWithBoth'];
+        $foo->doublewrap = function ($text) use ($foo) {
+            return $foo->wrapWithBoth($text);
+        };
 
         $bar = new Foo();
-        $bar->trimmer = [get_class($bar), 'staticTrim'];
+        $bar->trimmer = function ($text) use ($bar) {
+            return $bar::staticTrim($text);
+        };
 
         return [
             [$foo, '{{#doublewrap}}{{name}}{{/doublewrap}}', sprintf('<strong><em>%s</em></strong>', $foo->name)],
@@ -53,7 +57,9 @@ class HigherOrderSectionsTest extends FunctionalTestCase
 
         $data = [
             'name' => 'Bob',
-            'trim' => [get_class($foo), 'staticTrim'],
+            'trim' => function ($text) use ($foo) {
+                return $foo::staticTrim($text);
+            },
         ];
 
         $this->assertSame($data['name'], $tpl->render($data));
@@ -90,7 +96,9 @@ class HigherOrderSectionsTest extends FunctionalTestCase
         $tpl = $mustache->loadTemplate('{{#wrap}}NAME{{/wrap}}');
 
         $foo = new Foo();
-        $foo->wrap = [$foo, 'wrapWithEm'];
+        $foo->wrap = function ($text) use ($foo) {
+            return $foo->wrapWithEm($text);
+        };
 
         $this->assertSame('<em>NAME</em>', $tpl->render($foo));
     }
@@ -112,7 +120,9 @@ class HigherOrderSectionsTest extends FunctionalTestCase
         $tpl = $mustache->loadTemplate('{{#wrap}}{{name}}{{/wrap}}');
 
         $foo = new Foo();
-        $foo->wrap = [$foo, 'wrapWithEm'];
+        $foo->wrap = function ($text) use ($foo) {
+            return $foo->wrapWithEm($text);
+        };
 
         $this->assertSame('<em>' . $foo->name . '</em>', $tpl->render($foo));
     }
@@ -131,7 +141,9 @@ class HigherOrderSectionsTest extends FunctionalTestCase
 
         $tpl = $mustache->loadTemplate('{{#wrap}}{{name}}{{/wrap}}');
         $foo = new Foo();
-        $foo->wrap = [$foo, 'wrapWithEm'];
+        $foo->wrap = function ($text) use ($foo) {
+            return $foo->wrapWithEm($text);
+        };
         $this->assertSame('<em>' . $foo->name . '</em>', $tpl->render($foo));
         $this->assertCount($expect, glob($cacheDir . '/*.php'));
     }
@@ -227,6 +239,7 @@ class Foo
     public $name = 'Justin';
     public $lorem = 'Lorem ipsum dolor sit amet,';
 
+    public $wrap;
     public $doublewrap;
     public $trimmer;
 
@@ -259,6 +272,7 @@ class Bar
     public $name  = 'Justin';
     public $lorem = 'Lorem ipsum dolor sit amet,';
     public $wrap;
+    public $wrapper;
 
     public function __construct()
     {

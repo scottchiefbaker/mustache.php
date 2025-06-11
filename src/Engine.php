@@ -65,7 +65,7 @@ class Engine
     private $entityFlags = ENT_COMPAT;
     private $charset = 'UTF-8';
     private $logger;
-    private $strictCallables = false;
+    private $strictCallables = true;
     private $pragmas = [];
     private $delimiters;
     private $buggyPropertyShadowing = false;
@@ -141,7 +141,7 @@ class Engine
      *         // `['ClassName', 'methodName']` and `[$classInstance, 'methodName']`, which are traditionally
      *         // "callable" in PHP, are not called to resolve variables for interpolation or section contexts. This
      *         // helps protect against arbitrary code execution when user input is passed directly into the template.
-     *         // This currently defaults to false, but will default to true in v3.0.
+     *         // Defaults to true, but can be set to false to preserve v2.x behavior.
      *         'strict_callables' => true,
      *
      *        // Enable buggy property shadowing. Per the Mustache spec, keys of a value higher in the context stack
