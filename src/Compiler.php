@@ -534,8 +534,6 @@ class Compiler
     /**
      * Helper method for filtering out non-block-arg tokens.
      *
-     * @param array $node
-     *
      * @return bool True if $node is a block arg token
      */
     private static function onlyBlockArgs(array $node)
@@ -586,7 +584,7 @@ class Compiler
      *
      * @param string[] $filters Array of filters
      * @param int      $level
-     * @param bool     $first (default: false)
+     * @param bool     $first   (default: false)
      *
      * @return string Generated filter PHP source
      */

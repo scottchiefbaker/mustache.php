@@ -20,7 +20,6 @@ class SyntaxException extends LogicException implements \Mustache\Exception
 
     /**
      * @param string    $msg
-     * @param array     $token
      * @param Exception $previous
      */
     public function __construct($msg, array $token, $previous = null)

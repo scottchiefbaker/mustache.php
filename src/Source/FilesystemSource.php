@@ -32,7 +32,6 @@ class FilesystemSource implements Source
      * Filesystem Source constructor.
      *
      * @param string $fileName
-     * @param array  $statProps
      */
     public function __construct($fileName, array $statProps)
     {

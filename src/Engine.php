@@ -316,8 +316,6 @@ class Engine
 
     /**
      * Set the Mustache template Loader instance.
-     *
-     * @param Loader $loader
      */
     public function setLoader(Loader $loader)
     {
@@ -343,8 +341,6 @@ class Engine
 
     /**
      * Set the Mustache partials Loader instance.
-     *
-     * @param Loader $partialsLoader
      */
     public function setPartialsLoader(Loader $partialsLoader)
     {
@@ -512,8 +508,6 @@ class Engine
 
     /**
      * Set the Mustache Tokenizer instance.
-     *
-     * @param Tokenizer $tokenizer
      */
     public function setTokenizer(Tokenizer $tokenizer)
     {
@@ -538,8 +532,6 @@ class Engine
 
     /**
      * Set the Mustache Parser instance.
-     *
-     * @param Parser $parser
      */
     public function setParser(Parser $parser)
     {
@@ -564,8 +556,6 @@ class Engine
 
     /**
      * Set the Mustache Compiler instance.
-     *
-     * @param Compiler $compiler
      */
     public function setCompiler(Compiler $compiler)
     {
@@ -590,8 +580,6 @@ class Engine
 
     /**
      * Set the Mustache Cache instance.
-     *
-     * @param Cache $cache
      */
     public function setCache(Cache $cache)
     {
@@ -766,7 +754,7 @@ class Engine
         $className = $this->getTemplateClassName($source);
 
         if (!isset($this->templates[$className])) {
-            if ($cache === null || ! $cache instanceof Cache) {
+            if ($cache === null || !$cache instanceof Cache) {
                 $cache = $this->getCache();
             }
 

@@ -68,7 +68,6 @@ class DynamicPartialsTest extends TestCase
         $this->mustache->render($template);
     }
 
-
     public function testDynamicBlocks()
     {
         $tpl = '{{% BLOCKS }}{{< *partial }}{{$ bar }}{{ value }}{{/ bar }}{{/ *partial }}';

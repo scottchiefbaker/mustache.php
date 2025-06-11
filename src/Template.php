@@ -30,8 +30,6 @@ abstract class Template
 
     /**
      * Mustache Template constructor.
-     *
-     * @param Engine $mustache
      */
     public function __construct(Engine $mustache)
     {
@@ -77,8 +75,7 @@ abstract class Template
      *
      * NOTE: This method is not part of the Mustache.php public API.
      *
-     * @param Context $context
-     * @param string  $indent  (default: '')
+     * @param string $indent (default: '')
      *
      * @return string Rendered template
      */
@@ -164,8 +161,7 @@ abstract class Template
      *
      * Invoke the value if it is callable, otherwise return the value.
      *
-     * @param mixed   $value
-     * @param Context $context
+     * @param mixed $value
      *
      * @return string
      */

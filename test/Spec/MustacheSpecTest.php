@@ -139,6 +139,7 @@ class MustacheSpecTest extends SpecTestCase
             if (isset($val['__tag__']) && $val['__tag__'] === 'code') {
                 if (!isset($val['php'])) {
                     $this->markTestSkipped(sprintf('PHP lambda test not implemented for this test.'));
+
                     return;
                 }
 

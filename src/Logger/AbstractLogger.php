@@ -28,7 +28,6 @@ abstract class AbstractLogger implements Logger
      * System is unusable.
      *
      * @param string $message
-     * @param array  $context
      */
     public function emergency($message, array $context = [])
     {
@@ -42,7 +41,6 @@ abstract class AbstractLogger implements Logger
      * trigger the SMS alerts and wake you up.
      *
      * @param string $message
-     * @param array  $context
      */
     public function alert($message, array $context = [])
     {
@@ -55,7 +53,6 @@ abstract class AbstractLogger implements Logger
      * Example: Application component unavailable, unexpected exception.
      *
      * @param string $message
-     * @param array  $context
      */
     public function critical($message, array $context = [])
     {
@@ -67,7 +64,6 @@ abstract class AbstractLogger implements Logger
      * be logged and monitored.
      *
      * @param string $message
-     * @param array  $context
      */
     public function error($message, array $context = [])
     {
@@ -81,7 +77,6 @@ abstract class AbstractLogger implements Logger
      * that are not necessarily wrong.
      *
      * @param string $message
-     * @param array  $context
      */
     public function warning($message, array $context = [])
     {
@@ -92,7 +87,6 @@ abstract class AbstractLogger implements Logger
      * Normal but significant events.
      *
      * @param string $message
-     * @param array  $context
      */
     public function notice($message, array $context = [])
     {
@@ -105,7 +99,6 @@ abstract class AbstractLogger implements Logger
      * Example: User logs in, SQL logs.
      *
      * @param string $message
-     * @param array  $context
      */
     public function info($message, array $context = [])
     {
@@ -116,7 +109,6 @@ abstract class AbstractLogger implements Logger
      * Detailed debug information.
      *
      * @param string $message
-     * @param array  $context
      */
     public function debug($message, array $context = [])
     {

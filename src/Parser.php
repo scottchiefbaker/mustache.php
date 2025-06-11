@@ -274,8 +274,6 @@ class Parser
      *
      * True if token type is T_TEXT and value is all whitespace characters.
      *
-     * @param array $token
-     *
      * @return bool True if token is a whitespace token
      */
     private function tokenIsWhitespace(array $token)
@@ -293,7 +291,6 @@ class Parser
      * @throws SyntaxException if an invalid token is found inside a parent tag
      *
      * @param array|null $parent
-     * @param array      $token
      */
     private function checkIfTokenIsAllowedInParent($parent, array $token)
     {
@@ -326,8 +323,6 @@ class Parser
      * Check whether the given token supports dynamic tag names.
      *
      * @throws SyntaxException when a tag does not allow *
-     *
-     * @param array $token
      */
     private function ensureTagAllowsDynamicNames(array $token)
     {
@@ -346,7 +341,6 @@ class Parser
 
         throw new SyntaxException($msg, $token);
     }
-
 
     /**
      * Split a tag name into name and filters.

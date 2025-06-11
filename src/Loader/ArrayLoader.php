@@ -63,8 +63,6 @@ class ArrayLoader implements Loader, MutableLoader
 
     /**
      * Set an associative array of Template sources for this loader.
-     *
-     * @param array $templates
      */
     public function setTemplates(array $templates)
     {

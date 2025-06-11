@@ -197,7 +197,6 @@ class TokenizerTest extends TestCase
                         Tokenizer::LINE  => 3,
                         Tokenizer::INDEX => 51,
                     ],
-
                 ],
             ],
 

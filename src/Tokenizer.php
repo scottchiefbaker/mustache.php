@@ -106,7 +106,7 @@ class Tokenizer
     /**
      * Scan and tokenize template source.
      *
-     * @throws SyntaxException when mismatched section tags are encountered
+     * @throws SyntaxException          when mismatched section tags are encountered
      * @throws InvalidArgumentException when $delimiters string is invalid
      *
      * @param string $text       Mustache template source to tokenize
@@ -378,7 +378,6 @@ class Tokenizer
 
         return $end + $this->ctagLen - 1;
     }
-
 
     private function throwUnclosedTagException()
     {

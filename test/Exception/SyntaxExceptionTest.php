@@ -12,8 +12,8 @@
 namespace Mustache\Test\Exception;
 
 use Mustache\Exception\SyntaxException;
-use Mustache\Tokenizer;
 use Mustache\Test\TestCase;
+use Mustache\Tokenizer;
 
 class SyntaxExceptionTest extends TestCase
 {

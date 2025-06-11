@@ -11,8 +11,8 @@
 
 namespace Mustache\Test;
 
-use Mustache\HelperCollection;
 use Mustache\Exception\InvalidArgumentException;
+use Mustache\HelperCollection;
 
 class HelperCollectionTest extends TestCase
 {

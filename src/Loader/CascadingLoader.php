@@ -42,8 +42,6 @@ class CascadingLoader implements Loader
 
     /**
      * Add a Loader instance.
-     *
-     * @param Loader $loader
      */
     public function addLoader(Loader $loader)
     {

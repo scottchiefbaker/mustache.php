@@ -32,7 +32,6 @@ class TemplateTest extends TestCase
         $template->rendered = $rendered;
         $context  = new Context();
 
-
         $this->assertSame($rendered, $template());
         $this->assertSame($rendered, $template->render());
         $this->assertSame($rendered, $template->renderInternal($context));

@@ -53,7 +53,7 @@ class ProductionFilesystemLoader extends FilesystemLoader
      *
      * @throws RuntimeException if $baseDir does not exist
      *
-     * @param string $baseDir Base directory containing Mustache template files.
+     * @param string $baseDir base directory containing Mustache template files
      * @param array  $options Loader options (default: [])
      */
     public function __construct($baseDir, array $options = [])

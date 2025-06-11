@@ -102,7 +102,6 @@ class StreamLogger extends AbstractLogger
      *
      * @param mixed  $level
      * @param string $message
-     * @param array  $context
      */
     public function log($level, $message, array $context = [])
     {
@@ -179,7 +178,6 @@ class StreamLogger extends AbstractLogger
      * Interpolate context values into the message placeholders.
      *
      * @param string $message
-     * @param array  $context
      *
      * @return string
      */

@@ -187,7 +187,6 @@ class ParserTest extends TestCase
                     ],
                 ],
             ],
-
         ];
     }
 
