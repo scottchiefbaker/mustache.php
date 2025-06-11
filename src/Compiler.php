@@ -274,7 +274,7 @@ class Compiler
         return sprintf($this->prepare(self::BLOCK_VAR, $level), $id, $else);
     }
 
-    const BLOCK_ARG = '%s => array($this, \'block%s\'),';
+    const BLOCK_ARG = '%s => [$this, \'block%s\'],';
 
     /**
      * Generate Mustache Template inheritance block argument PHP source.
@@ -351,7 +351,7 @@ class Compiler
             }
 
             if (!empty($value)) {
-                $values = $this->isIterable($value) ? $value : array($value);
+                $values = $this->isIterable($value) ? $value : [$value];
                 foreach ($values as $value) {
                     $context->push($value);
                     %s
@@ -491,8 +491,8 @@ class Compiler
 
     const PARENT = '
         if ($parent = $this->mustache->loadPartial(%s)) {
-            $context->pushBlockContext(array(%s
-            ));
+            $context->pushBlockContext([%s
+            ]);
             $buffer .= $parent->renderInternal($context, $indent);
             $context->popBlockContext();
         }
