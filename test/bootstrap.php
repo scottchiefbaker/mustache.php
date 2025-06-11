@@ -14,6 +14,7 @@
  */
 class TestStream
 {
+    public $context;
     private $filehandle;
 
     /**
