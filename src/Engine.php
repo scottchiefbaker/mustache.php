@@ -11,6 +11,7 @@
 
 namespace Mustache;
 
+use Psr\Log\LoggerInterface;
 use Mustache\Cache\FilesystemCache;
 use Mustache\Cache\NoopCache;
 use Mustache\Exception\InvalidArgumentException;
@@ -480,7 +481,7 @@ class Engine
      *
      * @throws InvalidArgumentException If logger is not an instance of Mustache\Logger or Psr\Log\LoggerInterface
      *
-     * @param Logger|\Psr\Log\LoggerInterface $logger
+     * @param Logger|LoggerInterface $logger
      */
     public function setLogger($logger = null)
     {
@@ -499,7 +500,7 @@ class Engine
     /**
      * Get the current Mustache Logger instance.
      *
-     * @return Logger|\Psr\Log\LoggerInterface
+     * @return Logger|LoggerInterface
      */
     public function getLogger()
     {
@@ -650,7 +651,7 @@ class Engine
         // Keep this list in alphabetical order :)
         $chunks = [
             'charset'         => $this->charset,
-            'delimiters'      => $this->delimiters ? $this->delimiters : '{{ }}',
+            'delimiters'      => $this->delimiters ?: '{{ }}',
             'entityFlags'     => $this->entityFlags,
             'escape'          => isset($this->escape) ? 'custom' : 'default',
             'key'             => ($source instanceof Source) ? $source->getKey() : 'source',

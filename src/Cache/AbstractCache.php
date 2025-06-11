@@ -11,6 +11,7 @@
 
 namespace Mustache\Cache;
 
+use Psr\Log\LoggerInterface;
 use Mustache\Cache;
 use Mustache\Exception\InvalidArgumentException;
 use Mustache\Logger;
@@ -29,7 +30,7 @@ abstract class AbstractCache implements Cache
     /**
      * Get the current logger instance.
      *
-     * @return Logger|\Psr\Log\LoggerInterface
+     * @return Logger|LoggerInterface
      */
     public function getLogger()
     {
@@ -39,7 +40,7 @@ abstract class AbstractCache implements Cache
     /**
      * Set a logger instance.
      *
-     * @param Logger|\Psr\Log\LoggerInterface $logger
+     * @param Logger|LoggerInterface $logger
      */
     public function setLogger($logger = null)
     {

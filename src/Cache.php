@@ -11,6 +11,8 @@
 
 namespace Mustache;
 
+use Psr\Log\LoggerInterface;
+
 /**
  * Mustache Cache interface.
  *
@@ -38,7 +40,7 @@ interface Cache
     /**
      * Set a logger instance.
      *
-     * @param \Mustache\Logger|\Psr\Log\LoggerInterface $logger
+     * @param Logger|LoggerInterface $logger
      */
     public function setLogger($logger = null);
 }

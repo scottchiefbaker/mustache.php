@@ -517,7 +517,7 @@ class Compiler
      */
     private function parent($id, $dynamic, $indent, array $children, $level)
     {
-        $realChildren = array_filter($children, [__CLASS__, 'onlyBlockArgs']);
+        $realChildren = array_filter($children, [self::class, 'onlyBlockArgs']);
         $partialName = $this->resolveDynamicName($id, $dynamic);
 
         if (empty($realChildren)) {

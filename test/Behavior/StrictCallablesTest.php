@@ -47,7 +47,7 @@ class StrictCallablesTest extends TestCase
             ],
             [
                 false,
-                [__CLASS__, 'staticName'],
+                [self::class, 'staticName'],
                 $lambda,
                 'YOSHI',
             ],
@@ -70,7 +70,7 @@ class StrictCallablesTest extends TestCase
             [
                 false,
                 'Yoshi',
-                [__CLASS__, 'staticCallable'],
+                [self::class, 'staticCallable'],
                 'YOSHI',
             ],
             [
@@ -100,7 +100,7 @@ class StrictCallablesTest extends TestCase
             [
                 true,
                 'Yoshi',
-                [__CLASS__, 'staticCallable'],
+                [self::class, 'staticCallable'],
                 'YoshiYoshi',
             ],
             [

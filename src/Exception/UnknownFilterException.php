@@ -11,10 +11,12 @@
 
 namespace Mustache\Exception;
 
+use Mustache\Exception;
+
 /**
  * Unknown filter exception.
  */
-class UnknownFilterException extends \UnexpectedValueException implements \Mustache\Exception
+class UnknownFilterException extends \UnexpectedValueException implements Exception
 {
     protected $filterName;
 

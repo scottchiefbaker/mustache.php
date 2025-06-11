@@ -11,10 +11,12 @@
 
 namespace Mustache\Exception;
 
+use Mustache\Exception;
+
 /**
  * Mustache syntax exception.
  */
-class SyntaxException extends LogicException implements \Mustache\Exception
+class SyntaxException extends LogicException implements Exception
 {
     protected $token;
 
