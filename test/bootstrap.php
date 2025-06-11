@@ -82,5 +82,5 @@ class TestStream
 }
 
 if (!stream_wrapper_register('test', 'TestStream')) {
-    die('Failed to register protocol');
+    exit('Failed to register protocol');
 }
