@@ -11,7 +11,6 @@
 
 namespace Mustache;
 
-use Psr\Log\LoggerInterface;
 use Mustache\Cache\FilesystemCache;
 use Mustache\Cache\NoopCache;
 use Mustache\Exception\InvalidArgumentException;
@@ -20,6 +19,7 @@ use Mustache\Exception\UnknownTemplateException;
 use Mustache\Loader\ArrayLoader;
 use Mustache\Loader\MutableLoader;
 use Mustache\Loader\StringLoader;
+use Psr\Log\LoggerInterface;
 
 /**
  * A Mustache implementation in PHP.
@@ -300,7 +300,7 @@ class Engine
     }
 
     /**
-     * Get the current Mustache entitity type to escape.
+     * Get the current Mustache entity type to escape.
      *
      * @return int
      */

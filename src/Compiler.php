@@ -41,7 +41,7 @@ class Compiler
      * @throws InvalidArgumentException if the FILTERS pragma is set but lambdas are not enabled
      *
      * @param string $source          Mustache Template source code
-     * @param string $tree            Parse tree of Mustache tokens
+     * @param array  $tree            Parse tree of Mustache tokens
      * @param string $name            Mustache Template class name
      * @param bool   $customEscape    (default: false)
      * @param string $charset         (default: 'UTF-8')
