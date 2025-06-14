@@ -1,19 +1,18 @@
-Mustache.php
-============
+# Mustache.php
 
-A [Mustache](https://mustache.github.io/) implementation in PHP.
+A [Mustache][mustache] implementation in PHP.
 
-[![Package version](http://img.shields.io/packagist/v/mustache/mustache.svg?style=flat-square)](https://packagist.org/packages/mustache/mustache)
-[![Monthly downloads](http://img.shields.io/packagist/dm/mustache/mustache.svg?style=flat-square)](https://packagist.org/packages/mustache/mustache)
+[![Package version](http://img.shields.io/packagist/v/mustache/mustache.svg?style=flat-square)][packagist]
+[![Monthly downloads](http://img.shields.io/packagist/dm/mustache/mustache.svg?style=flat-square)][packagist]
 
-Installation
-------------
+
+## Installation
+
 ```
 composer require mustache/mustache
 ```
 
-Usage
------
+## Usage
 
 A quick example:
 
@@ -61,16 +60,23 @@ $chris = new \Chris;
 echo $m->render($template, $chris);
 ```
 
-*Note:* we recommend using `ENT_QUOTES` as a default of [entity_flags](https://github.com/bobthecow/mustache.php/wiki#entity_flags) to decrease the chance of Cross-site scripting vulnerability.
-
-And That's Not All!
--------------------
-
-Read [the Mustache.php documentation](https://github.com/bobthecow/mustache.php/wiki/Home) for more information.
+*Note:* we recommend using `ENT_QUOTES` as a default of [entity_flags][entity_flags] to decrease the chance of Cross-site scripting vulnerability.
 
 
-See Also
---------
+## And That's Not All!
 
- * [mustache(5)](http://mustache.github.io/mustache.5.html) man page.
- * [Readme for the Ruby Mustache implementation](http://github.com/defunkt/mustache/blob/master/README.md).
+Read [the Mustache.php documentation][docs] for more information.
+
+
+## See Also
+
+ - [mustache(5)][manpage] man page.
+ - [Readme for the Ruby Mustache implementation][ruby].
+
+
+[mustache]:     https://mustache.github.io/
+[packagist]:    https://packagist.org/packages/mustache/mustache
+[entity_flags]: https://github.com/bobthecow/mustache.php/wiki#entity_flags
+[docs]:         https://github.com/bobthecow/mustache.php/wiki/Home
+[manpage]:      http://mustache.github.io/mustache.5.html
+[ruby]:         http://github.com/defunkt/mustache/blob/master/README.md
