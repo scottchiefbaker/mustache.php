@@ -27,7 +27,6 @@ class Parser
 
     private $pragmaFilters;
     private $pragmaBlocks;
-    private $pragmaDynamicNames;
 
     /**
      * Process an array of Mustache tokens and convert them into a parse tree.
@@ -44,7 +43,6 @@ class Parser
 
         $this->pragmaFilters      = isset($this->pragmas[Engine::PRAGMA_FILTERS]);
         $this->pragmaBlocks       = isset($this->pragmas[Engine::PRAGMA_BLOCKS]);
-        $this->pragmaDynamicNames = isset($this->pragmas[Engine::PRAGMA_DYNAMIC_NAMES]);
 
         return $this->buildTree($tokens);
     }
@@ -91,7 +89,7 @@ class Parser
             }
 
             if ($token[Tokenizer::TYPE] !== Tokenizer::T_COMMENT) {
-                if ($this->pragmaDynamicNames && isset($token[Tokenizer::NAME])) {
+                if (isset($token[Tokenizer::NAME])) {
                     list($name, $isDynamic) = $this->getDynamicName($token);
                     if ($isDynamic) {
                         $token[Tokenizer::NAME]    = $name;
@@ -373,10 +371,6 @@ class Parser
 
             case Engine::PRAGMA_FILTERS:
                 $this->pragmaFilters = true;
-                break;
-
-            case Engine::PRAGMA_DYNAMIC_NAMES:
-                $this->pragmaDynamicNames = true;
                 break;
         }
     }

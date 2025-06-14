@@ -41,14 +41,12 @@ class Engine
     const PRAGMA_FILTERS       = 'FILTERS';
     const PRAGMA_BLOCKS        = 'BLOCKS';
     const PRAGMA_ANCHORED_DOT  = 'ANCHORED-DOT';
-    const PRAGMA_DYNAMIC_NAMES = 'DYNAMIC-NAMES';
 
     // Known pragmas
     private static $knownPragmas = [
         self::PRAGMA_FILTERS       => true,
         self::PRAGMA_BLOCKS        => true,
         self::PRAGMA_ANCHORED_DOT  => true,
-        self::PRAGMA_DYNAMIC_NAMES => true,
     ];
 
     // Template cache

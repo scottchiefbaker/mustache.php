@@ -21,9 +21,7 @@ class DynamicPartialsTest extends TestCase
 
     public function set_up()
     {
-        $this->mustache = new Engine([
-            'pragmas' => [Engine::PRAGMA_DYNAMIC_NAMES],
-        ]);
+        $this->mustache = new Engine();
     }
 
     public function getValidDynamicNamesExamples()
