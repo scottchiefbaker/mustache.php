@@ -68,6 +68,15 @@ echo $m->render($template, $chris);
 Read [the Mustache.php documentation][docs] for more information.
 
 
+## Upgrading from v2.x
+
+_Mustache.php v3.x drops support for PHP 5.2–5.5_, but is otherwise a drop-in replacement for v2.x:
+
+ - `\Mustache_Engine` and other prefixed classnames are all available as `\Mustache\Engine`, etc. You can keep using the old style for now, if you feel nostalgic for 2008, but you'll want to update eventually.
+ - [A context shadowing bug from v2.x has been fixed](https://github.com/bobthecow/mustache.php/commit/66ecb327ce15b9efa0cfcb7026fdc62c6659b27f), but if you depend on the previous buggy behavior you can preserve it via the `buggy_property_shadowing` config option.
+ - The `strict_callables` config now defaults to `true`. Lambda sections should use closures or callable objects. To continue supporting array-style callables for lambda sections (e.g. `[$this, 'foo']`), set `strict_callables` to `false`.
+
+
 ## See Also
 
  - [mustache(5)][manpage] man page.
