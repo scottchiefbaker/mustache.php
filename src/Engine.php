@@ -24,7 +24,7 @@ use Mustache\Loader\StringLoader;
 /**
  * A Mustache implementation in PHP.
  *
- * {@link http://defunkt.github.com/mustache}
+ * {@link https://mustache.github.io}
  *
  * Mustache is a framework-agnostic logic-less templating language. It enforces separation of view
  * logic from template files. In fact, it is not even possible to embed logic in the template.
