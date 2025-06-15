@@ -11,7 +11,6 @@
 
 namespace Mustache\Test;
 
-use Mustache\Engine;
 use Mustache\Exception\SyntaxException;
 use Mustache\Parser;
 use Mustache\Tokenizer;
@@ -120,39 +119,6 @@ class ParserTest extends TestCase
                 ],
             ],
 
-            // This *would* be an invalid inheritance parse tree, but that pragma
-            // isn't enabled so it'll thunk it back into an "escaped" token:
-            [
-                [
-                    [
-                        Tokenizer::TYPE => Tokenizer::T_BLOCK_VAR,
-                        Tokenizer::NAME => 'foo',
-                        Tokenizer::OTAG => '{{',
-                        Tokenizer::CTAG => '}}',
-                        Tokenizer::LINE => 0,
-                    ],
-                    [
-                        Tokenizer::TYPE  => Tokenizer::T_TEXT,
-                        Tokenizer::LINE  => 0,
-                        Tokenizer::VALUE => 'bar',
-                    ],
-                ],
-                [
-                    [
-                        Tokenizer::TYPE => Tokenizer::T_ESCAPED,
-                        Tokenizer::NAME => '$foo',
-                        Tokenizer::OTAG => '{{',
-                        Tokenizer::CTAG => '}}',
-                        Tokenizer::LINE => 0,
-                    ],
-                    [
-                        Tokenizer::TYPE  => Tokenizer::T_TEXT,
-                        Tokenizer::LINE  => 0,
-                        Tokenizer::VALUE => 'bar',
-                    ],
-                ],
-            ],
-
             [
                 [
                     [
@@ -196,7 +162,6 @@ class ParserTest extends TestCase
     public function testParseWithInheritance(array $tokens, array $expected)
     {
         $parser = new Parser();
-        $parser->setPragmas([Engine::PRAGMA_BLOCKS]);
         $this->assertSame($expected, $parser->parse($tokens));
     }
 
@@ -396,33 +361,42 @@ class ParserTest extends TestCase
                     ],
                 ],
             ],
+        ];
+    }
 
-            // This *would* be a valid inheritance parse tree, but that pragma
-            // isn't enabled here so it's going to fail :)
+    public function testParserThrowsWhenInheritanceIsDisabled()
+    {
+        $parser = new Parser();
+        $parser->setOptions([
+            'inheritance' => false,
+        ]);
+
+        $this->expectException(SyntaxException::class);
+        $this->expectExceptionMessage('Unexpected closing tag: /foo on line 0');
+
+        $parser->parse(
             [
                 [
-                    [
-                        Tokenizer::TYPE => Tokenizer::T_BLOCK_VAR,
-                        Tokenizer::NAME => 'foo',
-                        Tokenizer::OTAG => '{{',
-                        Tokenizer::CTAG => '}}',
-                        Tokenizer::LINE => 0,
-                    ],
-                    [
-                        Tokenizer::TYPE  => Tokenizer::T_TEXT,
-                        Tokenizer::LINE  => 0,
-                        Tokenizer::VALUE => 'bar',
-                    ],
-                    [
-                        Tokenizer::TYPE  => Tokenizer::T_END_SECTION,
-                        Tokenizer::NAME  => 'foo',
-                        Tokenizer::OTAG  => '{{',
-                        Tokenizer::CTAG  => '}}',
-                        Tokenizer::LINE  => 0,
-                        Tokenizer::INDEX => 11,
-                    ],
+                    Tokenizer::TYPE => Tokenizer::T_BLOCK_VAR,
+                    Tokenizer::NAME => 'foo',
+                    Tokenizer::OTAG => '{{',
+                    Tokenizer::CTAG => '}}',
+                    Tokenizer::LINE => 0,
                 ],
-            ],
-        ];
+                [
+                    Tokenizer::TYPE  => Tokenizer::T_TEXT,
+                    Tokenizer::LINE  => 0,
+                    Tokenizer::VALUE => 'bar',
+                ],
+                [
+                    Tokenizer::TYPE  => Tokenizer::T_END_SECTION,
+                    Tokenizer::NAME  => 'foo',
+                    Tokenizer::OTAG  => '{{',
+                    Tokenizer::CTAG  => '}}',
+                    Tokenizer::LINE  => 0,
+                    Tokenizer::INDEX => 11,
+                ],
+            ]
+        );
     }
 }

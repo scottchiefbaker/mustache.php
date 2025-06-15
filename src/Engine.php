@@ -39,14 +39,18 @@ class Engine
     const SPEC_VERSION = '1.4.3';
 
     const PRAGMA_FILTERS       = 'FILTERS';
-    const PRAGMA_BLOCKS        = 'BLOCKS';
     const PRAGMA_ANCHORED_DOT  = 'ANCHORED-DOT';
+
+    /**
+     * @deprecated PRAGMA_BLOCKS is now part of the Mustache spec, and is enabled by default
+     */
+    const PRAGMA_BLOCKS = 'BLOCKS';
 
     // Known pragmas
     private static $knownPragmas = [
         self::PRAGMA_FILTERS       => true,
-        self::PRAGMA_BLOCKS        => true,
         self::PRAGMA_ANCHORED_DOT  => true,
+        self::PRAGMA_BLOCKS        => true,
     ];
 
     // Template cache
@@ -71,6 +75,7 @@ class Engine
 
     // Optional Mustache specs
     private $dynamicNames = true;
+    private $inheritance = true;
     private $lambdas = true;
 
     // Services
@@ -254,6 +259,10 @@ class Engine
             $this->dynamicNames = $options['dynamic_names'] !== false;
         }
 
+        if (isset($options['inheritance'])) {
+            $this->inheritance = $options['inheritance'] !== false;
+        }
+
         if (isset($options['lambdas'])) {
             $this->lambdas = $options['lambdas'] !== false;
         }
@@ -329,6 +338,7 @@ class Engine
     {
         return [
             'dynamic_names' => $this->dynamicNames,
+            'inheritance' => $this->inheritance,
             'lambdas' => $this->lambdas,
         ];
     }

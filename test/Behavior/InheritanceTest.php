@@ -21,9 +21,7 @@ class InheritanceTest extends TestCase
 
     public function set_up()
     {
-        $this->mustache = new Engine([
-            'pragmas' => [Engine::PRAGMA_BLOCKS],
-        ]);
+        $this->mustache = new Engine();
     }
 
     public function getIllegalInheritanceExamples()
@@ -542,5 +540,29 @@ class InheritanceTest extends TestCase
         $this->mustache->setPartials($partials);
         $tpl = $this->mustache->loadTemplate($template);
         $this->assertSame($expect, $tpl->render($data));
+    }
+
+    public function testDisabledInheritance()
+    {
+        // With inheritance disabled, the block tag (`{{$bar}}`) will be treated as a regular
+        // variable tag, so the `{{/bar}}` tag will be parsed as a mismatched closing tag for
+        // `{{< foo }}`.
+
+        $this->expectException(SyntaxException::class);
+        $this->expectExceptionMessage('Nesting error: foo (on line 0) vs. bar (on line 0)');
+
+        $mustache = new Engine([
+            'inheritance' => false,
+        ]);
+
+        $mustache->setPartials([
+            'foo' => '{{$bar}}baz{{/bar}}',
+        ]);
+
+        $tpl = $mustache->loadTemplate('{{< foo }}{{$bar}}qux{{/bar}}{{/foo}}');
+        $tpl->render([
+            'foo' => 'foo content',
+            'bar' => 'bar content',
+        ]);
     }
 }

@@ -27,9 +27,9 @@ class Parser
 
     // Optional Mustache specs
     private $dynamicNames = true;
+    private $inheritance = true;
 
     private $pragmaFilters;
-    private $pragmaBlocks;
 
     /**
      * Process an array of Mustache tokens and convert them into a parse tree.
@@ -44,8 +44,7 @@ class Parser
         $this->lineTokens = 0;
         $this->pragmas    = $this->defaultPragmas;
 
-        $this->pragmaFilters      = isset($this->pragmas[Engine::PRAGMA_FILTERS]);
-        $this->pragmaBlocks       = isset($this->pragmas[Engine::PRAGMA_BLOCKS]);
+        $this->pragmaFilters = isset($this->pragmas[Engine::PRAGMA_FILTERS]);
 
         return $this->buildTree($tokens);
     }
@@ -61,6 +60,10 @@ class Parser
     {
         if (isset($options['dynamic_names'])) {
             $this->dynamicNames = $options['dynamic_names'] !== false;
+        }
+
+        if (isset($options['inheritance'])) {
+            $this->inheritance = $options['inheritance'] !== false;
         }
     }
 
@@ -184,8 +187,7 @@ class Parser
                     break;
 
                 case Tokenizer::T_BLOCK_VAR:
-                    if ($this->pragmaBlocks) {
-                        // BLOCKS pragma is enabled, let's do this!
+                    if ($this->inheritance) {
                         if (isset($parent) && $parent[Tokenizer::TYPE] === Tokenizer::T_PARENT) {
                             $token[Tokenizer::TYPE] = Tokenizer::T_BLOCK_ARG;
                         }
@@ -382,10 +384,6 @@ class Parser
         $this->pragmas[$name] = true;
 
         switch ($name) {
-            case Engine::PRAGMA_BLOCKS:
-                $this->pragmaBlocks = true;
-                break;
-
             case Engine::PRAGMA_FILTERS:
                 $this->pragmaFilters = true;
                 break;
