@@ -71,6 +71,8 @@ class Engine
 
     // Optional Mustache specs
     private $dynamicNames = true;
+    private $lambdas = true;
+
     // Services
     private $tokenizer;
     private $parser;
@@ -164,6 +166,7 @@ class Engine
      *     ];
      *
      * @throws InvalidArgumentException If `escape` option is not callable
+     * @throws InvalidArgumentException If `lambdas` is disabled but the `FILTERS` pragma is enabled
      */
     public function __construct(array $options = [])
     {
@@ -237,7 +240,7 @@ class Engine
         if (isset($options['pragmas'])) {
             foreach ($options['pragmas'] as $pragma) {
                 if (!isset(self::$knownPragmas[$pragma])) {
-                    throw new InvalidArgumentException(sprintf('Unknown pragma: "%s".', $pragma));
+                    throw new InvalidArgumentException(sprintf('Unknown pragma: "%s"', $pragma));
                 }
                 $this->pragmas[$pragma] = true;
             }
@@ -249,6 +252,14 @@ class Engine
 
         if (isset($options['dynamic_names'])) {
             $this->dynamicNames = $options['dynamic_names'] !== false;
+        }
+
+        if (isset($options['lambdas'])) {
+            $this->lambdas = $options['lambdas'] !== false;
+        }
+
+        if (!$this->lambdas && isset($this->pragmas[self::PRAGMA_FILTERS])) {
+            throw new InvalidArgumentException('The FILTERS pragma requires lambda support');
         }
     }
 
@@ -318,6 +329,7 @@ class Engine
     {
         return [
             'dynamic_names' => $this->dynamicNames,
+            'lambdas' => $this->lambdas,
         ];
     }
 

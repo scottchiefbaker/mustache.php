@@ -29,6 +29,11 @@ abstract class Template
     protected $strictCallables = false;
 
     /**
+     * @var bool
+     */
+    protected $lambdas = true;
+
+    /**
      * Mustache Template constructor.
      */
     public function __construct(Engine $mustache)
@@ -167,6 +172,10 @@ abstract class Template
      */
     protected function resolveValue($value, Context $context)
     {
+        if (!$this->lambdas) {
+            return $value;
+        }
+
         if (($this->strictCallables ? is_object($value) : !is_string($value)) && is_callable($value)) {
             $result = call_user_func($value);
 

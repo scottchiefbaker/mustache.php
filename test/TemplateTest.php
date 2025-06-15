@@ -37,6 +37,15 @@ class TemplateTest extends TestCase
         $this->assertSame($rendered, $template->renderInternal($context));
         $this->assertSame($rendered, $template->render(['foo' => 'bar']));
     }
+
+    public function testResolveValueWithoutLambdas()
+    {
+        $mustache = new Engine();
+        $template = new NoLambdasTemplateStub($mustache);
+        $context = new Context();
+
+        $this->assertSame([NoLambdasTemplateStub::class, 'staticMethod'], $template->getResolvedValue([NoLambdasTemplateStub::class, 'staticMethod'], $context));
+    }
 }
 
 class TemplateStub extends Template
@@ -51,5 +60,26 @@ class TemplateStub extends Template
     public function renderInternal(Context $context, $indent = '', $escape = false)
     {
         return $this->rendered;
+    }
+}
+
+class NoLambdasTemplateStub extends Template
+{
+    protected $strictCallables = false; // Disabling strict callables for testing purposes
+    protected $lambdas = false;
+
+    public function getResolvedValue($value, Context $context)
+    {
+        return $this->resolveValue($value, $context);
+    }
+
+    public static function staticMethod()
+    {
+        return 'fail';
+    }
+
+    public function renderInternal(Context $context, $indent = '', $escape = false)
+    {
+        return '';
     }
 }

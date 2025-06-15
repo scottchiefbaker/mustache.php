@@ -232,6 +232,20 @@ class HigherOrderSectionsTest extends FunctionalTestCase
             ["{{# people }} - {{ name }}: {{ lang }}\n{{/people}}", $data, " - Albert: en-GB\n - Betty: en-US\n - Charles: en-US\n"],
         ];
     }
+
+    public function testWithLambdasDisabled()
+    {
+        $mustache = new Engine([
+            'lambdas' => false,
+            'strict_callables' => false, // strict callables disabled to make testing easier
+        ]);
+
+        $tpl = $mustache->loadTemplate('{{#data}}[{{.}}]{{/data}}');
+
+        $this->assertSame(sprintf('[%s][getData]', Baz::class), $tpl->render([
+            'data' => [Baz::class, 'getData'],
+        ]));
+    }
 }
 
 class Foo
@@ -279,6 +293,14 @@ class Bar
         $this->wrap = function ($text) {
             return sprintf('<em>%s</em>', $text);
         };
+    }
+}
+
+class Baz
+{
+    public static function getData()
+    {
+        return ['foo', 'bar', 'baz'];
     }
 }
 

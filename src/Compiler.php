@@ -11,6 +11,7 @@
 
 namespace Mustache;
 
+use Mustache\Exception\InvalidArgumentException;
 use Mustache\Exception\SyntaxException;
 
 /**
@@ -31,8 +32,13 @@ class Compiler
     private $charset;
     private $strictCallables;
 
+    // Optional Mustache specs
+    private $lambdas = true;
+
     /**
      * Compile a Mustache token parse tree into PHP source code.
+     *
+     * @throws InvalidArgumentException if the FILTERS pragma is set but lambdas are not enabled
      *
      * @param string $source          Mustache Template source code
      * @param string $tree            Parse tree of Mustache tokens
@@ -56,7 +62,14 @@ class Compiler
         $this->charset         = $charset;
         $this->strictCallables = $strictCallables;
 
-        return $this->writeCode($tree, $name);
+        $code = $this->writeCode($tree, $name);
+
+        if (isset($this->pragmas[Engine::PRAGMA_FILTERS]) && !$this->lambdas) {
+            throw new InvalidArgumentException('The FILTERS pragma requires lambda support');
+        }
+
+        return $code;
+    }
 
     /**
      * Disable optional Mustache specs.
@@ -67,6 +80,9 @@ class Compiler
      */
     public function setOptions(array $options)
     {
+        if (isset($options['lambdas'])) {
+            $this->lambdas = $options['lambdas'] !== false;
+        }
     }
 
     /**
@@ -201,7 +217,7 @@ class Compiler
 
         class %s extends \\Mustache\\Template
         {
-            private $lambdaHelper;%s
+            private $lambdaHelper;%s%s
 
             public function renderInternal(\\Mustache\\Context $context, $indent = \'\')
             {
@@ -218,7 +234,7 @@ class Compiler
     const KLASS_NO_LAMBDAS = '<?php
 
         class %s extends \\Mustache\\Template
-        {%s
+        {%s%s
             public function renderInternal(\\Mustache\\Context $context, $indent = \'\')
             {
                 $buffer = \'\';
@@ -229,6 +245,8 @@ class Compiler
         }';
 
     const STRICT_CALLABLE = 'protected $strictCallables = true;';
+
+    const NO_LAMBDAS = 'protected $lambdas = false;';
 
     /**
      * Generate Mustache Template class PHP source.
@@ -246,8 +264,9 @@ class Compiler
         $klass    = empty($this->sections) && empty($this->blocks) ? self::KLASS_NO_LAMBDAS : self::KLASS;
 
         $callable = $this->strictCallables ? $this->prepare(self::STRICT_CALLABLE) : '';
+        $lambda   = $this->lambdas ? '' : $this->prepare(self::NO_LAMBDAS);
 
-        return sprintf($this->prepare($klass, 0, false, true), $name, $callable, $code, $sections, $blocks);
+        return sprintf($this->prepare($klass, 0, false, true), $name, $callable, $lambda, $code, $sections, $blocks);
     }
 
     const BLOCK_VAR = '
@@ -373,6 +392,24 @@ class Compiler
         }
     ';
 
+    const SECTION_NO_LAMBDAS = '
+        private function section%s(\\Mustache\\Context $context, $indent, $value)
+        {
+            $buffer = \'\';
+
+            if (!empty($value)) {
+                $values = $this->isIterable($value) ? $value : [$value];
+                foreach ($values as $value) {
+                    $context->push($value);
+                    %s
+                    $context->pop();
+                }
+            }
+
+            return $buffer;
+        }
+    ';
+
     /**
      * Generate Mustache Template section PHP source.
      *
@@ -404,7 +441,11 @@ class Compiler
         $key = ucfirst(md5($delims . "\n" . $source));
 
         if (!isset($this->sections[$key])) {
-            $this->sections[$key] = sprintf($this->prepare(self::SECTION), $key, $callable, $source, $helper, $delims, $this->walk($nodes, 2));
+            if ($this->lambdas) {
+                $this->sections[$key] = sprintf($this->prepare(self::SECTION), $key, $callable, $source, $helper, $delims, $this->walk($nodes, 2));
+            } else {
+                $this->sections[$key] = sprintf($this->prepare(self::SECTION_NO_LAMBDAS), $key, $this->walk($nodes, 2));
+            }
         }
 
         $method  = $this->getFindMethod($id);

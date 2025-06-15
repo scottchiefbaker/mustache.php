@@ -423,6 +423,16 @@ class EngineTest extends FunctionalTestCase
             [[],                       $helpers, $data, $tpl, ''],
         ];
     }
+
+    public function testFiltersPragmaWithoutLambdasThrowsException()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The FILTERS pragma requires lambda support');
+        new Engine([
+            'lambdas' => false,
+            'pragmas' => [Engine::PRAGMA_FILTERS],
+        ]);
+    }
 }
 
 class MustacheStub extends Engine

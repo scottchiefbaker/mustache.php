@@ -11,6 +11,7 @@
 
 namespace Mustache\Test\Behavior;
 
+use InvalidArgumentException;
 use Mustache\Engine;
 use Mustache\Exception\UnknownFilterException;
 use Mustache\Test\TestCase;
@@ -237,5 +238,15 @@ EOS;
             ['{{% FILTERS }}{{# people_lambda | first_person }}{{ name }}{{/ people_lambda }}', $data, 'Albert'],
             ['{{% FILTERS }}{{# people_lambda | noop | first_person }}{{ name }}{{/ people_lambda }}', $data, 'Albert'],
         ];
+    }
+
+    public function testFiltersWithoutLambdasThrows()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('FILTERS pragma requires lambda support');
+        $mustache = new Engine([
+            'lambdas' => false,
+        ]);
+        $mustache->render('{{% FILTERS }}wheee', []);
     }
 }
