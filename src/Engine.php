@@ -69,6 +69,8 @@ class Engine
     private $delimiters;
     private $buggyPropertyShadowing = false;
 
+    // Optional Mustache specs
+    private $dynamicNames = true;
     // Services
     private $tokenizer;
     private $parser;
@@ -244,6 +246,10 @@ class Engine
         if (isset($options['buggy_property_shadowing'])) {
             $this->buggyPropertyShadowing = (bool) $options['buggy_property_shadowing'];
         }
+
+        if (isset($options['dynamic_names'])) {
+            $this->dynamicNames = $options['dynamic_names'] !== false;
+        }
     }
 
     /**
@@ -301,6 +307,18 @@ class Engine
     public function useBuggyPropertyShadowing()
     {
         return $this->buggyPropertyShadowing;
+    }
+
+    /**
+     * Get currently enabled optional features.
+     *
+     * @return array
+     */
+    public function getOptions()
+    {
+        return [
+            'dynamic_names' => $this->dynamicNames,
+        ];
     }
 
     /**
@@ -653,6 +671,7 @@ class Engine
             'entityFlags'     => $this->entityFlags,
             'escape'          => isset($this->escape) ? 'custom' : 'default',
             'key'             => ($source instanceof Source) ? $source->getKey() : 'source',
+            'options'         => $this->getOptions(),
             'pragmas'         => $this->getPragmas(),
             'strictCallables' => $this->strictCallables,
             'version'         => self::VERSION,
@@ -802,6 +821,7 @@ class Engine
     private function parse($source)
     {
         $parser = $this->getParser();
+        $parser->setOptions($this->getOptions());
         $parser->setPragmas($this->getPragmas());
 
         return $parser->parse($this->tokenize($source));
@@ -832,6 +852,7 @@ class Engine
         $tree = $this->parse($source);
 
         $compiler = $this->getCompiler();
+        $compiler->setOptions($this->getOptions());
         $compiler->setPragmas($this->getPragmas());
 
         return $compiler->compile($source, $tree, $name, isset($this->escape), $this->charset, $this->strictCallables, $this->entityFlags);

@@ -57,6 +57,16 @@ class Compiler
         $this->strictCallables = $strictCallables;
 
         return $this->writeCode($tree, $name);
+
+    /**
+     * Disable optional Mustache specs.
+     *
+     * @internal Users should set options in Mustache\Engine, not here :)
+     *
+     * @param bool[] $options
+     */
+    public function setOptions(array $options)
+    {
     }
 
     /**

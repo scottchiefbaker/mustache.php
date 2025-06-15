@@ -15,7 +15,7 @@ use Mustache\Engine;
 use Mustache\Exception\SyntaxException;
 use Mustache\Test\TestCase;
 
-class DynamicPartialsTest extends TestCase
+class DynamicNamesTest extends TestCase
 {
     private $mustache;
 
@@ -35,6 +35,7 @@ class DynamicPartialsTest extends TestCase
             ['{{! foo.*bar }}'],
             ['{{% FILTERS }}{{! foo | *bar }}'],
             ['{{% BLOCKS }}{{< *foo }}{{/ *foo }}'],
+            ['{{< *foo }}{{/ *foo }}'],
         ];
     }
 
@@ -53,6 +54,8 @@ class DynamicPartialsTest extends TestCase
             ['{{^ foo }}{{/ *foo }}'],
             ['{{% BLOCKS }}{{< foo }}{{/ *foo }}'],
             ['{{% BLOCKS }}{{$ foo }}{{/ *foo }}'],
+            ['{{< foo }}{{/ *foo }}'],
+            ['{{$ foo }}{{/ *foo }}'],
         ];
     }
 
@@ -68,10 +71,10 @@ class DynamicPartialsTest extends TestCase
 
     public function testDynamicBlocks()
     {
-        $tpl = '{{% BLOCKS }}{{< *partial }}{{$ bar }}{{ value }}{{/ bar }}{{/ *partial }}';
+        $tpl = '{{< *partial }}{{$ bar }}{{ value }}{{/ bar }}{{/ *partial }}';
 
         $this->mustache->setPartials([
-            'foobarbaz' => '{{% BLOCKS }}{{$ foo }}foo{{/ foo }}{{$ bar }}bar{{/ bar }}{{$ baz }}baz{{/ baz }}',
+            'foobarbaz' => '{{$ foo }}foo{{/ foo }}{{$ bar }}bar{{/ bar }}{{$ baz }}baz{{/ baz }}',
             'qux' => 'qux',
         ]);
 
@@ -81,5 +84,29 @@ class DynamicPartialsTest extends TestCase
         ]);
 
         $this->assertSame($result, 'fooBARbaz');
+    }
+
+    public function testDisabledDynamicNames()
+    {
+        $mustache = new Engine([
+            'dynamic_names' => false,
+        ]);
+
+        $tpl = '{{> *partial }}';
+
+        $mustache->setPartials([
+            'foo' => '{{ value }}',
+        ]);
+
+        // The partial `foo` is defined, but dynamic names are disabled, so
+        // `*partial` will not resolve to 'foo' and the partial will not be
+        // rendered.
+
+        $result = $mustache->render($tpl, [
+            'partial' => 'foo',
+            'value' => 'BAR',
+        ]);
+
+        $this->assertSame($result, '');
     }
 }

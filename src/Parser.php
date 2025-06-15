@@ -25,6 +25,9 @@ class Parser
     private $pragmas;
     private $defaultPragmas = [];
 
+    // Optional Mustache specs
+    private $dynamicNames = true;
+
     private $pragmaFilters;
     private $pragmaBlocks;
 
@@ -45,6 +48,20 @@ class Parser
         $this->pragmaBlocks       = isset($this->pragmas[Engine::PRAGMA_BLOCKS]);
 
         return $this->buildTree($tokens);
+    }
+
+    /**
+     * Disable optional Mustache specs.
+     *
+     * @internal Users should set options in Mustache\Engine, not here :)
+     *
+     * @param bool[] $options
+     */
+    public function setOptions(array $options)
+    {
+        if (isset($options['dynamic_names'])) {
+            $this->dynamicNames = $options['dynamic_names'] !== false;
+        }
     }
 
     /**
@@ -308,7 +325,7 @@ class Parser
         $name = $token[Tokenizer::NAME];
         $isDynamic = false;
 
-        if (preg_match('/^\s*\*\s*/', $name)) {
+        if ($this->dynamicNames && preg_match('/^\s*\*\s*/', $name)) {
             $this->ensureTagAllowsDynamicNames($token);
             $name = preg_replace('/^\s*\*\s*/', '', $name);
             $isDynamic = true;
