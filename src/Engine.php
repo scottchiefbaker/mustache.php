@@ -165,9 +165,31 @@ class Engine
      *        // This bug was fixed in v3.0.0, but the buggy behavior can be preserved by setting this option to true.
      *        'buggy_property_shadowing' => false,
      *
-     *         // Enable pragmas across all templates, regardless of the presence of pragma tags in the individual
-     *         // templates.
-     *         'pragmas' => [\Mustache\Engine::PRAGMA_FILTERS],
+     *        // Enable dynamic names. By default, variables and sections like `{{*name}}` will be resolved dynamically.
+     *        //
+     *        // To disable dynamic name resolution, set this to false.
+     *        'dynamic_names' => true,
+     *
+     *        // Enable template inheritance. By default, templates can extend other templates using the `{{< name}}` and
+     *        // `{{$ block}}` tags.
+     *        //
+     *        // To disable inheritance, set this to false.
+     *       'inheritance' => true,
+     *
+     *        // Enable lambda sections and values. By default, "lambdas" are enabled; if a variable resolves to a
+     *        // callable value, that callable is called before interpolation. If a section name resolves to a callable
+     *        // value, it is treated as a "higher order section", and the section content is passed to the callable
+     *        // for processing prior to rendering.
+     *        //
+     *        // Note that the FILTERS pragma requires lambdas to function, so using FILTERS without lambdas enabled
+     *        // will throw an invalid argument exception.
+     *        //
+     *        // To disable lambdas and higher order sections entirely, set this to false.
+     *        'lambdas' => true,
+     *
+     *        // Enable pragmas across all templates, regardless of the presence of pragma tags in the individual
+     *        // templates.
+     *        'pragmas' => [\Mustache\Engine::PRAGMA_FILTERS],
      *     ];
      *
      * @throws InvalidArgumentException If `escape` option is not callable
