@@ -391,7 +391,7 @@ class Engine
      *
      * See https://github.com/bobthecow/mustache.php/pull/410
      */
-    public function useBuggyPropertyShadowing()
+    public function getBuggyPropertyShadowing()
     {
         return $this->buggyPropertyShadowing;
     }

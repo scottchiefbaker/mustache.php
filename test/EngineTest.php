@@ -385,10 +385,13 @@ class EngineTest extends FunctionalTestCase
     public function testBuggyPropertyShadowing()
     {
         $mustache = new Engine();
-        $this->assertFalse($mustache->useBuggyPropertyShadowing());
+        $this->assertFalse($mustache->getBuggyPropertyShadowing());
 
         $mustache = new Engine(['buggy_property_shadowing' => true]);
-        $this->assertTrue($mustache->useBuggyPropertyShadowing());
+        $this->assertTrue($mustache->getBuggyPropertyShadowing());
+
+        $mustache = new Engine(['buggy_property_shadowing' => false]);
+        $this->assertFalse($mustache->getBuggyPropertyShadowing());
     }
 
     public function testDoubleRenderLambdas()

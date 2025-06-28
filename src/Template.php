@@ -147,7 +147,7 @@ abstract class Template
      */
     protected function prepareContextStack($context = null)
     {
-        $stack = new Context(null, $this->mustache->useBuggyPropertyShadowing());
+        $stack = new Context(null, $this->mustache->getBuggyPropertyShadowing());
 
         $helpers = $this->mustache->getHelpers();
         if (!$helpers->isEmpty()) {

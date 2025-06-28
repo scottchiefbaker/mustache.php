@@ -27,7 +27,7 @@ class Context
      * Mustache rendering Context constructor.
      *
      * @param mixed $context                Default rendering context (default: null)
-     * @param bool  $buggyPropertyShadowing See Engine::useBuggyPropertyShadowing (default: false)
+     * @param bool  $buggyPropertyShadowing See Engine::getBuggyPropertyShadowing (default: false)
      */
     public function __construct($context = null, $buggyPropertyShadowing = false)
     {
