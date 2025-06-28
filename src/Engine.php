@@ -183,7 +183,7 @@ class Engine
      *         // "callable" in PHP, are not called to resolve variables for interpolation or section contexts. This
      *         // helps protect against arbitrary code execution when user input is passed directly into the template.
      *         //
-     *         // Defaults to true, but can be set to false to preserve Mustache v2.x behavior.
+     *         // Defaults to true, but can be set to false to preserve Mustache.php v2.x behavior.
      *         //
      *         // THIS IS NOT RECOMMENDED.
      *         'strict_callables' => true,
@@ -198,7 +198,7 @@ class Engine
      *         // lookup logic meant that a property which exists but is set to null would not prevent further context
      *         // lookup.
      *         //
-     *         // This bug was fixed in Mustache v3.x, but the previous buggy behavior can be preserved by setting this
+     *         // This bug was fixed in Mustache.php v3.x, but the previous buggy behavior can be preserved by setting this
      *         // option to true.
      *         //
      *         // THIS IS NOT RECOMMENDED.
@@ -207,7 +207,7 @@ class Engine
      *         // Double-render lambda return values. By default, the return value of higher order sections that are
      *         // rendered via the lambda helper will *not* be re-rendered.
      *         //
-     *         // To preserve the behavior of Mustache v2.x, set this to true.
+     *         // To preserve the behavior of Mustache.php v2.x, set this to true.
      *         //
      *         // THIS IS NOT RECOMMENDED.
      *        'double_render_lambdas' => false,
@@ -375,7 +375,7 @@ class Engine
      *
      * By default, the return value of higher order sections that are rendered
      * via the lambda helper will *not* be re-rendered. To preserve the
-     * behavior of Mustache v2.x, set this to true.
+     * behavior of Mustache.php v2.x, set this to true.
      *
      * THIS IS NOT RECOMMENDED.
      */
