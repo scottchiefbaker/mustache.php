@@ -69,12 +69,15 @@ Read [the Mustache.php documentation][docs] for more information.
 
 
 ## Upgrading from v2.x
+_Mustache.php v3.x drops support for PHP 5.2–5.5_, but is otherwise backwards compatible with v2.x.
 
-_Mustache.php v3.x drops support for PHP 5.2–5.5_, but is otherwise a drop-in replacement for v2.x:
+To ease the transition, previous behavior can be preserved via configuration:
 
- - `\Mustache_Engine` and other prefixed classnames are all available as `\Mustache\Engine`, etc. You can keep using the old style for now, if you feel nostalgic for 2008, but you'll want to update eventually.
+ - The `strict_callables` config option now defaults to `true`. Lambda sections should use closures or callable objects. To continue supporting array-style callables for lambda sections (e.g. `[$this, 'foo']`), set `strict_callables` to `false`.
  - [A context shadowing bug from v2.x has been fixed](https://github.com/bobthecow/mustache.php/commit/66ecb327ce15b9efa0cfcb7026fdc62c6659b27f), but if you depend on the previous buggy behavior you can preserve it via the `buggy_property_shadowing` config option.
- - The `strict_callables` config now defaults to `true`. Lambda sections should use closures or callable objects. To continue supporting array-style callables for lambda sections (e.g. `[$this, 'foo']`), set `strict_callables` to `false`.
+ - By default the return value of higher-order sections that are rendered via the lambda helper will no longer be double-rendered. To preserve the previous behavior, set `double_render_lambdas` to `true`. _This is not recommended._
+
+In order to maintain a wide PHP version support range, there are minor changes to a few interfaces, which you might need to handle if you extend Mustache (see [c0453be](https://github.com/bobthecow/mustache.php/commit/c0453be5c09e7d988b396982e29218fcb25b7304)).
 
 
 ## See Also
@@ -87,5 +90,5 @@ _Mustache.php v3.x drops support for PHP 5.2–5.5_, but is otherwise a drop-in 
 [packagist]:    https://packagist.org/packages/mustache/mustache
 [entity_flags]: https://github.com/bobthecow/mustache.php/wiki#entity_flags
 [docs]:         https://github.com/bobthecow/mustache.php/wiki/Home
-[manpage]:      http://mustache.github.io/mustache.5.html
-[ruby]:         http://github.com/defunkt/mustache/blob/master/README.md
+[manpage]:      https://mustache.github.io/mustache.5.html
+[ruby]:         https://github.com/mustache/mustache/blob/master/README.md
