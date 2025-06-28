@@ -3,21 +3,18 @@
 /*
  * This file is part of Mustache.php.
  *
- * (c) 2010-2017 Justin Hileman
+ * (c) 2010-2025 Justin Hileman
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
-require dirname(__FILE__) . '/../src/Mustache/Autoloader.php';
-Mustache_Autoloader::register();
-Mustache_Autoloader::register(dirname(__FILE__) . '/../test');
 
 /**
  * Minimal stream wrapper to test protocol-based access to templates.
  */
 class TestStream
 {
+    public $context;
     private $filehandle;
 
     /**
@@ -54,7 +51,7 @@ class TestStream
      */
     public function stream_stat()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -85,5 +82,5 @@ class TestStream
 }
 
 if (!stream_wrapper_register('test', 'TestStream')) {
-    die('Failed to register protocol');
+    exit('Failed to register protocol');
 }

@@ -3,7 +3,7 @@
 /*
  * This file is part of Mustache.php.
  *
- * (c) 2010-2017 Justin Hileman
+ * (c) 2010-2025 Justin Hileman
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,7 +11,7 @@
 
 class Filters
 {
-    public $states = array(
+    public $states = [
         'al' => 'Alabama',
         'ak' => 'Alaska',
         'az' => 'Arizona',
@@ -62,36 +62,24 @@ class Filters
         'wv' => 'West Virginia',
         'wi' => 'Wisconsin',
         'wy' => 'Wyoming',
-    );
-
-    // The next few functions are ugly, because they have to work in PHP 5.2...
-    // for everyone who doesn't have to support 5.2, please, for the love, make
-    // your ViewModel return closures rather than `array($this, '...')`
-    //
-    // :)
+    ];
 
     public function upcase()
     {
-        return array($this, '_upcase');
-    }
-
-    public function _upcase($val)
-    {
-        return strtoupper($val);
+        return function ($val) {
+            return strtoupper($val);
+        };
     }
 
     public function eachPair()
     {
-        return array($this, '_eachPair');
-    }
+        return function ($val) {
+            $ret = [];
+            foreach ($val as $key => $value) {
+                array_push($ret, compact('key', 'value'));
+            }
 
-    public function _eachPair($val)
-    {
-        $ret = array();
-        foreach ($val as $key => $value) {
-            array_push($ret, compact('key', 'value'));
-        }
-
-        return $ret;
+            return $ret;
+        };
     }
 }
