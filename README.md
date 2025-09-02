@@ -17,11 +17,18 @@ composer require mustache/mustache
 A quick example:
 
 ```php
-<?php
 $m = new \Mustache\Engine(['entity_flags' => ENT_QUOTES]);
 echo $m->render('Hello {{planet}}', ['planet' => 'World!']); // "Hello World!"
 ```
 
+or for non-composer users:
+
+```php
+require_once("/path/to/mustache/src/mustache.php");
+
+$m = new \Mustache\Engine(['entity_flags' => ENT_QUOTES]);
+echo $m->render('Today: {{date}}', ['date' => date('Y-m-d')]);
+```
 
 And a more in-depth example -- this is the canonical Mustache template:
 
